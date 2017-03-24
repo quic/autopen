@@ -50,7 +50,8 @@ def install_git(pack_man):
 		print ("INSTALLATION SUCCESSFUL: Git successfully installed")
 
 
+general_use.update(distro)
+
 install_python(pack_man)
 install_git(pack_man)
 
-general_use.update(distro)
