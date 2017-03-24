@@ -94,7 +94,7 @@ def github_tools(packman, toolname, repo):
 				if modprobe_rc != 0:
 					print ('CHECK FAILED: Failed to add a LKM to the kernel. Can-utils may not be fully functional')
 					print ('WITH ERROR CODE: ', modprobe_rc)
-				elif modprobe_rc == 0:
+				else:
 					print ('CHECK SUCCESSFUL: Successfully added a LKM to the kernel')
 
 		elif toolname == 'canbus-utils':	#find out if socketCAN needs to be installed to be able to use it
@@ -299,11 +299,11 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 				print ('INSTALLATION SUCCESSFUL: Successfully installed RomRaiders')
 		elif toolname == 'katoolin':	
 			print ("Setting /usr/bin/katoolin to executable...")
-			changemode_EC = subprocess.run(["chmod", "754", "/usr/bin/katoolin"]) #executable script for both you and your group but not for the world. 
-			if changemode_EC.returncode != 0:
+			mode_rc = subprocess.run(["chmod", "754", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
+			if mode_rc != 0:
 				print ("CONVERSION FAILED: Could not make /usr/bin/katoolin executable")
-				print ("ERROR CODE:", changemode_EC.returncode)
-			elif changemode_EC.returncode == 0:
+				print ("ERROR CODE:", mode_rc)
+			else:
 				print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
 				print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
 
