@@ -35,7 +35,7 @@ link_romraider = 'http://assembla.com/spaces/romraider/documents/a5Ao9gHEir5P9Ud
 
 try:
 	e = subprocess.run(['python3', 'install_basics.py'])
-	e != 0:
+	if e != 0:
 		print ('install_basics did not run')
 	else:
 		pack_man = general_use.package_tool(d)
