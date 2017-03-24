@@ -41,7 +41,7 @@ def update(pack_man):
 	'''	
 	update_rc = subprocess.run(["sudo", pack_man, "update"]).returncode
 	if update_rc != 0:
-		print ('\UPDATE FAILED: Failed to update system')
+		print ('UPDATE_ FAILED: Failed to update_ system')
 		print ('WITH ERROR CODE:', update_rc)
 	else:
-		print ('\UPDATE SUCCESSFUL: Successfully updated system')
+		print ('UPDATE_ SUCCESSFUL: Successfully updated system')
