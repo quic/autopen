@@ -4,6 +4,7 @@
 
 
 import general_use
+import subprocess
 import os
 
 repo_bluez = 'https://github.com/khvzak/bluez-tools.git'
