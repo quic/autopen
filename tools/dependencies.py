@@ -10,7 +10,7 @@ repo_bluez = 'https://github.com/khvzak/bluez-tools.git'
 
 
 def commandline_install(pack_man, i):
-	general_use.update(d)
+	general_use.update(pack_man)
 	return subprocess.run(['sudo', pack_man, '-y', 'install', i]).returncode
 
 def download_install(toolname, link):
