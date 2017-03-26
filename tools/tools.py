@@ -59,7 +59,7 @@ link_pythoncan = 'https://bitbucket.org/hardbyte/python-can/get/77eea796362b.zip
 link_package = 'https://pkgconfig.freedesktop.org/releases/pkg-config-0.21.tar.gz' #needed for bluelog
 
 
-def github_tools(packman, toolname, repo):
+def github_tools(pack_man, toolname, repo):
 	'''
 		This function installs the tools that use github
 		rc stands for returncode
@@ -197,9 +197,9 @@ def github_tools(packman, toolname, repo):
 			final_rc = 0
 
 			#lambda these map to function
-			dev = dependencies.commandline_install(packman, 'libsdl2-dev')
-			image = dependencies.commandline_install(packman, 'libsdl2-image')
-			ttf = dependencies.commandline_install(packman, 'libsdl2-ttf')
+			dev = dependencies.commandline_install(pack_man, 'libsdl2-dev')
+			image = dependencies.commandline_install(pack_man, 'libsdl2-image')
+			ttf = dependencies.commandline_install(pack_man, 'libsdl2-ttf')
 			returncode_list = [dev, image, ttf]
 			for i, j in enumerate(returncode_list):
 				if j != 0:
@@ -258,7 +258,7 @@ def github_tools(packman, toolname, repo):
 					print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
 
 def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
-	general_use.update(d)
+	general_use.update(pack_man)
 
 	#NOTE: If pyOBD link doesn't work tell them the install.html is available
 	down_rc = dependencies.download_install(toolname, link)
@@ -308,7 +308,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 				print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
 
 def installed_tools(pack_man, toolname): #this function is for tools that are apt-getable / yumable
-	general_use.update(d)
+	general_use.update(pack_man)
 
 	install_rc = -1
 
