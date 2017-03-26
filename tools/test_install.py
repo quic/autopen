@@ -17,7 +17,7 @@ TO DO:
 '''
 
 #this will be placed somewhere else, maybe a dictionary?
-repo_socketCAN = 'https://github.com/linux-can/can-utils.git' #needed to run can-utils
+repo_can_utils = 'https://github.com/linux-can/can-utils.git' #needed to run can-utils
 repo_canbus_utils = 'https://github.com/digitalbond/canbus-utils'
 repo_kayak = 'https://github.com/dschanoeh/Kayak.git'
 repo_caringcaribou = 'https://github.com/CaringCaribou/caringcaribou.git' #want to check this to make sure it works, instructions a bit unclear
@@ -35,7 +35,7 @@ link_romraider = 'http://assembla.com/spaces/romraider/documents/a5Ao9gHEir5P9Ud
 
 d = general_use.check_distribution()
 pack_man = general_use.package_tool(d)
-tools.github_tools(pack_man, 'socketcan', repo_socketCAN)
+tools.github_tools(pack_man, 'can-utils', repo_can_utils)
 #tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)
 #tools.github_tools(pack_man, 'kayak', repo_kayak)
 #tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)
