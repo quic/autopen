@@ -18,9 +18,9 @@ Front End/Back End Connection:
 Note:
 	ELM327:
 		Be forewarned that the ELM327 has limited buffer space, so you will lose packets when sniffing,
- 		and transmission can be a bit imprecise, but if you're in a pinch this is the cheapest route.
+		and transmission can be a bit imprecise, but if you're in a pinch this is the cheapest route.
 
- 	Make sure the user knows that this will all be cloned in the current directory aka most likely /Users/'user'
+	Make sure the user knows that this will all be cloned in the current directory aka most likely /Users/'user'
 
 
 Tools may be included:
@@ -141,7 +141,7 @@ def github_tools(packman, toolname, repo):
 				print ('LOAD FAILED: Failed to load CAN module. Cannot complete caringcaribou installation')
 				print ('WITH ERROR CODE: ', load_rc)
 			else:
-				print ('LOAD SUCCESSFUL: Successfully loaded CAN module'
+				print ('LOAD SUCCESSFUL: Successfully loaded CAN module')
 
 				#--------->when they click install, have them input the bitrate and the can bus they're on and store these values
 				#user needs to input the CAN bus they are on (can we fingerprint how many canbuses are on?)
@@ -202,20 +202,20 @@ def github_tools(packman, toolname, repo):
 			ttf = dependencies.commandline_install(packman, 'libsdl2-ttf')
 			returncode_list = [dev, image, ttf]
 			for i, j in enumerate(returncode_list):
-    			if j != 0:
-    				final_rc = -1
-        			print ('INSTALLATION FAILED: Could not install library libsdl2-', i)
-        			print ('WITH ERROR CODE: ', j)
-        		else:
-        			print ('INSTALLATION SUCCESSFUL: Successfully installed library libsdl2-', i)
-        	if final_rc != 0:
-        		print ('INSTALLATION FAILED: Failed to install libraries needed to compile UDSIM. Cannot complete udsim installation')
-        	else:
-               	print ('INSTALLATION COMPLETE: Successfully installed the libraries needed to compile UDSIM.')
+				if j != 0:
+					final_rc = -1
+					print ('INSTALLATION FAILED: Could not install library libsdl2-', i)
+					print ('WITH ERROR CODE: ', j)
+				else:
+					print ('INSTALLATION SUCCESSFUL: Successfully installed library libsdl2-', i)
+			if final_rc != 0:
+				print ('INSTALLATION FAILED: Failed to install libraries needed to compile UDSIM. Cannot complete udsim installation')
+			else:
+				print ('INSTALLATION COMPLETE: Successfully installed the libraries needed to compile UDSIM.')
 	
-        	#Bluetooth tools below
+			#Bluetooth tools below
 
-        elif toolname == 'bluelog': #has an optional web mode so when running want to add that functionality.  (just run make to run)
+		elif toolname == 'bluelog': #has an optional web mode so when running want to add that functionality.  (just run make to run)
 			print ('INSTALLATION SUCCESSFUL: Successfully installed bluelog')
 		elif toolname == 'bluemaho':
 			print ('Beginning bluemaho installation...')
