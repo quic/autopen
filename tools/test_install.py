@@ -38,6 +38,7 @@ try:
 	if e != 0:
 		print ('install_basics did not run')
 	else:
+		d = general_use.check_distribution()
 		pack_man = general_use.package_tool(d)
 		tools.github_tools(pack_man, 'socketcan', repo_socketCAN)
 		tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)

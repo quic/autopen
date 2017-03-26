@@ -250,10 +250,10 @@ def github_tools(packman, toolname, repo):
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for Bluemaho')
 				print ('Building Bluemaho...')
-				build_rc = subprocess.run([./build.sh]).returncode
+				build_rc = subprocess.run(['./build.sh']).returncode
 				if build_rc != 0:
 					print ('BUILD FAILED: Failed to build and complete installation of Bluemaho')
-					print ('WITH ERROR CODE:' build_rc)
+					print ('WITH ERROR CODE:', build_rc)
 				else:
 					print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
 
@@ -266,7 +266,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 		print ('DOWNLOAD FAILED: Failed to download file for', toolname, 'using download link:', link)
 		print ('WITH ERROR CODE: ', down_rc)
 	else:
-		print ('DOWNLOAD SUCCESSFUL: Successfully downloaded file for' toolname)
+		print ('DOWNLOAD SUCCESSFUL: Successfully downloaded file for', toolname)
 
 		if toolname == 'pyobd':
 			print ('Beginning pyobd installation...')
@@ -281,7 +281,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 				print ('WITH ERROR CODE:', pyserial_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed pyobd')	
-		elif toolname = 'o2oo':
+		elif toolname == 'o2oo':
 			print ('Beginning o2oo installation...')
 			extract_rc = subprocess.run(['tar', '-xzvf', 'O2OO-0.9.tar']).returncode
 			if extract_rc != 0:
@@ -323,7 +323,7 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 		install_rc = dependencies.commandline_install(pack_man, 'gnuradio')
 
 	if install_rc != 0:
-		print ('INSTALLATION FAILED: Failed to install' toolname)
+		print ('INSTALLATION FAILED: Failed to install', toolname)
 		print ('WITH ERROR CODE:', install_rc)
 	else:
 		print ('INSTALLATION SUCCESSFUL: Successfully installed', toolname)
