@@ -271,6 +271,21 @@ def github_tools(pack_man, toolname, repo):
 					print ('WITH ERROR CODE:', build_rc)
 				else:
 					print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
+		elif toolname == 'katoolin':
+			cp_rc = subprocess.run(['sudo', 'cp', 'katoolin.py', '/usr/bin/katoolin']).returncode
+			if cp_rc != 0:
+				print ('COPY FAILED: Could not copy katoolin.py to /usr/bin/katoolin')
+				print ('ERROR CODE:', cp_rc)
+			else:
+				print ('COPY SUCCESSFUL: Successfully copied katoolin.py to /usr/bin/katoolin')
+				print ("Setting /usr/bin/katoolin to executable...")
+				mode_rc = subprocess.run(["chmod", "754", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
+				if mode_rc != 0:
+					print ("CONVERSION FAILED: Could not make /usr/bin/katoolin executable")
+					print ("ERROR CODE:", mode_rc)
+				else:
+					print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
+					print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
 
 def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	general_use.update(pack_man)
@@ -312,15 +327,6 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 				print ('WITH ERROR CODE:', rom_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed RomRaiders')
-		elif toolname == 'katoolin':	
-			print ("Setting /usr/bin/katoolin to executable...")
-			mode_rc = subprocess.run(["chmod", "754", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
-			if mode_rc != 0:
-				print ("CONVERSION FAILED: Could not make /usr/bin/katoolin executable")
-				print ("ERROR CODE:", mode_rc)
-			else:
-				print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
-				print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
 
 def installed_tools(pack_man, toolname): #this function is for tools that are apt-getable / yumable
 	general_use.update(pack_man)
