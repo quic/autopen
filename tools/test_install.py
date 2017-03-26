@@ -34,7 +34,8 @@ link_o2oo = 'https://www.vanheusden.com/O2OO/O2OO-0.9.tgz'
 link_romraider = 'http://assembla.com/spaces/romraider/documents/a5Ao9gHEir5P9Udmr6QqzO/download/RomRaider0.5.9RC3-linux.jar'
 
 try:
-	e = subprocess.run(['python3', 'install_basics.py'])
+	o = open('output.log', 'w')
+	e = subprocess.run(['python3', 'install_basics.py', '>', o])
 	if e != 0:
 		print ('install_basics did not run')
 	else:
@@ -58,3 +59,9 @@ try:
 except:
 	print ('SOME ERROR FIND OUT WHAT')
 
+'''
+
+Things to note during testing: 
+
+1. in order to run test_install.py , python3 has to be installed. So, we need to make it that they can just run the python version of make
+2. if they clone from git, they have to have git installed. If they download zip, they do not (we will install for them). Need to include instructions for both 

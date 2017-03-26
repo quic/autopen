@@ -41,7 +41,7 @@ def install_git(pack_man):
 	'''
 
 	print('Installing git...')
-	g_rc = dependencies.command_line(pack_man, "git")
+	g_rc = dependencies.commandline_install(pack_man, "git")
 
 	if g_rc != 0:
 		print ("INSTALLATION FAILED: Could not install git")
