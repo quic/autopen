@@ -39,7 +39,7 @@ def update(pack_man):
 		This function updates software packages based on repository state
 		This needs to be included at the beginning of every major installation function
 	'''	
-	update_rc = subprocess.run(["sudo", pack_man, "update", '>>', 'output.log']).returncode
+	update_rc = subprocess.run(['sudo', pack_man, 'update']).returncode
 	if update_rc != 0:
 		print ('UPDATE_ FAILED: Failed to update_ system')
 		print ('WITH ERROR CODE:', update_rc)

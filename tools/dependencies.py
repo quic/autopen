@@ -13,13 +13,13 @@ repo_bluez = 'https://github.com/khvzak/bluez-tools.git'
 
 def commandline_install(pack_man, i):
 	general_use.update(pack_man)
-	return subprocess.run(['sudo', pack_man, '-y', 'install', i, '>>', 'output.log']).returncode
+	return subprocess.run(['sudo', pack_man, '-y', 'install', i]).returncode
 
 def download_install(toolname, link):
-	return subprocess.run(['curl', '-o', toolname, link, '>>', 'output.log']).returncode
+	return subprocess.run(['curl', '-o', toolname, link]).returncode
 
 def clone_git_repo(repo):
-	return subprocess.run(["git", "clone", repo, '>>', 'output.log']).returncode
+	return subprocess.run(["git", "clone", repo]).returncode
 
 def install_pyserial(link):
 	d_rc = download_install('pyserial', link) #FYI MIGHT BE ABLE TO RUN PIP INSTALL PYSERIAL 
@@ -33,7 +33,7 @@ def install_pyserial(link):
 		current_dir = os.getcwd()
 		path = current_dir + '/pyserial-2.0'
 		os.chdir(path)
-		build_rc = subprocess.run(['python', 'setup.py', 'build', '>>', 'output.log']).returncode
+		build_rc = subprocess.run(['python', 'setup.py', 'build']).returncode
 		if build_rc != 0:
 			print ('BUILD FAILED: Failed to build pyserial.')
 			print ('WITH ERROR CODE:', build_rc)
@@ -41,7 +41,7 @@ def install_pyserial(link):
 		else:
 			print ('BUILD SUCCESSFUL: Successfully completed pyserial build')
 			print ('Installing pyserial...')
-			i_rc = subprocess.run(['sudo', 'python', 'setup.py', 'install', '>>', 'output.log']).returncode
+			i_rc = subprocess.run(['sudo', 'python', 'setup.py', 'install']).returncode
 			if i_rc != 0:
 				return i_rc
 			else:
@@ -61,10 +61,10 @@ def install_NPM(pack_man):
 
 def check_symlink(source_file, symlink):
 	
-	check_rc = subprocess.run(['test', '-h', symlink, '>>', 'output.log']).returncode
+	check_rc = subprocess.run(['test', '-h', symlink]).returncode
 	if check_rc!= 0:
 		print ('Creating symbolic link between', source_file, 'and', symlink, '...')
-		symlink = subprocess.run(['sudo', 'ln', '-s', source_file, symlink, '>>', 'output.log']).returncode #this might not work
+		symlink = subprocess.run(['sudo', 'ln', '-s', source_file, symlink]).returncode #this might not work
 		if symlink_rc != 0:
 			print ('SYMLINK CREATION FAILED: Failed to create a symbolic link between', source_file, 'and', symlink)
 		elif symlink_rc == 0:
@@ -76,8 +76,8 @@ def check_symlink(source_file, symlink):
 
 def check_NPM(pack_man): #cant decide if should do this / count this as basics, like install ruby and gcc and homebrew so that later can just run brew install node? 
 
-	check_node_existence_rc = subprocess.run(['command', '-v', 'node', '>>', 'output.log']).returncode
-	check_npm_existence_rc = subprocess.run(['command', '-v', 'npm', '>>', 'output.log']).returncode
+	check_node_existence_rc = subprocess.run(['command', '-v', 'node']).returncode
+	check_npm_existence_rc = subprocess.run(['command', '-v', 'npm']).returncode
 
 	if check_node_existence == 0:
 		if check_npm_existence == 0:
@@ -106,8 +106,8 @@ def check_NPM(pack_man): #cant decide if should do this / count this as basics, 
 			return symlink_rc
 		else:
 			print ('Confirming complete installation of nodejs and npm...') #dk if will keep this yet, we'll see
-			node_check_rc = subprocess.run(['command', '-v', 'node', '>>', 'output.log']).returncode
-			npm_check_rc = subprocess.run(['command', '-v', 'npm', '>>', 'output.log']).returncode
+			node_check_rc = subprocess.run(['command', '-v', 'node']).returncode
+			npm_check_rc = subprocess.run(['command', '-v', 'npm']).returncode
 			if node_check_rc == 0 and npm_check_rc == 0:
 				print ('CONFIRMATION COMPLETE: Successfully confirmed installation of both node.js and npm')
 				return 0
@@ -133,7 +133,7 @@ def install_bluez():
 		current_dir = os.getcwd()
 		path = current_dir + '/bluez-tools-master'
 		os.chdir(path)
-		config_rc = subprocess.run(['./configure', '>>', 'output.log']).returncode
+		config_rc = subprocess.run(['./configure']).returncode
 		if config_rc != 0:
 			print ('CONFIGURATION FAILED: Failed to run ./configure after cloning Bluez repo')
 			print ('WITH ERROR CODE:', config_rc)
@@ -141,7 +141,7 @@ def install_bluez():
 		else:
 			print ('CONFIGURATION SUCCESSFUL: Successfully ran ./configure after cloning Bluez repo')
 			print ('Compiling...')
-			make_rc = subprocess.run(['make', '>>', 'output.log']).returncode
+			make_rc = subprocess.run(['make']).returncode
 			if make_rc != 0:
 				print ('COMPILATION FAILED: Failed to compile bluez package')
 				print ('WITH ERROR CODE:', make_rc)
@@ -149,7 +149,7 @@ def install_bluez():
 			else:
 				print ('COMPILATION SUCCESSFUL: Successfully compiled bluez package')
 				print ('Installing Bluez...')
-				make_install_rc = subprocess.run(['make', 'install', '>>', 'output.log']).returncode
+				make_install_rc = subprocess.run(['make', 'install']).returncode
 				if make_install_rc != 0:
 					print ('INSTALLATION FAILED: Failed to run "make install"')
 					print ('WITH ERROR CODE:', make_install_rc)

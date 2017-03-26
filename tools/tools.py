@@ -90,7 +90,7 @@ def github_tools(packman, toolname, repo):
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed can-utils')
 				print ('Ensuring CAN modules are enabled...')
-				modprobe_rc = subprocess.run(['sudo', 'modprobe', 'can', '>>', 'output.log']).returncode	#not sure if going to keep this yet mainly cuz might not be necessary, also need to check if redhat has modprobe, it should but need to check (also just check generally if other linux has this already installed)
+				modprobe_rc = subprocess.run(['sudo', 'modprobe', 'can']).returncode	#not sure if going to keep this yet mainly cuz might not be necessary, also need to check if redhat has modprobe, it should but need to check (also just check generally if other linux has this already installed)
 				if modprobe_rc != 0:
 					print ('CHECK FAILED: Failed to add a LKM to the kernel. Can-utils may not be fully functional')
 					print ('WITH ERROR CODE: ', modprobe_rc)
@@ -109,7 +109,7 @@ def github_tools(packman, toolname, repo):
 				current_dir = os.getcwd()
 				path = current_dir + '/canbus-utils'
 				os.chdir(path)
-				npm_rc = subprocess.run(['npm', 'install', '>>', 'output.log']).returncode
+				npm_rc = subprocess.run(['npm', 'install']).returncode
 				if npm_rc != 0:
 					print ('INSTALLATION FAILED: Failed to run "npm install". Cannot complete canbus-utils installation')
 					print ('WITH ERROR CODE: ', npm_rc)
@@ -125,18 +125,18 @@ def github_tools(packman, toolname, repo):
 				current_dir = os.getcwd()
 				path = current_dir + '/Kayak'
 				os.chdir(path)
-				mvn_rc = (subprocess.run(['mvn', 'clean', 'package', '>>', 'output.log'])).returncode
+				mvn_rc = (subprocess.run(['mvn', 'clean', 'package'])).returncode
 				if mvn_rc != 0:
 					print ('INSTALLATION FAILED: Failed to run "mvn clean package". Cannot complete kayak installation')
 					print ('WITH ERROR CODE: ', mvn_rc)
 				else:
 					print ('INSTALLATION SUCCESSFUL: Successfully installed kayak')
 
-		elif toolname == 'caringcaribou'
+		elif toolname == 'caringcaribou':
 			#---------->have a button that pops up that says that the user will have to set up there device, and have some steps on doing that (front end)
 			print ('Beginning caringcaribou installation...')
 			print ('Setting up usb-to-can connection...')
-			load_rc = subprocess.run(['sudo', 'modprobe', 'can', '>>', 'output.log']).returncode #might have to install modprobe?
+			load_rc = subprocess.run(['sudo', 'modprobe', 'can']).returncode #might have to install modprobe?
 			if load_rc != 0:
 				print ('LOAD FAILED: Failed to load CAN module. Cannot complete caringcaribou installation')
 				print ('WITH ERROR CODE: ', load_rc)
@@ -148,7 +148,7 @@ def github_tools(packman, toolname, repo):
 				#user needs to know the bitrate that the bus runs with
 				bitrate = 500000 #HARDCODED FOR NOW
 				print ('Setting up CAN device...')
-				setup = subprocess.run(['sudo', 'ip', 'link', 'set', 'can0', 'up', 'type', 'can', 'bitrate', bitrate, '>>', 'output.log']).returncode
+				setup = subprocess.run(['sudo', 'ip', 'link', 'set', 'can0', 'up', 'type', 'can', 'bitrate', bitrate]).returncode
 				# -----------> handle the error that ip is not a command, 
 				if setup_can_rc != 0:
 					print ('SETUP FAILED: Failed to set-up can device.')
@@ -167,7 +167,7 @@ def github_tools(packman, toolname, repo):
 							print ('WITH ERROR CODE: ', pip_rc)
 						else:
 							print ('INSTALLATION COMPLETE: Successfully installed pip')
-							setup_pcan_rc = subprocess.run(['sudo', 'python', 'setup.py', 'install', '>>', 'output.log']).returncode
+							setup_pcan_rc = subprocess.run(['sudo', 'python', 'setup.py', 'install']).returncode
 							if setup_pcan_rc != 0:
 								print ('DOWNLOAD SUCCESSFUL: Failed to install python-can. Cannot complete caringcaribou installation')
 								print ('WITH ERROR CODE: ', setup_pcan_rc)
@@ -176,7 +176,7 @@ def github_tools(packman, toolname, repo):
 
 								# NEED TO HANDLE THE CONFIGURATION FILE, ARE WE GOING TO TRY TO DO THIS OR IS THE USER GOING TO DO THIS
 
-		elif toolname == 'c0f'
+		elif toolname == 'c0f':
 			print ('Beginning c0f installation')
 			print ('Installing gem...')
 			gem_rc = commandline_install(pack_man, 'rubygems')
@@ -185,7 +185,7 @@ def github_tools(packman, toolname, repo):
 				print ('WITH ERROR CODE: ', gem_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed gem')
-				c0f_rc = subprocess.run(['gem', 'install', 'c0f', '>>', 'output.log']).returncode
+				c0f_rc = subprocess.run(['gem', 'install', 'c0f']).returncode
 				if c0f_rc != 0:
 					print ('INSTALLATION FAILED: Failed to install c0f.')
 					print ('WITH ERROR CODE: ', c0f_rc)
@@ -250,7 +250,7 @@ def github_tools(packman, toolname, repo):
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for Bluemaho')
 				print ('Building Bluemaho...')
-				build_rc = subprocess.run([./build.sh, '>>', 'output.log']).returncode
+				build_rc = subprocess.run([./build.sh]).returncode
 				if build_rc != 0:
 					print ('BUILD FAILED: Failed to build and complete installation of Bluemaho')
 					print ('WITH ERROR CODE:' build_rc)
@@ -283,7 +283,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 				print ('INSTALLATION SUCCESSFUL: Successfully installed pyobd')	
 		elif toolname = 'o2oo':
 			print ('Beginning o2oo installation...')
-			extract_rc = subprocess.run(['tar', '-xzvf', 'O2OO-0.9.tar', '>>', 'output.log']).returncode
+			extract_rc = subprocess.run(['tar', '-xzvf', 'O2OO-0.9.tar']).returncode
 			if extract_rc != 0:
 				print ('EXTRACTION FAILED: Failed to decompress the o2oo tar file')
 				print ('WITH ERROR CODE:', extract_rc)
@@ -299,7 +299,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 				print ('INSTALLATION SUCCESSFUL: Successfully installed RomRaiders')
 		elif toolname == 'katoolin':	
 			print ("Setting /usr/bin/katoolin to executable...")
-			mode_rc = subprocess.run(["chmod", "754", "/usr/bin/katoolin", '>>', 'output.log']).returncode #executable script for both you and your group but not for the world. 
+			mode_rc = subprocess.run(["chmod", "754", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
 			if mode_rc != 0:
 				print ("CONVERSION FAILED: Could not make /usr/bin/katoolin executable")
 				print ("ERROR CODE:", mode_rc)
