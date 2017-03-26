@@ -107,9 +107,6 @@ def github_tools(pack_man, toolname, repo):
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed node.js and npm')
 				print ('Installing canbus-utils...')
-				current_dir = os.getcwd()
-				path = current_dir + '/canbus-utils'
-				os.chdir(path)
 				npm_rc = subprocess.run(['npm', 'install']).returncode
 				if npm_rc != 0:
 					print ('INSTALLATION FAILED: Failed to run "npm install". Cannot complete canbus-utils installation')
@@ -123,9 +120,6 @@ def github_tools(pack_man, toolname, repo):
 				print ('INSTALLATION FAILED: Failed to install maven. Cannot complete kayak installation')
 				print ('WITH ERROR CODE:', check_maven_rc)
 			else:
-				current_dir = os.getcwd()
-				path = current_dir + '/Kayak'
-				os.chdir(path)
 				mvn_rc = (subprocess.run(['mvn', 'clean', 'package'])).returncode
 				if mvn_rc != 0:
 					print ('INSTALLATION FAILED: Failed to run "mvn clean package". Cannot complete kayak installation')
