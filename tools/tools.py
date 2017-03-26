@@ -120,12 +120,18 @@ def github_tools(pack_man, toolname, repo):
 				print ('INSTALLATION FAILED: Failed to install maven. Cannot complete kayak installation')
 				print ('WITH ERROR CODE:', check_maven_rc)
 			else:
-				mvn_rc = (subprocess.run(['mvn', 'clean', 'package'])).returncode
-				if mvn_rc != 0:
-					print ('INSTALLATION FAILED: Failed to run "mvn clean package". Cannot complete kayak installation')
-					print ('WITH ERROR CODE: ', mvn_rc)
+				print ('Installing jdk...')
+				jdk_rc = dependencies.commandline_install(pack_man, 'default-jdk')
+				if jdk_rc != 0:
+					print ('INSTALLATION FAILED: Failed to install jdk. This compiler is needed to run mvn clean. Cannot complete kayak installation')
 				else:
-					print ('INSTALLATION SUCCESSFUL: Successfully installed kayak')
+					('Installing kayak...')
+					mvn_rc = (subprocess.run(['mvn', 'clean', 'package'])).returncode
+					if mvn_rc != 0:
+						print ('INSTALLATION FAILED: Failed to run "mvn clean package". Cannot complete kayak installation')
+						print ('WITH ERROR CODE: ', mvn_rc)
+					else:
+						print ('INSTALLATION SUCCESSFUL: Successfully installed kayak')
 
 		elif toolname == 'caringcaribou':
 			#---------->have a button that pops up that says that the user will have to set up there device, and have some steps on doing that (front end)
