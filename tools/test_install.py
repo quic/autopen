@@ -33,31 +33,24 @@ link_pyobd = 'http://www.obdtester.com/download/pyobd_0.9.3.tar.gz'
 link_o2oo = 'https://www.vanheusden.com/O2OO/O2OO-0.9.tgz'
 link_romraider = 'http://assembla.com/spaces/romraider/documents/a5Ao9gHEir5P9Udmr6QqzO/download/RomRaider0.5.9RC3-linux.jar'
 
-try:
-	e = subprocess.run(['python3', 'install_basics.py'])
-	if e != 0:
-		print ('install_basics did not run')
-	else:
-		d = general_use.check_distribution()
-		pack_man = general_use.package_tool(d)
-		tools.github_tools(pack_man, 'socketcan', repo_socketCAN)
-		tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)
-		tools.github_tools(pack_man, 'kayak', repo_kayak)
-		tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)
-		tools.github_tools(pack_man, 'c0f', repo_c0f)
-		tools.github_tools(pack_man, 'udsim', repo_udsim)
-		tools.github_tools(pack_man, 'katoolin', repo_katoolin)
+d = general_use.check_distribution()
+pack_man = general_use.package_tool(d)
+tools.github_tools(pack_man, 'socketcan', repo_socketCAN)
+#tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)
+#tools.github_tools(pack_man, 'kayak', repo_kayak)
+#tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)
+#tools.github_tools(pack_man, 'c0f', repo_c0f)
+#tools.github_tools(pack_man, 'udsim', repo_udsim)
+#tools.github_tools(pack_man, 'katoolin', repo_katoolin)
 
-		tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library
-		tools.downloaded_tools(pack_man, 'o2oo', link_o2oo) #WxPython and some other library
-		tools.downloaded_tools(pack_man, 'romraider', link_romraider) #WxPython and some other library
-		
-		tools.installed_tools(pack_man, 'bluetooth tools') #this function is for tools that are apt-getable / yumable
-		tools.installed_tools(pack_man, 'btscanner')
-		tools.installed_tools(pack_man, 'gnuradio')
+#tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library
+#tools.downloaded_tools(pack_man, 'o2oo', link_o2oo) #WxPython and some other library
+#tools.downloaded_tools(pack_man, 'romraider', link_romraider) #WxPython and some other library
 
-except:
-	print ('SOME ERROR FIND OUT WHAT')
+#tools.installed_tools(pack_man, 'bluetooth tools') #this function is for tools that are apt-getable / yumable
+#tools.installed_tools(pack_man, 'btscanner')
+#tools.installed_tools(pack_man, 'gnuradio')
+
 
 '''
 
