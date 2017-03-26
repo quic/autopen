@@ -165,11 +165,6 @@ def install_bluez():
 					return 0
 
 
-def matplob
-
-
-
-
 
 
 
