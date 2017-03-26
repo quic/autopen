@@ -39,8 +39,8 @@ pack_man = general_use.package_tool(d)
 #tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)		#DONE
 #tools.github_tools(pack_man, 'kayak', repo_kayak)					#DONE
 #tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)	#CANT TEST THIS UNLESS A DEVICE IS ATTACHED AND SET UP
-tools.github_tools(pack_man, 'c0f', repo_c0f)
-#tools.github_tools(pack_man, 'udsim', repo_udsim)
+#tools.github_tools(pack_man, 'c0f', repo_c0f)
+tools.github_tools(pack_man, 'udsim', repo_udsim)
 #tools.github_tools(pack_man, 'katoolin', repo_katoolin)
 
 #tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library
