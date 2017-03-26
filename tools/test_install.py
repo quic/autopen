@@ -18,7 +18,7 @@ TO DO:
 
 #this will be placed somewhere else, maybe a dictionary?
 repo_can_utils = 'https://github.com/linux-can/can-utils.git' #needed to run can-utils
-repo_canbus_utils = 'https://github.com/digitalbond/canbus-utils'
+repo_canbus_utils = 'https://github.com/digitalbond/canbus-utils.git'
 repo_kayak = 'https://github.com/dschanoeh/Kayak.git'
 repo_caringcaribou = 'https://github.com/CaringCaribou/caringcaribou.git' #want to check this to make sure it works, instructions a bit unclear
 repo_c0f = 'https://github.com/zombieCraig/c0f.git'
@@ -35,8 +35,8 @@ link_romraider = 'http://assembla.com/spaces/romraider/documents/a5Ao9gHEir5P9Ud
 
 d = general_use.check_distribution()
 pack_man = general_use.package_tool(d)
-tools.github_tools(pack_man, 'can-utils', repo_can_utils)
-#tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)
+#tools.github_tools(pack_man, 'can-utils', repo_can_utils) 			#DONE
+tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)
 #tools.github_tools(pack_man, 'kayak', repo_kayak)
 #tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)
 #tools.github_tools(pack_man, 'c0f', repo_c0f)
@@ -59,7 +59,13 @@ Things to note during testing:
 1. in order to run test_install.py , python3 has to be installed. So, we need to make it that they can just run the python version of make
 2. if they clone from git, they have to have git installed. If they download zip, they do not (we will install for them). Need to include instructions for both 
 
+EXCEPTIONS TO CATCH:
+	1. if the repo has already been cloned, want to keep going
+	2. in dependencies in check_NPM (wrap command -v in exception catching FileNotFoundError), this is because if it's not there it throws this error
+
+
 ERRORS:
 	1. Having trouble redirecting output to text file; it's reading it as added arguments
+
 
 '''
