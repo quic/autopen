@@ -149,7 +149,7 @@ def github_tools(pack_man, toolname, repo):
 				#user needs to know the bitrate that the bus runs with
 				bitrate = 500000 #HARDCODED FOR NOW
 				print ('Setting up CAN device...')
-				setup_can_rc = subprocess.run(['sudo', 'ip', 'link', 'set', 'can0', 'up', 'type', 'can', 'bitrate', bitrate]).returncode
+				setup_can_rc = subprocess.run(['sudo', 'ip', 'link', 'set', 'can0', 'up', 'type', 'can', 'bitrate', str(bitrate)]).returncode
 				# -----------> handle the error that ip is not a command, 
 				if setup_can_rc != 0:
 					print ('SETUP FAILED: Failed to set-up can device.')
