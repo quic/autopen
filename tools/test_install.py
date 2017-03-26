@@ -65,3 +65,5 @@ Things to note during testing:
 
 1. in order to run test_install.py , python3 has to be installed. So, we need to make it that they can just run the python version of make
 2. if they clone from git, they have to have git installed. If they download zip, they do not (we will install for them). Need to include instructions for both 
+
+'''
