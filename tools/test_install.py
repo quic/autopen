@@ -36,10 +36,10 @@ link_romraider = 'http://assembla.com/spaces/romraider/documents/a5Ao9gHEir5P9Ud
 d = general_use.check_distribution()
 pack_man = general_use.package_tool(d)
 #tools.github_tools(pack_man, 'can-utils', repo_can_utils) 			#DONE
-tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)
-#tools.github_tools(pack_man, 'kayak', repo_kayak)
-#tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)
-#tools.github_tools(pack_man, 'c0f', repo_c0f)
+#tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)		#DONE
+#tools.github_tools(pack_man, 'kayak', repo_kayak)					#DONE
+#tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)	#CANT TEST THIS UNLESS A DEVICE IS ATTACHED AND SET UP
+tools.github_tools(pack_man, 'c0f', repo_c0f)
 #tools.github_tools(pack_man, 'udsim', repo_udsim)
 #tools.github_tools(pack_man, 'katoolin', repo_katoolin)
 
@@ -58,10 +58,13 @@ Things to note during testing:
 
 1. in order to run test_install.py , python3 has to be installed. So, we need to make it that they can just run the python version of make
 2. if they clone from git, they have to have git installed. If they download zip, they do not (we will install for them). Need to include instructions for both 
+3. in check_NPM, the version is printed out, might want to add print statements around that --> blank is installed with version number bleh
+4. complete caringcaribou installation, need an actual device or ask omar to help set up a virtual 
 
 EXCEPTIONS TO CATCH:
 	1. if the repo has already been cloned, want to keep going
 	2. in dependencies in check_NPM (wrap command -v in exception catching FileNotFoundError), this is because if it's not there it throws this error
+	3. IF SOMETHING FAILS TO INSTALL. PASS AND SKIP THE REST !! 
 
 
 ERRORS:
