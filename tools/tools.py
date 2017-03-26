@@ -212,14 +212,14 @@ def github_tools(pack_man, toolname, repo):
 			final_rc = 0
 
 			#lambda these map to function
-			dev = dependencies.commandline_install(pack_man, 'libsdl2-dev')
-			image = dependencies.commandline_install(pack_man, 'libsdl2-image')
-			ttf = dependencies.commandline_install(pack_man, 'libsdl2-ttf')
-			returncode_list = [dev, image, ttf]
+			ttf_dev = dependencies.commandline_install(pack_man, 'libsdl2-ttf-dev')
+			image = dependencies.commandline_install(pack_man, 'libsdl2-image-2.0.0')
+			returncode_list = [ttf_dev, image]
+			lib_names = ['ttf-dev', 'image']
 			for i, j in enumerate(returncode_list):
 				if j != 0:
 					final_rc = -1
-					print ('INSTALLATION FAILED: Could not install library libsdl2-', i)
+					print ('INSTALLATION FAILED: Could not install library libsdl2-', lib_names[i])
 					print ('WITH ERROR CODE: ', j)
 				else:
 					print ('INSTALLATION SUCCESSFUL: Successfully installed library libsdl2-', i)
