@@ -180,18 +180,32 @@ def github_tools(pack_man, toolname, repo):
 		elif toolname == 'c0f':
 			print ('Beginning c0f installation')
 			print ('Installing gem...')
-			gem_rc = commandline_install(pack_man, 'rubygems')
+			gem_rc = dependencies.commandline_install(pack_man, 'rubygems')
 			if gem_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install gem. Cannot complete c0f installation')
 				print ('WITH ERROR CODE: ', gem_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed gem')
-				c0f_rc = subprocess.run(['gem', 'install', 'c0f']).returncode
-				if c0f_rc != 0:
-					print ('INSTALLATION FAILED: Failed to install c0f.')
-					print ('WITH ERROR CODE: ', c0f_rc)
+				headers_rc = dependencies.commandline_install(pack_man, 'ruby-dev')
+				if headers_rc != 0:
+					print ('INSTALLATION FAILED: Failed to install header files for ruby. Cannot complete c0f installation')
+					print ('WITH ERROR CODE:', headers_rc)
 				else:
-					print ('INSTALLATION SUCCESSFUL: Successfully installed c0f')
+					print ('INSTALLATION SUCCESSFUL: Successfully installed header files for ruby')
+					print ('Installing sqlite3 library...')
+					sql_rc = dependencies.commandline_install(pack_man, libsqlite3_dev)
+					if sql_rc != 0:
+						print ('INSTALLATION FAILED: Failed to install sqlite3 library')
+						print ('WITH ERROR CODE:'. sql_rc)
+					else:
+						print ('INSTALLATION SUCCESSFUL: Successfully installed sqlite3')
+						print ('Installing c0f...')
+						c0f_rc = subprocess.run(['gem', 'install', 'c0f']).returncode
+						if c0f_rc != 0:
+							print ('INSTALLATION FAILED: Failed to install c0f.')
+							print ('WITH ERROR CODE: ', c0f_rc)
+						else:
+							print ('INSTALLATION SUCCESSFUL: Successfully installed c0f')
 
 		elif toolname == 'udsim': #know later that when user starts the program they have to run make in the file that they are in. Or maybe we can run make
 			print ('Beginning udsim installation...')
