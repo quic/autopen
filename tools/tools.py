@@ -286,6 +286,21 @@ def github_tools(pack_man, toolname, repo):
 				else:
 					print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
 					print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
+		elif toolname == 'do':
+			mat_rc = dependencies.commandline_install(pack_man, 'python-matplotlib')
+			if mat_rc != 0:
+				print ('INSTALLATION FAILED: Failed to install matplotlib from python. This is needed to run do')
+				print ('ERROR CODE:'. mat_rc)
+			else:
+				print ('INSTALLATION SUCCESSFUL: Successfully installed matplotlib from python')
+				socket = github_tools(pack_man, 'can-utils', repo) #this repo is can-utils repo
+		elif toolname == 'aircrack-ng':
+			air_rc = dependencies.commandline_install(pack_man, 'aircrack-ng')
+			if air_rc != 0:
+				print ('INSTALLATION FAILED: Failed to install aircrack-ng. Cannot complete aircrack-ng installation')
+				print ('ERROR CODE:', air_rc)
+			else:
+				print ('INSTALLATION SUCCESSFUL: Successfully installed aircrack-ng')
 
 def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	general_use.update(pack_man)
