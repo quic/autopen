@@ -64,7 +64,7 @@ def github_tools(pack_man, toolname, repo):
 		This function installs the tools that use github
 		rc stands for returncode
 	'''
-	general_use.update(d)
+	general_use.update(pack_man)
 
 	print ("Cloning repository...")	#might install 
 	git_rc = dependencies.clone_git_repo(repo)
@@ -73,8 +73,9 @@ def github_tools(pack_man, toolname, repo):
 		print ('WITH ERROR CODE: ', git_rc)
 	else:
 		print ('CLONING SUCCESSFUL: Successfully cloned repository at', repo)
-		index = repo.rfind('/')
-		folder_name = repo[index:]
+		back_index = repo.rfind('/')
+		dot_index = repo.rfind('.')
+		folder_name = repo[back_index:dot_index]
 		print ('Changing directory to', folder_name[1:], '...')
 		current_dir = os.getcwd()
 		path = current_dir + folder_name
