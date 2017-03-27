@@ -44,11 +44,25 @@ def install_git(pack_man):
 	g_rc = dependencies.commandline_install(pack_man, "git")
 
 	if g_rc != 0:
-		print ("INSTALLATION FAILED: Could not install git")
+		print ("INSTALLATION FAILED: Could not install git. This is needed to install some of the tools")
 		print ("WITH ERROR CODE:", g_rc)
 	else:
 		print ("INSTALLATION SUCCESSFUL: Git successfully installed")
 
+def install_curl(pack_man):
+	'''
+		This function installs curl depending
+	'''
+
+	print ('Installing curl...')
+	c_rc = dependencies.commandline_install(pack_man, 'curl')
+	if c_rc != 0:
+		print ('INSTALLATION FAILED: Could not install curl. This is needed to install some of the tools')
+		print ('WITH ERROR CODE:', c_rc)
+	else:
+		print ('INSTALLATION SUCCESSFUL: curl successfully installed')
+
 install_python(pack_man)
 install_git(pack_man)
+install_curl(pack_man)
 
