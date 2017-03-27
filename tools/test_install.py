@@ -1,5 +1,5 @@
 import general_use
-import install_basics
+#import install_basics
 import dependencies
 import tools
 import subprocess
@@ -27,6 +27,7 @@ repo_katoolin = 'https://github.com/LionSec/katoolin.git'
 
 #BLUETOOTH
 repo_bluelog = 'https://github.com/MS3FGX/Bluelog.git'
+repo_bluemaho = 'https://github.com/zenware/bluemaho.git'
 
 #for download links
 link_pyobd = 'http://www.obdtester.com/download/pyobd_0.9.3.tar.gz'
@@ -42,6 +43,8 @@ pack_man = general_use.package_tool(d)
 #tools.github_tools(pack_man, 'c0f', repo_c0f)
 #tools.github_tools(pack_man, 'udsim', repo_udsim)
 #tools.github_tools(pack_man, 'katoolin', repo_katoolin)
+#tools.github_tools(pack_man, 'bluelog', repo_bluelog)
+#tools.github_tools(pack_man, 'bluemaho', repo_bluemaho)
 
 tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library
 #tools.downloaded_tools(pack_man, 'o2oo', link_o2oo) #WxPython and some other library
