@@ -8,6 +8,7 @@ import subprocess
 import os
 
 repo_bluez = 'https://github.com/khvzak/bluez-tools.git'
+link_lightblue = 'http://prdownloads.sourceforge.net/lightblue/lightblue-0.4.tar.gz?download'
 
 #change redirecting file name later, hardcoding for now for testing
 
@@ -188,6 +189,47 @@ def install_bluez(pack_man):
 								print ('INSTALLATION SUCCESSFUL: Successfully ran make install')
 								return 0
 
+def install_lightblue(pack_man):
+	print ('Installing python-dev...')
+	pdev_rc = commandline_install(pack_man, 'python-dev')
+	if pdev_rc != 0:
+		print ('INSTALLATION FAILED: Failed to install python-dev. Cannot complete lightblue installation')
+		print ('WITH ERROR CODE:', pdev_rc)
+		return pdev_rc
+	else:
+		print ('INSTALLATION SUCCESSFUL: Successfully installed python-dev')
+		print ('Installing pybluez...')
+		pyb_rc = subprocess.run(['sudo', 'pip', 'install', 'pybluez']).returncode
+		if pyb_rc != 0:
+			print ('INSTALLATION FAILED: Failed to install pybluez. Cannot complete lightblue installation')
+			print ('WITH ERROR CODE:', pyb_rc)
+			return pyb_rc
+		else:
+			print ('INSTALLATION SUCCESSFUL: Successfully installed pybluez')
+			print ('Downloading lightblue...')
+			light_rc = download_install('lightblue', link_lightblue)
+			if light_rc != 0:
+				print ('DOWNLOAD FAILED: Failed to download lightblue. Cannot complete lightblue installation')
+				print ('WITH ERROR CODE:', light_rc)
+				return light_rc
+			else:
+				print ('DOWNLOAD SUCCESSFUL: Successfully downloaded lightblue .tar')
+				print ('Extracting files...')
+				ex_rc = subprocess.run(['tar', '-xzvf', 'lightblue-0.4.tar']).returncode
+				if ex_rc != 0:
+					print ('EXTRACTION FAILED: Failed to decompress the tar file (lightblue-0.4.tar). Cannot complete lightblue installation')
+					print ('WITH ERROR CODE:', ex_rc)
+					return ex_rc
+				else:
+					print ('EXTRACTION SUCCESSFUL: Successfully decompressed lightblue-0.4.tar')
+					setup_rc = subprocess.run(['python', 'setup.py', 'install']).returncode
+					if setup_rc != 0:
+						print ('INSTALLATION FAILED: Failed to install lightblue')
+						print ('WITH ERROR CODE:', setup_rc)
+						return setup_rc
+					else:
+						print ('INSTALLATION SUCCESSFUL: Successfully installed lightblue')
+						return 0
 
 
 
