@@ -297,6 +297,7 @@ def github_tools(pack_man, toolname, repo):
 				socket = github_tools(pack_man, 'can-utils', repo) #this repo is can-utils repo
 def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	general_use.update(pack_man)
+	d = general_use.check_distribution()
 
 	#NOTE: If pyOBD link doesn't work tell them the install.html is available
 	down_rc = dependencies.download_install(toolname, link)
