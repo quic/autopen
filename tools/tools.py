@@ -162,20 +162,14 @@ def github_tools(pack_man, toolname, repo):
 						print ('WITH ERROR CODE: ', pcan_rc)
 					else:
 						print ('DOWNLOAD SUCCESSFUL: Successfully downloaded pythoncan from', link_pythoncan)
-						pip_rc = commandline_install(pack_man, 'python-pip') #might move this to dependency we'll see.
-						if pip_rc != 0:
-							print ('INSTALLATION FAILED: Failed to install pip. Cannot complete caringcaribou installation')
-							print ('WITH ERROR CODE: ', pip_rc)
+						setup_pcan_rc = subprocess.run(['sudo', 'python', 'setup.py', 'install']).returncode
+						if setup_pcan_rc != 0:
+							print ('DOWNLOAD SUCCESSFUL: Failed to install python-can. Cannot complete caringcaribou installation')
+							print ('WITH ERROR CODE: ', setup_pcan_rc)
 						else:
-							print ('INSTALLATION COMPLETE: Successfully installed pip')
-							setup_pcan_rc = subprocess.run(['sudo', 'python', 'setup.py', 'install']).returncode
-							if setup_pcan_rc != 0:
-								print ('DOWNLOAD SUCCESSFUL: Failed to install python-can. Cannot complete caringcaribou installation')
-								print ('WITH ERROR CODE: ', setup_pcan_rc)
-							else:
-								print ('INSTALLATION SUCCESSFUL: Successfully installed python-can. Caringcaribou installation complete')
+							print ('INSTALLATION SUCCESSFUL: Successfully installed python-can. Caringcaribou installation complete')
 
-								# NEED TO HANDLE THE CONFIGURATION FILE, ARE WE GOING TO TRY TO DO THIS OR IS THE USER GOING TO DO THIS
+							# NEED TO HANDLE THE CONFIGURATION FILE, ARE WE GOING TO TRY TO DO THIS OR IS THE USER GOING TO DO THIS
 
 		elif toolname == 'c0f':
 			print ('Beginning c0f installation')
@@ -236,14 +230,17 @@ def github_tools(pack_man, toolname, repo):
 			print ('Beginning bluemaho installation...')
 			print ('Installing bluemaho dependencies...')
 			wxpython = dependencies.commandline_install(pack_man, 'python-wxgtk2.6')
-			bluez = dependencies.install_bluez()
+			bluez = dependencies.install_bluez(pack_man)
 			config = dependencies.download_install('pkg-config', link_package)
+			lightblue = dependencies.install_lightblue(pack_man)
 
-			depend = ['libopenobex1', 'libopenobex-dev', 'libxml2', 'libxml2-dev', 'libusb-dev', 'libreadline5-dev', 'lightblue-0.3.3']
+			depend = ['libopenobex2-dev', 'libxml2', 'libxml2-dev', 'libusb-dev']
 			returncodes = [dependencies.commandline_install(pack_man, i) for i in libraries]
+			depend.append('lightblue')
 			depend.append('wxpython') #appends the name of the dependencies and returncodes to appropriate lists to have one list of 
 			depend.append('bluez')
 			depend.append('config')
+			returncodes.append(lightblue)
 			returncodes.append(wxpython)
 			returncodes.append(bluez)
 			returncodes.append(config)
