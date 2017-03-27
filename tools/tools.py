@@ -346,12 +346,12 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 				print ('EXTRACTION SUCCESSFUL: Successfully extracted o2oo tar file.')
 				print ('Installing o2oo dependencies...')
 
-				l = ['libncurses-dev', 'libsqlite3_dev', 'libgps-dev', 'libgp2-xpm-dev', 'libhpdf-dev', 'libtinyxml2-dev', 'libcurl4-openssl-dev']
+				l = ['libncurses-dev', 'libsqlite3-dev', 'libgps-dev', 'libgd2-xpm-dev', 'libhpdf-dev', 'libtinyxml2-dev', 'libcurl4-openssl-dev', 'libfftw3-dev']
 				rc = [dependencies.commandline_install(pack_man, i) for i in l]
 
 				ins = 0
 
-				for i,j in enumerate(returncodes):
+				for i,j in enumerate(rc):
 					if j != 0:
 						print ('INSTALLATION FAILED: Failed to install dependency', l[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
 						print ('WITH ERROR CODE:', j)
@@ -364,16 +364,12 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 					current = os.getcwd()
 					p = current + '/O2OO-0.9'
 					os.chdir(p)
-					mak_rc = subprocess.run(['make', 'install']).returncode
+					mak_rc = subprocess.run(['sudo', 'make', 'install']).returncode
 					if mak_rc != 0:
 						print ('BUILD FAILED: Failed to build o2oo')
 						print ('WITH ERROR CODE:', mak_rc)
 					else:
 						print ('BUILD SUCCESSFUL: Successfully built o2oo and installed')
-
-
-
-
 
 		elif toolname == 'romraider':
 			print ('Beginning romraider installation...')
