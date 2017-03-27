@@ -62,7 +62,17 @@ def install_curl(pack_man):
 	else:
 		print ('INSTALLATION SUCCESSFUL: curl successfully installed')
 
+def install_pip(pack_man):
+	
+	pip_rc = commandline_install(pack_man, 'python-pip') #might move this to dependency we'll see.
+	if pip_rc != 0:
+		print ('INSTALLATION FAILED: Failed to install pip. This is needed to install some dependencies for tools')
+		print ('WITH ERROR CODE: ', pip_rc)
+	else:
+		print ('INSTALLATION COMPLETE: Successfully installed pip')
+
 install_python(pack_man)
 install_git(pack_man)
 install_curl(pack_man)
+install_pip(pack_man)
 
