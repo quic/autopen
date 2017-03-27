@@ -1,5 +1,5 @@
 import general_use
-#import install_basics
+import install_basics
 import dependencies
 import tools
 import subprocess
@@ -44,9 +44,9 @@ pack_man = general_use.package_tool(d)
 #tools.github_tools(pack_man, 'udsim', repo_udsim)
 #tools.github_tools(pack_man, 'katoolin', repo_katoolin)
 #tools.github_tools(pack_man, 'bluelog', repo_bluelog)
-#tools.github_tools(pack_man, 'bluemaho', repo_bluemaho)
+tools.github_tools(pack_man, 'bluemaho', repo_bluemaho)
 
-tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library
+#tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library
 #tools.downloaded_tools(pack_man, 'o2oo', link_o2oo) #WxPython and some other library
 #tools.downloaded_tools(pack_man, 'romraider', link_romraider) #WxPython and some other library
 
