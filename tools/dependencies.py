@@ -17,13 +17,13 @@ def commandline_install(pack_man, i):
 	return subprocess.run(['sudo', pack_man, '-y', 'install', i]).returncode
 
 def download_install(link):
-	return subprocess.run(['curl', '-o', toolname, link]).returncode
+	return subprocess.run(['curl', '-O', link]).returncode
 
 def clone_git_repo(repo):
 	return subprocess.run(["git", "clone", repo]).returncode
 
 def install_pyserial(link):
-	d_rc = download_install('pyserial', link) #FYI MIGHT BE ABLE TO RUN PIP INSTALL PYSERIAL 
+	d_rc = download_install(link) #FYI MIGHT BE ABLE TO RUN PIP INSTALL PYSERIAL 
 	if d_rc != 0:
 		print ('DOWNLOAD FAILED: Failed to download pyserial')
 		print ('WITH ERROR CODE:', d_rc)
