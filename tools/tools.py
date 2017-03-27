@@ -156,7 +156,7 @@ def github_tools(pack_man, toolname, repo):
 					print ('WITH ERROR CODE: ', setup_can_rc)
 				else:
 					print ('SETUP SUCCESSFUL: Successfully set-up can device. This will now display as a normal network interface as can0')
-					pcan_rc = dependencies.download_install('can', link_pythoncan)
+					pcan_rc = dependencies.download_install(link_pythoncan)
 					if pcan_rc != 0:
 						print ('DOWNLOAD FAILED: Failed to download pythoncan from', link_pythoncan, 'Cannot complete caringcaribou installation')
 						print ('WITH ERROR CODE: ', pcan_rc)
@@ -231,7 +231,7 @@ def github_tools(pack_man, toolname, repo):
 			print ('Installing bluemaho dependencies...')
 			wxpython = dependencies.commandline_install(pack_man, 'python-wxgtk3.0')
 			bluez = dependencies.install_bluez(pack_man)
-			config = dependencies.download_install('pkg-config', link_package)
+			config = dependencies.download_install(link_package)
 			#lightblue = dependencies.install_lightblue(pack_man) ---> issue installing this one so need to figure this out
 
 			depend = ['libopenobex2-dev', 'libxml2', 'libxml2-dev', 'libusb-dev']
@@ -301,7 +301,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	d = general_use.check_distribution()
 
 	#NOTE: If pyOBD link doesn't work tell them the install.html is available
-	down_rc = dependencies.download_install(toolname, link)
+	down_rc = dependencies.download_install(link)
 	if down_rc != 0:
 		print ('DOWNLOAD FAILED: Failed to download file for', toolname, 'using download link:', link)
 		print ('WITH ERROR CODE: ', down_rc)
@@ -311,11 +311,11 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 		if toolname == 'pyobd': #not 100% sure this is going to work
 			print ('Beginning pyobd installation...')
 			if d == 'debian':
-				deb_rc = dependencies.download_install('pyobd_0.9.3_all.deb', link_pyobd_debian)
+				deb_rc = dependencies.download_install(link_pyobd_debian)
 				if deb_rc != 0:
 					print ('Download Failed: Failed to download debian specific file') #need to figure out what this is for
 			print ('Beginning pyserial installation...')
-			pyserial_rc = subprocess.run(['python3', '-m', 'pip', 'install', 'pyserial']).returncode 
+			pyserial_rc = dependencies.install_pyserial(link_pyserial)
 			if pyserial_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install pyserial. Cannot complete pyobd installation')
 				print ('WITH ERROR CODE:', pyserial_rc)
@@ -331,7 +331,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 				print ('EXTRACTION SUCCESSFUL: Successfully extracted o2oo tar file. o2oo installation complete')
 		elif toolname == 'romraider':
 			print ('Beginning romraider installation...')
-			rom_rc = dependencies.download_install('romraider', link)
+			rom_rc = dependencies.download_install(link)
 			if rom_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install RomRaiders.')
 				print ('WITH ERROR CODE:', rom_rc)
