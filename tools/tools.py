@@ -258,7 +258,7 @@ def github_tools(pack_man, toolname, repo):
 						essential = -1
 
 			if essential != 0:
-				print ('INSTALLATION FAILED: Failed to install Bluemaho dependencies: either wxPython, bluez or pkg-config')
+				print ('INSTALLATION FAILED: Failed to install Bluemaho dependencies')
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for Bluemaho')
 				print ('Building Bluemaho...')
@@ -308,14 +308,14 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	else:
 		print ('DOWNLOAD SUCCESSFUL: Successfully downloaded file for', toolname)
 
-		if toolname == 'pyobd':
+		if toolname == 'pyobd': #not 100% sure this is going to work
 			print ('Beginning pyobd installation...')
 			if d == 'debian':
 				deb_rc = dependencies.download_install('pyobd_0.9.3_all.deb', link_pyobd_debian)
 				if deb_rc != 0:
 					print ('Download Failed: Failed to download debian specific file') #need to figure out what this is for
 			print ('Beginning pyserial installation...')
-			pyserial_rc = dependencies.install_pyserial(link_pyserial)
+			pyserial_rc = subprocess.run(['python3', '-m', 'pip', 'install', 'pyserial']).returncode 
 			if pyserial_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install pyserial. Cannot complete pyobd installation')
 				print ('WITH ERROR CODE:', pyserial_rc)
