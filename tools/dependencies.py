@@ -137,32 +137,48 @@ def install_bluez():
 	else:
 		print ('CLONING SUCCESSFUL: Successfully cloned repository at', repo_bluez)
 		current_dir = os.getcwd()
-		path = current_dir + '/bluez-tools-master'
+		path = current_dir + '/bluez-tools'
 		os.chdir(path)
-		config_rc = subprocess.run(['./configure']).returncode
-		if config_rc != 0:
-			print ('CONFIGURATION FAILED: Failed to run ./configure after cloning Bluez repo')
-			print ('WITH ERROR CODE:', config_rc)
-			return config_rc
+		auto_rc = commandline_install(pack_man, 'autoconf')
+		if auto_rc != 0:
+			print ('INSTALLATION FAILED: Failed to install autoconf. Cannot complete bluez installation')
+			print ('WITH ERROR CODE:'. auto_rc)
+			return auto_rc
 		else:
-			print ('CONFIGURATION SUCCESSFUL: Successfully ran ./configure after cloning Bluez repo')
-			print ('Compiling...')
-			make_rc = subprocess.run(['make']).returncode
-			if make_rc != 0:
-				print ('COMPILATION FAILED: Failed to compile bluez package')
-				print ('WITH ERROR CODE:', make_rc)
-				return make_rc
+			print ('INSTALLATION SUCCESSFUL: Successfully installed autoconf')
+			print ('Running autogen.sh...')
+			autogen_rc = subprocess.run(['./autogen.sh']).returncode
+			if autogen_rc != 0:
+				print ('AUTOGENERATION FAILED: Failed to run autogen.sh. Cannot complete bluez installation')
+				print ('WITH ERROR CODE:', autogen_rc)
+				return autogen_rc
 			else:
-				print ('COMPILATION SUCCESSFUL: Successfully compiled bluez package')
-				print ('Installing Bluez...')
-				make_install_rc = subprocess.run(['make', 'install']).returncode
-				if make_install_rc != 0:
-					print ('INSTALLATION FAILED: Failed to run "make install"')
-					print ('WITH ERROR CODE:', make_install_rc)
-					return make_install_rc
+				print ('AUTOGENERATION SUCCESSFUL: Successfully ran autogen.sh')
+				print ('Running configure...')
+				config_rc = subprocess.run(['./configure']).returncode
+				if config_rc != 0:
+					print ('CONFIGURATION FAILED: Failed to run ./configure after cloning Bluez repo')
+					print ('WITH ERROR CODE:', config_rc)
+					return config_rc
 				else:
-					print ('INSTALLATION SUCCESSFUL: Successfully ran make install')
-					return 0
+					print ('CONFIGURATION SUCCESSFUL: Successfully ran ./configure after cloning Bluez repo')
+					print ('Compiling...')
+					make_rc = subprocess.run(['make']).returncode
+					if make_rc != 0:
+						print ('COMPILATION FAILED: Failed to compile bluez package')
+						print ('WITH ERROR CODE:', make_rc)
+						return make_rc
+					else:
+						print ('COMPILATION SUCCESSFUL: Successfully compiled bluez package')
+						print ('Installing Bluez...')
+						make_install_rc = subprocess.run(['make', 'install']).returncode
+						if make_install_rc != 0:
+							print ('INSTALLATION FAILED: Failed to run "make install"')
+							print ('WITH ERROR CODE:', make_install_rc)
+							return make_install_rc
+						else:
+							print ('INSTALLATION SUCCESSFUL: Successfully ran make install')
+							return 0
 
 
 
