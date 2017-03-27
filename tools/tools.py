@@ -247,12 +247,13 @@ def github_tools(pack_man, toolname, repo):
 
 			essential = 0
 
-			for i,j in enumerate(returncodes):
+			for i,j in enumerate(returncodes): #FIX THIS CODE BELOW
 				if j != 0:
 					if i < 7:
 						#maybe we'll be nice and include which library is associate with what attack 
 						print ('INSTALLATION FAILED: Failed to install dependency', depend[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
 						print ('WITH ERROR CODE:', j)
+						essential = j
 					else:
 						print ('INSTALLATION FAILED: Failed to install dependency', depend[i])
 						essential = -1
@@ -308,7 +309,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	else:
 		print ('DOWNLOAD SUCCESSFUL: Successfully downloaded file for', toolname)
 
-		if toolname == 'pyobd': #not 100% sure this is going to work
+		if toolname == 'pyobd': #not 100% sure this is going to work (pyserial = 2.0, wxpython = 2.4, doesnt work with 2.5??)
 			print ('Beginning pyobd installation...')
 			if d == 'debian':
 				deb_rc = dependencies.download_install(link_pyobd_debian)
@@ -337,12 +338,40 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 
 		elif toolname == 'o2oo':
 			print ('Beginning o2oo installation...')
-			extract_rc = subprocess.run(['tar', '-xzvf', 'O2OO-0.9.tar']).returncode
+			extract_rc = subprocess.run(['tar', '-xzvf', 'O2OO-0.9.tgz']).returncode
 			if extract_rc != 0:
 				print ('EXTRACTION FAILED: Failed to decompress the o2oo tar file')
 				print ('WITH ERROR CODE:', extract_rc)
 			else:
-				print ('EXTRACTION SUCCESSFUL: Successfully extracted o2oo tar file. o2oo installation complete')
+				print ('EXTRACTION SUCCESSFUL: Successfully extracted o2oo tar file.')
+				print ('Installing o2oo dependencies...')
+
+				l = ['libncurses-dev', 'libsqlite3_dev', 'libgps-dev', 'libgp2-xpm-dev', 'libhpdf-dev', 'libtinyxml2-dev', 'libcurl4-openssl-dev']
+				rc = [dependencies.commandline_install(pack_man, i) for i in l]
+
+				ins = 0
+
+				for i,j in enumerate(returncodes):
+					if j != 0:
+						print ('INSTALLATION FAILED: Failed to install dependency', l[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
+						print ('WITH ERROR CODE:', j)
+						ins = j
+
+				if ins != 0:
+					print ('INSTALLATION FAILED: Failed to install o2oo dependencies')
+				else:
+					print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for o2oo')
+					mak_rc = subprocess.run(['make', 'install']).returncode
+					if mak_rc != 0:
+						print ('BUILD FAILED: Failed to build o2oo')
+						print ('WITH ERROR CODE:', mak_rc)
+					else:
+						print ('BUILD SUCCESSFUL: Successfully built o2oo and installed')
+
+
+
+
+
 		elif toolname == 'romraider':
 			print ('Beginning romraider installation...')
 			rom_rc = dependencies.download_install(link)
