@@ -64,7 +64,7 @@ def install_curl(pack_man):
 
 def install_pip(pack_man):
 
-	pip_rc = dependencies.commandline_install(pack_man, 'python-pip') #might move this to dependency we'll see.
+	pip_rc = dependencies.commandline_install(pack_man, 'python3-pip') #might move this to dependency we'll see.
 	if pip_rc != 0:
 		print ('INSTALLATION FAILED: Failed to install pip. This is needed to install some dependencies for tools')
 		print ('WITH ERROR CODE: ', pip_rc)
