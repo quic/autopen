@@ -361,6 +361,9 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 					print ('INSTALLATION FAILED: Failed to install o2oo dependencies')
 				else:
 					print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for o2oo')
+					current = os.getcwd()
+					p = current + '/O2OO-0.9'
+					os.chdir(p)
 					mak_rc = subprocess.run(['make', 'install']).returncode
 					if mak_rc != 0:
 						print ('BUILD FAILED: Failed to build o2oo')
