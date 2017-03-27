@@ -15,6 +15,7 @@ Assumes user is running as root and has apt-get installed
 
 import general_use
 import dependencies
+import subprocess
 
 distro = general_use.check_distribution()
 pack_man = general_use.package_tool(distro)
@@ -70,7 +71,7 @@ def install_pip(pack_man):
 		print ('WITH ERROR CODE: ', pip_rc)
 	else:
 		print ('INSTALLATION COMPLETE: Successfully installed pip')
-		upgrade_rc = subprocess.run(['pip', 'install', '--upgrade', 'pip'])
+		upgrade_rc = subprocess.run(['pip', 'install', '--upgrade', 'pip']).returncode
 		if upgrade_rc != 0:
 			print ('UPGRADE FAILED: Failed to upgrade pip. This may cause trouble when installing libraries')
 			print ('WITH ERROR CODE:', upgrade_rc)
