@@ -46,9 +46,9 @@ pack_man = general_use.package_tool(d)
 #tools.github_tools(pack_man, 'bluelog', repo_bluelog)
 tools.github_tools(pack_man, 'bluemaho', repo_bluemaho)
 
-#tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library
-#tools.downloaded_tools(pack_man, 'o2oo', link_o2oo) #WxPython and some other library
-#tools.downloaded_tools(pack_man, 'romraider', link_romraider) #WxPython and some other library
+#tools.downloaded_tools(link_pyobd) #WxPython and some other library
+#tools.downloaded_tools(link_o2oo) #WxPython and some other library
+#tools.downloaded_tools(link_romraider) #WxPython and some other library
 
 #tools.installed_tools(pack_man, 'bluetooth tools') #this function is for tools that are apt-getable / yumable
 #tools.installed_tools(pack_man, 'btscanner')
