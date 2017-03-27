@@ -229,18 +229,18 @@ def github_tools(pack_man, toolname, repo):
 		elif toolname == 'bluemaho':
 			print ('Beginning bluemaho installation...')
 			print ('Installing bluemaho dependencies...')
-			wxpython = dependencies.commandline_install(pack_man, 'python-wxgtk2.6')
+			wxpython = dependencies.commandline_install(pack_man, 'python-wxgtk3.0')
 			bluez = dependencies.install_bluez(pack_man)
 			config = dependencies.download_install('pkg-config', link_package)
-			lightblue = dependencies.install_lightblue(pack_man)
+			#lightblue = dependencies.install_lightblue(pack_man) ---> issue installing this one so need to figure this out
 
 			depend = ['libopenobex2-dev', 'libxml2', 'libxml2-dev', 'libusb-dev']
-			returncodes = [dependencies.commandline_install(pack_man, i) for i in libraries]
-			depend.append('lightblue')
+			returncodes = [dependencies.commandline_install(pack_man, i) for i in depend]
+			#depend.append('lightblue')
 			depend.append('wxpython') #appends the name of the dependencies and returncodes to appropriate lists to have one list of 
 			depend.append('bluez')
 			depend.append('config')
-			returncodes.append(lightblue)
+			#returncodes.append(lightblue)
 			returncodes.append(wxpython)
 			returncodes.append(bluez)
 			returncodes.append(config)
@@ -262,6 +262,10 @@ def github_tools(pack_man, toolname, repo):
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for Bluemaho')
 				print ('Building Bluemaho...')
+				c_dir = os.getcwd()
+				last_slash = c_dir.rfind('/')
+				path = current_dir[:last_slash] + '/config'
+				os.chdir(path)
 				build_rc = subprocess.run(['./build.sh']).returncode
 				if build_rc != 0:
 					print ('BUILD FAILED: Failed to build and complete installation of Bluemaho')
