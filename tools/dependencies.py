@@ -16,11 +16,39 @@ def commandline_install(pack_man, i):
 	general_use.update(pack_man)
 	return subprocess.run(['sudo', pack_man, '-y', 'install', i]).returncode
 
-def download_install(toolname, link):
+def download_install(link):
 	return subprocess.run(['curl', '-o', toolname, link]).returncode
 
 def clone_git_repo(repo):
 	return subprocess.run(["git", "clone", repo]).returncode
+
+def install_pyserial(link):
+	d_rc = download_install('pyserial', link) #FYI MIGHT BE ABLE TO RUN PIP INSTALL PYSERIAL 
+	if d_rc != 0:
+		print ('DOWNLOAD FAILED: Failed to download pyserial')
+		print ('WITH ERROR CODE:', d_rc)
+		return d_rc
+	else:
+		print ('DOWNLOAD SUCCESSFUL: Successfully downloaded pyserial')
+		print ('Building PySerial 2.0 package...')
+		current_dir = os.getcwd()
+		path = current_dir + '/pyserial-2.0'
+		os.chdir(path)
+		build_rc = subprocess.run(['python', 'setup.py', 'build']).returncode
+		if build_rc != 0:
+			print ('BUILD FAILED: Failed to build pyserial.')
+			print ('WITH ERROR CODE:', build_rc)
+			return build_rc
+		else:
+			print ('BUILD SUCCESSFUL: Successfully completed pyserial build')
+			print ('Installing pyserial...')
+			i_rc = subprocess.run(['sudo', 'python', 'setup.py', 'install']).returncode
+			if i_rc != 0:
+				return i_rc
+			else:
+				return 0
+
+
 
 def install_NPM(pack_man):
 
@@ -173,7 +201,7 @@ def install_lightblue(pack_man):
 	else:
 		print ('INSTALLATION SUCCESSFUL: Successfully installed pybluez')
 		print ('Downloading lightblue...')
-		light_rc = download_install('lightblue', link_lightblue)
+		light_rc = download_install(link_lightblue)
 		if light_rc != 0:
 			print ('DOWNLOAD FAILED: Failed to download lightblue. Cannot complete lightblue installation')
 			print ('WITH ERROR CODE:', light_rc)
