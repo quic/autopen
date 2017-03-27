@@ -1,5 +1,5 @@
 import general_use
-import install_basics
+#import install_basics
 import dependencies
 import tools
 import subprocess
@@ -40,14 +40,14 @@ pack_man = general_use.package_tool(d)
 #tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)		#DONE
 #tools.github_tools(pack_man, 'kayak', repo_kayak)					#DONE
 #tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)	#CANT TEST THIS UNLESS A DEVICE IS ATTACHED AND SET UP
-#tools.github_tools(pack_man, 'c0f', repo_c0f)
-#tools.github_tools(pack_man, 'udsim', repo_udsim)
-#tools.github_tools(pack_man, 'katoolin', repo_katoolin)
-#tools.github_tools(pack_man, 'bluelog', repo_bluelog)
-tools.github_tools(pack_man, 'bluemaho', repo_bluemaho)
+#tools.github_tools(pack_man, 'c0f', repo_c0f)				#DONE
+#tools.github_tools(pack_man, 'udsim', repo_udsim)	#DONE
+#tools.github_tools(pack_man, 'katoolin', repo_katoolin)	#DONE
+#tools.github_tools(pack_man, 'bluelog', repo_bluelog)	#DONE
+#tools.github_tools(pack_man, 'bluemaho', repo_bluemaho)	#NOT SURE
 
-#tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library
-#tools.downloaded_tools(pack_man, 'o2oo', link_o2oo) #WxPython and some other library
+#tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library	#DONE BUT NOT SURE IF WORKS
+tools.downloaded_tools(pack_man, 'o2oo', link_o2oo) #WxPython and some other library
 #tools.downloaded_tools(pack_man, 'romraider', link_romraider) #WxPython and some other library
 
 #tools.installed_tools(pack_man, 'bluetooth tools') #this function is for tools that are apt-getable / yumable
