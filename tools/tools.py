@@ -263,8 +263,8 @@ def github_tools(pack_man, toolname, repo):
 				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for Bluemaho')
 				print ('Building Bluemaho...')
 				c_dir = os.getcwd()
-				last_slash = c_dir.rfind('/')
-				path = current_dir[:last_slash] + '/config'
+				#last_slash = c_dir.rfind('/')
+				path = current_dir + '/bluemaho' + '/config'
 				os.chdir(path)
 				build_rc = subprocess.run(['./build.sh']).returncode
 				if build_rc != 0:
@@ -314,13 +314,27 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 				deb_rc = dependencies.download_install(link_pyobd_debian)
 				if deb_rc != 0:
 					print ('Download Failed: Failed to download debian specific file') #need to figure out what this is for
-			print ('Beginning pyserial installation...')
-			pyserial_rc = dependencies.install_pyserial(link_pyserial)
+			print ('Installing pyserial...')
+			pyserial_rc = subprocess.run(['python3', '-m', 'pip', 'install', 'pyserial'])
 			if pyserial_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install pyserial. Cannot complete pyobd installation')
 				print ('WITH ERROR CODE:', pyserial_rc)
 			else:
-				print ('INSTALLATION SUCCESSFUL: Successfully installed pyobd')	
+				print ('INSTALLATION SUCCESSFUL: Successfully installed pyserial')
+				wx_rc = dependencies.commandline_install(pack_man, 'python-wxgtk3.0')
+				if wx_rc != 0:
+					print ('INSTALLATION FAILED: Failed to install python-wxgtk3.0. Cannot complete pyobd installation')
+					print ('WITH ERROR CODE:', wx_rc)
+				else:
+					print ('INSTALLATION SUCCESSFUL: Successfully installed python-wxgtk3')
+					print ('Extracting pyobd...')
+					ext_rc = subprocess.run(['tar', '-xzvf', 'pyobd_0.9.3.tar.gz']).returncode
+					if ext_rc != 0:
+						print ('EXTRACTION FAILED: Failed to decompress pyobd tar file')
+						print ('WITH ERROR CODE:', ext_rc)
+					else:
+						print ('EXTRACTION SUCCESSFUL: Successfully decompressed tar file. Successfully installed pyobd')
+
 		elif toolname == 'o2oo':
 			print ('Beginning o2oo installation...')
 			extract_rc = subprocess.run(['tar', '-xzvf', 'O2OO-0.9.tar']).returncode
