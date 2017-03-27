@@ -40,16 +40,17 @@ pack_man = general_use.package_tool(d)
 #tools.github_tools(pack_man, 'kayak', repo_kayak)					#DONE
 #tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)	#CANT TEST THIS UNLESS A DEVICE IS ATTACHED AND SET UP
 #tools.github_tools(pack_man, 'c0f', repo_c0f)
-tools.github_tools(pack_man, 'udsim', repo_udsim)
+#tools.github_tools(pack_man, 'udsim', repo_udsim)
 #tools.github_tools(pack_man, 'katoolin', repo_katoolin)
 
-#tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library
+tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library
 #tools.downloaded_tools(pack_man, 'o2oo', link_o2oo) #WxPython and some other library
 #tools.downloaded_tools(pack_man, 'romraider', link_romraider) #WxPython and some other library
 
 #tools.installed_tools(pack_man, 'bluetooth tools') #this function is for tools that are apt-getable / yumable
 #tools.installed_tools(pack_man, 'btscanner')
 #tools.installed_tools(pack_man, 'gnuradio')
+#tools.installed_tools(pack_man, 'aircrack-ng')
 
 
 '''
@@ -60,6 +61,8 @@ Things to note during testing:
 2. if they clone from git, they have to have git installed. If they download zip, they do not (we will install for them). Need to include instructions for both 
 3. in check_NPM, the version is printed out, might want to add print statements around that --> blank is installed with version number bleh
 4. complete caringcaribou installation, need an actual device or ask omar to help set up a virtual 
+5. fix all 'with error codes' to say 'error code'
+6. fix in udsim tools, printing the correct library name
 
 EXCEPTIONS TO CATCH:
 	1. if the repo has already been cloned, want to keep going
