@@ -160,7 +160,7 @@ class AutoPen(App):
 			bluelog = Button(text='Bluelog', size_hint=(.25,.1), pos_hint={'x':.05,'y':.75})
 			bluemaho = Button(text='Bluemaho', size_hint=(.25,.1), pos_hint={'x':.05,'y':.65})
 			btscanner = Button(text='BTScanner', size_hint=(.25,.1), pos_hint={'x':.05, 'y':.55})
-			bluetooth_tools = Button(text='Bluetooth Tools Package', size_hint=(.25,.1), pos_hint={'x':.1, 'y':.45})
+			bluetooth_tools = Button(text='Bluetooth Tools Package', size_hint=(.25,.1), pos_hint={'x':.05, 'y':.45})
 
 			self.mainpage.add_widget(bluelog)
 			self.mainpage.add_widget(bluemaho)
@@ -178,11 +178,11 @@ class AutoPen(App):
 			tools_title = Button(text='Tools', size_hint=(.6,.3), pos_hint={'x':.2,'y':.8}, background_color=[1,0,1,0])
 			self.mainpage.add_widget(tools_title)
 
-			title = Button(text='Wi-fi/SDR Tools', size_hint=(.25,.1), pos_hint={'x':.1,'y':.85}, background_color=[1,0,1,0])
+			title = Button(text='Wi-fi/SDR Tools', size_hint=(.25,.1), pos_hint={'x':.05,'y':.85}, background_color=[1,0,1,0])
 			self.mainpage.add_widget(title)
 
-			aircrack = Button(text='Aircrack-ng', size_hint=(.25,.1), pos_hint={'x':.1,'y':.75})
-			gnuradio = Button(text='GNU Radio', size_hint=(.25,.1), pos_hint={'x':.1,'y':.65})
+			aircrack = Button(text='Aircrack-ng', size_hint=(.25,.1), pos_hint={'x':.05,'y':.75})
+			gnuradio = Button(text='GNU Radio', size_hint=(.25,.1), pos_hint={'x':.05,'y':.65})
 
 			self.mainpage.add_widget(aircrack)
 			self.mainpage.add_widget(gnuradio)
@@ -198,41 +198,16 @@ class AutoPen(App):
 			tools_title = Button(text='Tools', size_hint=(.6,.3), pos_hint={'x':.2,'y':.8}, background_color=[1,0,1,0])
 			self.mainpage.add_widget(tools_title)
 
-			miscel_title = Button(text='Miscellaneous Tools', size_hint=(.25,.1), pos_hint={'x':.1,'y':.85}, background_color=[1,0,1,0])
+			miscel_title = Button(text='Miscellaneous Tools', size_hint=(.25,.1), pos_hint={'x':.05,'y':.85}, background_color=[1,0,1,0])
 			self.mainpage.add_widget(miscel_title)
 
-			katoolin = Button(text='Katoolin', size_hint=(.25,.1), pos_hint={'x':.1,'y':.75})
-			romraider = Button(text='Romraider', size_hint=(.25,.1), pos_hint={'x':.1,'y':.65})
+			katoolin = Button(text='Katoolin', size_hint=(.25,.1), pos_hint={'x':.05,'y':.75})
+			romraider = Button(text='Romraider', size_hint=(.25,.1), pos_hint={'x':.05,'y':.65})
 
 			self.mainpage.add_widget(katoolin)
 			self.mainpage.add_widget(romraider)
 
 			self.back.bind(on_press=MainPage)
-
-
-
-		#self.mainpage.add_widget(self.MainPage())
-
-
-		'''
-		can = Button(text='CAN', size_hint=(.2, .1), pos_hint={'x':.1, 'y':.2})
-		wifi = Button(text='Wi-fi', size_hint=(.2, .1), pos_hint = {'x':.1, 'y':.6})
-		bluetooth = Button(text='Bluetooth', size_hint=(.2,.1), pos_hint={'x':.7, 'y':.2})
-		SDR = Button(text='SDR', size_hint=(.2,.1), pos_hint={'x':.7, 'y':.6})
-		back = Button(text='Back', size_hint=(.1,.05), pos_hint={'x':0, 'y':0})
-
-		#adding buttons to main tools
-		self.mainpage.add_widget(can)
-		self.mainpage.add_widget(wifi)
-		self.mainpage.add_widget(bluetooth)
-		self.mainpage.add_widget(SDR)
-		self.mainpage.add_widget(back)
-
-		can.bind(on_press=canPage)
-		bluetooth.bind(on_press=bluetoothPage)
-		back.bind(on_press=MainPage)
-
-		'''
 
 		return self.mainpage
 
