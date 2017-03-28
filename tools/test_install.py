@@ -47,18 +47,18 @@ pack_man = general_use.package_tool(d)
 #tools.github_tools(pack_man, 'bluemaho', repo_bluemaho)	#NOT SURE
 
 #tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library	#DONE BUT NOT SURE IF WORKS
-tools.downloaded_tools(pack_man, 'o2oo', link_o2oo) #WxPython and some other library
-#tools.downloaded_tools(pack_man, 'romraider', link_romraider) #WxPython and some other library
+#tools.downloaded_tools(pack_man, 'o2oo', link_o2oo) #DONE
+#tools.downloaded_tools(pack_man, 'romraider', link_romraider) #DONE
 
-#tools.installed_tools(pack_man, 'bluetooth tools') #this function is for tools that are apt-getable / yumable
-#tools.installed_tools(pack_man, 'btscanner')
+#tools.installed_tools(pack_man, 'bluetooth tools') #this function is for tools that are apt-getable / yumable 	DONE
+#tools.installed_tools(pack_man, 'btscanner') #DONE
 #tools.installed_tools(pack_man, 'gnuradio')
-#tools.installed_tools(pack_man, 'aircrack-ng')
+tools.installed_tools(pack_man, 'aircrack-ng')
 
 
 '''
 
-Things to note during testing: 
+Things to note during testing/to fix: 
 
 1. in order to run test_install.py , python3 has to be installed. So, we need to make it that they can just run the python version of make
 2. if they clone from git, they have to have git installed. If they download zip, they do not (we will install for them). Need to include instructions for both 
@@ -66,6 +66,7 @@ Things to note during testing:
 4. complete caringcaribou installation, need an actual device or ask omar to help set up a virtual 
 5. fix all 'with error codes' to say 'error code'
 6. fix in udsim tools, printing the correct library name
+7. write open script
 
 EXCEPTIONS TO CATCH:
 	1. if the repo has already been cloned, want to keep going
