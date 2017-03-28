@@ -40,7 +40,7 @@ class OtherGoodies():
 class AutoPen(App):
     def build(self):
 
-        #btn = Button(text='Back', on_release=self.callback, size_hint=(0.15, 0.1), pos_hint={'x': 0, 'y': .9})
+        btn = Button(text='Back', on_release=self.callback, size_hint=(0.15, 0.1), pos_hint={'x': 0, 'y': .9})
         car = Image(source='AutoPen.png')
 
         self.layout = FloatLayout()
@@ -58,10 +58,10 @@ class AutoPen(App):
         self.layout.add_widget(SDR)
 
         #binding buttons to lists
-        can.bind(on_press=callback)
-        wifi.bind(on_press=callback)
-        bluetooth.bind(on_press=callback)
-        SDR.bind(on_press=callback)
+        can.bind(on_press=self.callback)
+        wifi.bind(on_press=self.callback)
+        bluetooth.bind(on_press=self.callback)
+        SDR.bind(on_press=self.callback)
 
         #ListView parameters
         data = [{'text': 'CAN Tools', 'is_selected': False},{'text': 'Wi-Fi Tools', 'is_selected': False},{'text': 'Bluetooth Tools', 'is_selected': False},{'text': 'Miscellaneous', 'is_selected': False}]
@@ -72,13 +72,16 @@ class AutoPen(App):
                                    args_converter=args_converter,
                                    cls=ListItemButton,
                                    selection_mode='single',
-                                   allow_empty_selection=True)
+                                   allow_empty_selection=False)
         list_view = ListView(adapter=list_adapter, size_hint=(0.2,0.9))
-
-        #self.layout.add_widget(btn)
+        list_view.adapter.bind(on_selection_change=self.selection_changed)
+        self.layout.add_widget(btn)
         self.layout.add_widget(list_view)
         return self.layout
 
+    def selection_changed(self, *args):
+        print('    args when selection changes gets you the adapter', args)
+        self.selected_item = args[0].selection[0].text
 
     def callback(self, value):
 
