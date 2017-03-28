@@ -12,8 +12,6 @@ from kivy.uix.listview import ListItemButton, ListView
 from kivy.base import runTouchApp
 from kivy.uix.spinner import Spinner
 
-from kivy.uix.label import Label
-
 from kivy.lang import Builder
 
 
@@ -25,92 +23,78 @@ Builder.load_string('''
 				source: 'background.jpg'
 				pos: self.pos
 				size: self.size
-
 <OtherGoodies>:
 	ListItemButton:
 		selected_color: 0.5, 0.5, 0.5, 1
 		deselected_color: 0.7, 0.7, 0.7, 1
-
-
 ''')
 
-#:layout FloatLayout()
 
+class Container():
+	pass
 
+class OtherGoodies():
+	pass
 
 class AutoPen(App):
 	def build(self):
 
-		self.mainpage = FloatLayout()
-
-		#btn = Button(text='Back', on_release=self.callback, size_hint=(0.15, 0.1), pos_hint={'x': 0, 'y': .9})
+		btn = Button(text='Back', on_release=self.callback, size_hint=(0.15, 0.1), pos_hint={'x': 0, 'y': .9})
 		car = Image(source='AutoPen.png')
 
+		self.layout = FloatLayout()
 
-		def canPage(instance):
-			self.mainpage.remove_widget(can)
-			self.mainpage.remove_widget(wifi)
-			self.mainpage.remove_widget(bluetooth)
-			self.mainpage.remove_widget(SDR)
-
-			#l = Label(text='CAN Tools', font_size='20sp', halign='left', valign='top', size=(2,2))
-			can_title = Button(text='CAN Tools', size_hint=(.2,.1), pos_hint={'x':.1,'y':.85}, background_color=[1,0,1,0])
-			self.mainpage.add_widget(can_title)
-
-			canutils = Button(text='Canutils', size_hint=(.2,.1), pos_hint={'x':.1,'y':.75})
-			c0f = Button(text='c0f', size_hint=(.2,.1), pos_hint={'x':.1, 'y':.65})
-			kayak = Button(text='Kayak', size_hint=(.2,.1), pos_hint={'x':.1, 'y':.55})
-
-			self.mainpage.add_widget(canutils)
-			self.mainpage.add_widget(c0f)
-			self.mainpage.add_widget(kayak)
-
-
-
-
-		#def MainPage(self):
-
+		#main tools buttons
 		can = Button(text='CAN', size_hint=(.2, .1), pos_hint={'x':.1, 'y':.2})
 		wifi = Button(text='Wi-fi', size_hint=(.2, .1), pos_hint = {'x':.1, 'y':.6})
 		bluetooth = Button(text='Bluetooth', size_hint=(.2,.1), pos_hint={'x':.7, 'y':.2})
 		SDR = Button(text='SDR', size_hint=(.2,.1), pos_hint={'x':.7, 'y':.6})
-		back = Button(text='Back', size_hint=(.1,.05), pos_hint={'x':0, 'y':0})
 
 		#adding buttons to main tools
-		self.mainpage.add_widget(can)
-		self.mainpage.add_widget(wifi)
-		self.mainpage.add_widget(bluetooth)
-		self.mainpage.add_widget(SDR)
+		self.layout.add_widget(can)
+		self.layout.add_widget(wifi)
+		self.layout.add_widget(bluetooth)
+		self.layout.add_widget(SDR)
 
-		can.bind(on_press=canPage)
+		#binding buttons to lists
+		can.bind(on_press=self.callback)
+		wifi.bind(on_press=self.callback)
+		bluetooth.bind(on_press=self.callback)
+		SDR.bind(on_press=self.callback)
 
-		return self.mainpage
+		#ListView parameters
+		data = [{'text': 'CAN Tools', 'is_selected': False},{'text': 'Wi-Fi Tools', 'is_selected': False},{'text': 'Bluetooth Tools', 'is_selected': False},{'text': 'Miscellaneous', 'is_selected': False}]
+		args_converter = lambda row_index, rec: {'text': rec['text'],
+												 'size_hint_y': None,
+												 'height': 50}
+		list_adapter = ListAdapter(data=data,
+								   args_converter=args_converter,
+								   cls=ListItemButton,
+								   selection_mode='single',
+								   allow_empty_selection=False)
+		list_view = ListView(adapter=list_adapter, size_hint=(0.2,0.9))
+		list_view.adapter.bind(on_selection_change=self.selection_changed)
+		self.layout.add_widget(btn)
+		self.layout.add_widget(list_view)
+		return self.layout
 
+	def selection_changed(self, *args):
+		print('    args when selection changes gets you the adapter', args)
+		self.selected_item = args[0].selection[0].text
 
-#layout.add_widget(MainToolsScreen())
+	def callback(self, value):
+
+		if value == 'can':
+			self.sub_list_view.adapter.data = [{'text': 'canutils', 'is_selected': False}, {'text': 'c0f', 'is_selected': False}, {'text': 'Kayak', 'is_selected': False}, {'text': 'UDSim', 'is_selected': False}]
+		elif value == 'wifi':
+			self.sub_list_view.adapter.data = [{'text': 'aircrack-ng', 'is_selected': False}]
+		elif value == 'bluetooth':
+			self.sub_list_view.adapter.data = [{'text': 'bluemaho', 'is_selected': False}, {'text': 'btscanner', 'is_selected': False}]
+		elif value == 'SDR':
+			self.sub_list_view.adapter.data = [{'text': 'gnu-radio', 'is_selected': False}]
+
+		self.layout.do_layout()
+
 
 if __name__ == "__main__":
 	AutoPen().run()
-
-
-#def main_page():
-	#main tools buttons
-'''
-
-<MainToolsScreen>:
-	FloatLayout:
-		Button:
-			id: 'can'
-			text: 'CAN'
-			size_hint: (.2, .1)
-			pos_hint: {'x':.1, 'y':.2}
-			on_release: root.callback()
-		Button: 
-			id: 'wifi'
-			text: 'Wi-fi'
-			size_hint: (.2, .1)
-			pos_hint: {'x':.1, 'y':.6}
-'''
-
-
-
