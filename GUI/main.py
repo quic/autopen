@@ -5,42 +5,37 @@ from kivy.app import App
 from kivy.uix.image import Image
 from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
+from kivy.adapters.listadapter import ListAdapter
+from kivy.uix.listview import ListItemButton, ListView
 
 class AutoPen(App):
-
     def build(self):
-        mainpage = FloatLayout()
-        car = Image(source='file.gif')
+        self.load_kv('AutoPen.kv')
+        btn = Button(text='Back', on_release=self.callback, size_hint=(0.15, 0.1), pos_hint={'x': 0, 'y': .9})
+        car = Image(source='AutoPen.png')
 
-        dropdown = DropDown()
-        btn = Button(text='cheese puffs and cowbells', size_hint_y=None, height=24)
-        btn.bind(on_release=lambda btn: dropdown.select(btn.text))
-        dropdown.add_widget(btn)
-        btn2 = Button(text='froofy noopers', size_hint_y=None, height=24)
-        btn2.bind(on_release=lambda btn2: dropdown.select(btn.text))
-        dropdown.add_widget(btn2)
-        dropdownception = DropDown()
-        btn3 = Button(text='i am your father', size_hint_y=None, height=24, pos=(30,30))
-        btn3.bind(on_release=lambda btn3: dropdown.select(btn.text))
-        dropdownception.add_widget(btn3)
-        btn2.bind(on_release=dropdownception.open)
+        self.layout = FloatLayout()
 
-        canbutton = Button(text='hello', size_hint=(0.2, 0.12), border=(20, 20, 20, 20), pos_hint={'top':0.9, 'right':0.2}, font_size='20sp')
-        canbutton.bind(on_release=dropdown.open)
+        data = [{'text': 'CAN Tools', 'is_selected': False},{'text': 'Wi-Fi Tools', 'is_selected': False},{'text': 'Bluetooth Tools', 'is_selected': False},{'text': 'Miscellaneous', 'is_selected': False}]
+        args_converter = lambda row_index, rec: {'text': rec['text'],
+                                                 'size_hint_y': None,
+                                                 'height': 50}
+        list_adapter = ListAdapter(data=data,
+                                   args_converter=args_converter,
+                                   cls=ListItemButton,
+                                   selection_mode='single',
+                                   allow_empty_selection=True)
+        list_view = ListView(adapter=list_adapter, size_hint=(0.2,0.9))
 
-        dropdown = DropDown()
-        for index in range(10):
-            btn1 = Button(text='cheese puffs and cowbells', size_hint_y=None, height=24)
-            btn1.bind(on_release=lambda btn1: dropdown.select(btn1.text))
-            dropdown.add_widget(btn1)
-        wifibutton = Button(text='hello', size_hint=(0.2, 0.12), border=(20, 20, 20, 20), pos_hint={'top':0.2, 'right':0.2}, font_size='20sp')
-        wifibutton.bind(on_release=dropdown.open)
+        self.layout.add_widget(btn)
+        self.layout.add_widget(list_view)
+        return self.layout
 
-        mainpage.add_widget(car)
-        mainpage.add_widget(canbutton)
-        mainpage.add_widget(wifibutton)
-        return mainpage
+    def callback(self, value):
+        pass
+
 
 if __name__ == "__main__":
     AutoPen().run()
