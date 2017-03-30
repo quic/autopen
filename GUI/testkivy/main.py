@@ -9,16 +9,19 @@ from kivy.uix.button import Button
 from kivy.lang import Builder
 from kivy.animation import Animation
 from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.image import Image
+from kivy.uix.textinput import TextInput
+from kivy.graphics import Color, Rectangle
 
 Builder.load_string('''
 <Marvel>
-  Label:
-    id: loki
-    text: 'loki: I AM YOUR GOD!'
-  Button:
-    id: hulk
-    text: "press to smash loki"
-    on_release: root.hulk_smash()
+    Label:
+        id: loki
+        text: 'loki: I AM YOUR GOD!'
+    Button:
+        id: hulk
+        text: "press to smash loki"
+        on_release: root.hulk_smash()
 ''')
 
 
@@ -31,9 +34,9 @@ class Marvel(BoxLayout):
 
 class AutoPen(App):
     def build(self):
-        with open("tips.txt", "r") as stream:
-            labeltext = stream.read()
-        label = Label(text=labeltext, markup=True)
+        #with open("tips.txt", "r") as stream:
+        #    labeltext = stream.read()
+        label = Label(text="[size=50]hi[/size]", markup=True)
         box = BoxLayout()
         marvell = Marvel()
         box.add_widget(marvell)
@@ -59,8 +62,27 @@ class Anima(App):
         anim = Animation(x=200,y=200)
         anim.start(self.widget)
 
+class Loading(App):
+    def build(self):
+        floater = FloatLayout()
+        logo = Image(source='AutoPen.png', pos_hint={'center_x': 0.5, 'center_y': .6})
+        spiderman = Label(
+            text='[size=24][i]With Great Power comes Great Responsibility[/i][/size]',
+            markup=True,
+            pos_hint={'center_x': 0.5, 'center_y': .2})
+        enter = Button(text='enter', size_hint=(0.2,0.1), pos_hint={'center_x': 0.5, 'center_y': .1})
+        floater.add_widget(logo)
+        floater.add_widget(spiderman)
+        floater.add_widget(enter)
+        return floater
+
+class Textboox(App):
+    def build(self):
+        floater = FloatLayout()
+
+
 if __name__ == "__main__":
-    AutoPen().run()
+    Loading().run()
 
 
 
