@@ -9,7 +9,12 @@ def open(toolname, option):
 
 	#tools not with 'open' button : can-utils, canbus-utils, c0f, 'UDSim', bluetooth tools (provide a list with the commands it allows), aircrack-ng
 
-	#change dir here
+	t = ['Kayak', 'caringcaribou', 'katoolin', 'Bluelog', 'bluemaho']
+	if toolname in t:
+		current = os.getcwd()
+		path = current + '/' + toolname
+		os.chdir(path)
+
 	if toolname == 'Kayak':
 		kayak_run_path = '/Application/target/kayak/bin'
 		print ('Changing directory to', kayak_run_path, '...')
