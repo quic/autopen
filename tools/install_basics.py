@@ -29,7 +29,7 @@ def update_python(pack_man):
 	p_rc = dependencies.commandline_install(pack_man, "python3")
 	if p_rc != 0:
 		print ('INSTALLATION FAILED: Could not install Python 3')
-		print ("WITH ERROR CODE:", p_rc)
+		print ("ERROR CODE:", p_rc)
 	else:
 		print ('INSTALLATION SUCCESSFUL: Python 3 successfully installed')
 
@@ -43,7 +43,7 @@ def update_git(pack_man):
 
 	if g_rc != 0:
 		print ("INSTALLATION FAILED: Could not install git. This is needed to install some of the tools")
-		print ("WITH ERROR CODE:", g_rc)
+		print ("ERROR CODE:", g_rc)
 	else:
 		print ("INSTALLATION SUCCESSFUL: Git successfully installed")
 
@@ -56,7 +56,7 @@ def install_curl(pack_man):
 	c_rc = dependencies.commandline_install(pack_man, 'curl')
 	if c_rc != 0:
 		print ('INSTALLATION FAILED: Could not install curl. This is needed to install some of the tools')
-		print ('WITH ERROR CODE:', c_rc)
+		print ('ERROR CODE:', c_rc)
 	else:
 		print ('INSTALLATION SUCCESSFUL: curl successfully installed')
 
@@ -65,13 +65,13 @@ def install_pip(pack_man):
 	pip_rc = dependencies.commandline_install(pack_man, 'python3-pip') #might move this to dependency we'll see.
 	if pip_rc != 0:
 		print ('INSTALLATION FAILED: Failed to install pip. This is needed to install some dependencies for tools')
-		print ('WITH ERROR CODE: ', pip_rc)
+		print ('ERROR CODE:', pip_rc)
 	else:
 		print ('INSTALLATION COMPLETE: Successfully installed pip')
 		upgrade_rc = subprocess.run(['pip', 'install', '--upgrade', 'pip']).returncode
 		if upgrade_rc != 0:
 			print ('UPGRADE FAILED: Failed to upgrade pip. This may cause trouble when installing libraries')
-			print ('WITH ERROR CODE:', upgrade_rc)
+			print ('ERROR CODE:', upgrade_rc)
 		else:
 			print ('UPGRADE SUCCESSFUL: Successfully upgraded pip to newest version')
 

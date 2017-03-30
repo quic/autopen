@@ -27,22 +27,23 @@ def test():
 	pack_man = general_use.package_tool(d)
 	tools.github_tools(pack_man, 'can-utils', repo_can_utils) 			#DONE
 	#tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)		#DONE
-	#tools.github_tools(pack_man, 'kayak', repo_kayak)					#DONE
+	#tools.github_tools(pack_man, 'Kayak', repo_kayak)					#DONE
 	#tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)	#CANT TEST THIS UNLESS A DEVICE IS ATTACHED AND SET UP
 	#tools.github_tools(pack_man, 'c0f', repo_c0f)				#DONE
 	#tools.github_tools(pack_man, 'udsim', repo_udsim)	#DONE
 	#tools.github_tools(pack_man, 'katoolin', repo_katoolin)	#DONE
-	#tools.github_tools(pack_man, 'bluelog', repo_bluelog)	#DONE
+	#tools.github_tools(pack_man, 'Bluelog', repo_bluelog)	#DONE
 	#tools.github_tools(pack_man, 'bluemaho', repo_bluemaho)	#NOT SURE
 
 	#tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library	#DONE BUT NOT SURE IF WORKS
 	#tools.downloaded_tools(pack_man, 'o2oo', link_o2oo) #DONE
-	#tools.downloaded_tools(pack_man, 'romraider', link_romraider) #DONE
 
 	#tools.installed_tools(pack_man, 'bluetooth tools') #this function is for tools that are apt-getable / yumable 	DONE
 	#tools.installed_tools(pack_man, 'btscanner') #DONE
 	#tools.installed_tools(pack_man, 'gnuradio')
 	#tools.installed_tools(pack_man, 'aircrack-ng')
+
+test()
 
 '''
 
