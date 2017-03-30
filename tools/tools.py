@@ -313,6 +313,7 @@ def github_tools(pack_man, toolname, repo):
 					print ('ERROR CODE:', build_rc)
 				else:
 					print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
+					general_use.move_up_directory()
 		elif toolname == 'katoolin':
 			cp_rc = subprocess.run(['sudo', 'cp', 'katoolin.py', '/usr/bin/katoolin']).returncode
 			if cp_rc != 0:

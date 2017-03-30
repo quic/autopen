@@ -2,7 +2,7 @@ import general_use
 import dependencies
 import tools
 
-def open(toolname, option):
+def open_(toolname, option):
 	'''
 	This function opens the specified tool
 	'''

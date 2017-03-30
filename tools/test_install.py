@@ -43,7 +43,11 @@ def test():
 	tools.installed_tools(pack_man, 'gnuradio')
 	tools.installed_tools(pack_man, 'aircrack-ng')
 
-test()
+	dependencies.for_canuntilsx(pack_man)
+
+#test()
+
+
 
 '''
 
