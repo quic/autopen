@@ -29,7 +29,7 @@ def install(toolname):
 		tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)
 	elif toolname == 'kayak':
 		tools.github_tools(pack_man, 'Kayak', repo_kayak)
-	elif toolname == 'caringcaribou'
+	elif toolname == 'caringcaribou':
 		tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)	#CANT TEST THIS UNLESS A DEVICE IS ATTACHED AND SET UP
 	elif toolname == 'c0f':
 		tools.github_tools(pack_man, 'c0f', repo_c0f)
@@ -56,5 +56,3 @@ def install(toolname):
 
 
 
-
-		

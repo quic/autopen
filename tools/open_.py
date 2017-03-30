@@ -1,6 +1,8 @@
 import general_use
 import dependencies
 import tools
+import os
+import subprocess
 
 def open_(toolname, option):
 	'''
@@ -16,7 +18,7 @@ def open_(toolname, option):
 		os.chdir(path)
 
 	if toolname == 'Kayak':
-		kayak_run_path = '/Application/target/kayak/bin'
+		kayak_run_path = '/application/target/kayak/bin'
 		print ('Changing directory to', kayak_run_path, '...')
 		current_dir = os.getcwd()
 		path = current_dir + kayak_run_path
@@ -26,17 +28,23 @@ def open_(toolname, option):
 		current_dir = os.getcwd()
 		path = current_dir + '/tool'
 		os.chdir(path)
-		op_rc = subprocess.run(['./cc.py']).returncode
+		op_rc = subprocess.run(['./cc.py', '-h', option]).returncode	#option here will be the module
 	elif toolname == 'katoolin':
 		op_rc = subprocess.run(['katoolin']).returncode
 	elif toolname == 'Bluelog':
-		op_rc = subprocess.run(['./bluelog']).returncode
+		op_rc = subprocess.run(['./bluelog']).returncode	#works if you have a bluetooth device up
 	elif toolname == 'bluemaho':
 		op_rc = subprocess.run(['./bluemaho.py']).returncode
 	elif toolname == 'pyobd':
+		current = os.getcwd()
+		path = current + '/pyobd-0.9.3'
+		os.chdir(path)
 		op_rc = subprocess.run(['./pyobd']).returncode
-	elif toolname == 'O2OO':
+	elif toolname == 'O2OO':	#isn't going to work unless 
 		o = './' + option	#make sure that when this is called it passes O2OO- before the name and not the button name
+		current = os.getcwd()
+		path = current + '/O2OO-0.9'
+		os.chdir(path)
 		op_rc = subprocess.run([o]).returncode
 	elif toolname == 'btscanner':
 		#mention that this command will just show a list of the devices that are available; else can run btscanner (path to file name) and then potentially have a reset button
