@@ -1,0 +1,25 @@
+bluelog -h
+Basic Options:
+    -i <interface>     Sets scanning device, default is "hci0"
+    -o <filename>      Sets output filename, default is "devices.log"
+    -v                 Verbose, prints discovered devices to the terminal
+    -q                 Quiet, turns off nonessential terminal outout
+    -d                 Enables daemon mode, Bluelog will run in background
+    -k                 Kill an already running Bluelog process
+    -l                 Start "Bluelog Live", default is disabled
+
+Logging Options:
+    -n                 Write device names to log, default is disabled
+    -m                 Write device manufacturer to log, default is disabled
+    -c                 Write device class to log, default is disabled
+    -f                 Use "friendly" device class, default is disabled
+    -t                 Write timestamps to log, default is disabled
+    -x                 Obfuscate discovered MACs, default is disabled
+    -e                 Encode discovered MACs with CRC32, default disabled
+    -b                 Enable BlueProPro log format, see README
+
+Advanced Options:
+    -r <retries>       Name resolution retries, default is 3
+    -a <minutes>       Amnesia, Bluelog will forget device after given time
+    -w <seconds>       Scanning window in seconds, see README
+    -s                 Syslog only mode, no log file. Default is disabled

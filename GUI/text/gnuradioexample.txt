@@ -1,0 +1,22 @@
+uhd_fft --help                                                                                                 
+linux; GNU C++ version 4.5.2; Boost_104200; UHD_003.003.000-d5d448e
+
+Usage: uhd_fft.py [options]
+
+Options:
+  -h, --help            show this help message and exit
+  -a ADDRESS, --address=ADDRESS
+                        Address of UHD device, [default=addr=192.168.10.2]
+  -A ANTENNA, --antenna=ANTENNA
+                        select Rx Antenna where appropriate
+  -s SAMP_RATE, --samp-rate=SAMP_RATE
+                        set sample rate (bandwidth) [default=1000000.0]
+  -f FREQ, --freq=FREQ  set frequency to FREQ
+  -g GAIN, --gain=GAIN  set gain in dB (default is midpoint)
+  -W, --waterfall       Enable waterfall display
+  -S, --oscilloscope    Enable oscilloscope display
+  --avg-alpha=AVG_ALPHA
+                        Set fftsink averaging factor, default=[0.1]
+  --ref-scale=REF_SCALE
+                        Set dBFS=0dB input value, default=[1.0]
+  --fft-size=FFT_SIZE   Set number of FFT bins [default=1024]
