@@ -1,4 +1,4 @@
-'''
+	'''
 
 #Reference Links for me, might remove later we'll see how life goes 
 	can-utils : https://discuss.cantact.io/t/using-can-utils/24 (eric evenchick)
@@ -8,42 +8,79 @@
 	build-essential can fail, try this just incase: http://unix.stackexchange.com/questions/275438/kali-linux-2-0-cant-install-build-essentials
 
 TO DO: 
-	NEED TO CHANGE ALL THE TOOLS TO DOWNLOAD STUFF INTO THEIR FOLDER so that it doesn't just throw everything in one directory (aka cd right after clone/download)
-	NEED TO WRITE SCRIPTS TO IMPLEMENT ATTACKS
+	BACK-END:
+		EXCEPTIONS:
+			if repo has already been cloned, want it to continue with installation script
+			if something fails to install. pass and skip the rest !! 
+		IMPLEMENTATIONS:
+			handle log.txt (send stderr to stdout: http://stackoverflow.com/questions/29580663/save-error-message-of-subprocess-command)
+				make errors red, possibly make stderr and stdout
+				log it and show to the user
+			Kivy needs to be installed in order to run? How to get around that
+			check if an update is available and install that update
+		SCRIPTS:
+			need to write scripts to implement attacks
+			write install.py script to run check_distro and run the correct function to install that script()
+			create a open.py
+			kali: create a separate install script / show certain tools as already installed because its in kali
+			be able to replicate attacks on a tool
+			uninstall tool
+		SMALL CHANGES: 
+			remove python3 installation
+			in check_npm, the version is printed out, might want to add print statements around that --> blank is installed with version number bleh
+			fix all "with error codes" ---> "error code"
+			fix udsim code to print the correct library names
+			fix aircrack-ng error
+			caringcaribou hasn't been tested/not confirmed if install works because need to test it with socketCAN
 
-Front End/Back End Connection:
-	We only want the whole thing to run if the install all or install all CAN button is pressed
-	Else, we need to function to take in distro and the name of the tool depending on the button pressed and then install that
+	FRONT-END:
+		ADD:
+			install all button
+			highlight the buttons that are already installed, maybe gray out and make italics
+		FUNCTIONALITY:
+			need to pass a variable from front end to backend function call so do ---> on_press = install.install(toolname)
+			install > open or install > not installed (in red)
+		IMPLEMENTATION:
+			can we make it that our tool will know which tools they have installed?
+				OPTION 1: have a checklist to select which tools you already have and tailor the buttons to that
+				OPTION 2: could create a text file that keeps track of what the tools were installed, their paths and we could parse it later if they want to just upload that text file
+					they could input the name of the tool and the directory path and we can create the text file for them and they can store it
+	
+	TEST:
+		test caring caribou because a device needs to be set up to use it
+		test on kali, debian, ubuntu and fedora (try to get this)
 
-Note:
-	ELM327:
-		Be forewarned that the ELM327 has limited buffer space, so you will lose packets when sniffing,
-		and transmission can be a bit imprecise, but if you're in a pinch this is the cheapest route.
+	TO TELL USER:
+		Note:
+			can either clone our repo (this will probably still update github) or download the zip file and we will install git
+			Make sure the user knows that this will all be cloned in the current directory aka most likely ~/Documents/autopen/
+			Python3 is a requirement to run our application
+		Note:
+			ROMRAIDER: SUBARU
+				Warning: RomRaider is intended for use only by experienced tuners who understand the consequences. As with any tuning solution, the potential
+				for engine damage is very high when altering your ECUs hard coded values. The use of appropriate equipment (ie, knock sensor, wideband oxygen 
+				sensor) is extremely important. By downloading RomRaider, you agree to assume all risks and accept its license. Use at your own risk.
+		Note:
+			ELM327:
+				Be forewarned that the ELM327 has limited buffer space, so you will lose packets when sniffing,
+				and transmission can be a bit imprecise, but if you're in a pinch this is the cheapest route.
 
-	Make sure the user knows that this will all be cloned in the current directory aka most likely /Users/'user'
-
-
-Tools may be included:
-	canibus for ELM327:
+TOOLS MAY BE INCLUDED:
+	CANIBUS FOR ELM327:
 		(go-server)
-	CANtact:
+	CANTACT:
 		will provide a section in here with the github link and the website link so that the user can build their own
 		Also, will possibly provide steps on how to do so (will learn how to do this first)
-
-Note:
-	RomRaider: Subaru
-		Warning: RomRaider is intended for use only by experienced tuners who understand the consequences. As with any tuning solution, the potential
-		for engine damage is very high when altering your ECUs hard coded values. The use of appropriate equipment (ie, knock sensor, wideband oxygen 
-		sensor) is extremely important. By downloading RomRaider, you agree to assume all risks and accept its license. Use at your own risk.
-
-Tools may be included:
-	Octane:
-		not made available because runs on Windows	
+	METASPLOIT HARDWARE BRIDGE
+	CANBAGGER TOOLS 
 	AVRDUDESS:
 		(this one not sure if im going to install yet)
-	OpenPilot:
-		Hondas and Acuras (believe this one needs specific hardware / it needs to be installed on that but maybe we can make it possible / do for them)
 
+TO DO (LOGISTICS):
+	1. test live demo for may 5 to make sure it will work
+	2. might set up video conferencing to BU
+	3. Documentation
+	4. Test plan for tomorrow 
 
 '''
 
@@ -83,6 +120,7 @@ def github_tools(pack_man, toolname, repo):
 
 		if toolname == 'can-utils': #this will install SocketCAN first as it is needed to be able to run can-utils
 		#ADD HER CODE INSTALLING SOCKET CAN, WRITE FUNCTION IN DEPENDENCIES
+		#REMOVE TO COMMANDLINE OPTION
 			print ('Beginning can-utils installation...')
 			can_utils_rc = dependencies.commandline_install(pack_man, 'can-utils')
 			if can_utils_rc != 0:
@@ -297,6 +335,7 @@ def github_tools(pack_man, toolname, repo):
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed matplotlib from python')
 				socket = github_tools(pack_man, 'can-utils', repo) #this repo is can-utils repo
+
 def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	general_use.update(pack_man)
 	d = general_use.check_distribution()
