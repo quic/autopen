@@ -6,6 +6,7 @@
 
 import platform
 import subprocess
+import os
 
 def check_distribution():
 
@@ -42,6 +43,11 @@ def update(pack_man):
 	update_rc = subprocess.run(['sudo', pack_man, 'update']).returncode
 	if update_rc != 0:
 		print ('UPDATE_ FAILED: Failed to update_ system')
-		print ('WITH ERROR CODE:', update_rc)
+		print ('ERROR CODE:', update_rc)
 	else:
 		print ('UPDATE_ SUCCESSFUL: Successfully updated system')
+
+def move_up_directory():
+	c = os.getcwd()
+	s = c.rfind('/')
+	os.chdir(c[:s])
