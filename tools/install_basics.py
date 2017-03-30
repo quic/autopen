@@ -16,15 +16,12 @@ import subprocess
 distro = general_use.check_distribution()
 pack_man = general_use.package_tool(distro)
 
-
-
-def update_python(pack_man):
+def install_python(pack_man):
 	'''
 	This function installs or updates Python 3 depending on whether it is already on the system or not
 	'''
 
 	print ('Installing Python 3...')
-
 
 	p_rc = dependencies.commandline_install(pack_man, "python3")
 	if p_rc != 0:
@@ -75,7 +72,7 @@ def install_pip(pack_man):
 		else:
 			print ('UPGRADE SUCCESSFUL: Successfully upgraded pip to newest version')
 
-update_python(pack_man)
+install_python(pack_man)
 update_git(pack_man)
 install_curl(pack_man)
 install_pip(pack_man)

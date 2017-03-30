@@ -47,7 +47,7 @@ def install_pyserial(link):
 				return i_rc
 			else:
 				return 0
-
+				general_use.move_up_directory()
 
 
 def install_NPM(pack_man):
@@ -194,6 +194,7 @@ def install_bluez(pack_man):
 							else:
 								print ('INSTALLATION SUCCESSFUL: Successfully ran make install')
 								return 0
+								general_use.move_up_directory()
 
 def install_lightblue(pack_man):
 	print ('Installing pybluez...')

@@ -6,6 +6,7 @@
 
 import platform
 import subprocess
+import os
 
 def check_distribution():
 
@@ -45,3 +46,8 @@ def update(pack_man):
 		print ('ERROR CODE:', update_rc)
 	else:
 		print ('UPDATE_ SUCCESSFUL: Successfully updated system')
+
+def move_up_directory():
+	c = os.getcwd()
+	s = c.rfind('/')
+	os.chdir(c[:s])

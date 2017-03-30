@@ -5,7 +5,6 @@
 	canbus-utils : http://www.digitalbond.com/blog/2015/03/05/tool-release-digital-bond-canbus-utils/
 	NPM: http://blog.teamtreehouse.com/install-node-js-npm-linux
 	NPM2: http://www.hostingadvice.com/how-to/install-nodejs-ubuntu-14-04/#node-version-manager (May 2016)
-	build-essential can fail, try this just incase: http://unix.stackexchange.com/questions/275438/kali-linux-2-0-cant-install-build-essentials
 
 TO DO: 
 	BACK-END:
@@ -15,23 +14,18 @@ TO DO:
 		IMPLEMENTATIONS:
 			handle log.txt (send stderr to stdout: http://stackoverflow.com/questions/29580663/save-error-message-of-subprocess-command)
 				make errors red, possibly make stderr and stdout
-				log it and show to the user ( | tee log.txt)
-			Kivy needs to be installed in order to run? How to get around that
+				log it and show to the user ( | tee -a log.txt atm ~~~~ )
 			check if an update is available and install that update
 		SCRIPTS:
-			need to write scripts to implement attacks
+			need to write scripts to implement/replicate attacks using tool/to provide to tool
 			write install.py script to run check_distro and run the correct function to install that script()
-			create a open.py
 			kali: create a separate install script / show certain tools as already installed because its in kali
-			be able to replicate attacks on a tool
 			uninstall tool
 		SMALL CHANGES: 
 			fix udsim code to print the correct library names
 			caringcaribou hasn't been tested/not confirmed if install works because need to test it with socketCAN
-			can't run all testinstall ; add at the end of function to cd back into folder (cd ..)
 			UDSIM not working yet, need to do some more reading on how to use / install 
-			Katoolin isn't changing to executable user can use
-			add wasim & omar's dependencies
+			add omar's dependencies
 
 	FRONT-END:
 		ADD:
@@ -54,7 +48,6 @@ TO DO:
 		Note:
 			can either clone our repo (this will probably still update github) or download the zip file and we will install git
 			Make sure the user knows that this will all be cloned in the current directory aka most likely ~/Documents/autopen/
-			Python3 is a requirement to run our application
 		Note:
 			ROMRAIDER: SUBARU - THIS IS NOT WORKING, INVALID OR CORRUPT .JAR
 				Warning: RomRaider is intended for use only by experienced tuners who understand the consequences. As with any tuning solution, the potential
@@ -75,6 +68,9 @@ TOOLS MAY BE INCLUDED:
 	CANBAGGER TOOLS 
 	AVRDUDESS:
 		(this one not sure if im going to install yet)
+
+TO DO LATER:
+
 
 TO DO (LOGISTICS):
 	1. test live demo for may 5 to make sure it will work
@@ -325,7 +321,7 @@ def github_tools(pack_man, toolname, repo):
 			else:
 				print ('COPY SUCCESSFUL: Successfully copied katoolin.py to /usr/bin/katoolin')
 				print ("Setting /usr/bin/katoolin to executable...")
-				mode_rc = subprocess.run(["sudo", "chmod", "754", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
+				mode_rc = subprocess.run(["sudo", "chmod", "+x", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
 				if mode_rc != 0:
 					print ("CONVERSION FAILED: Could not make /usr/bin/katoolin executable")
 					print ("ERROR CODE:", mode_rc)
@@ -341,6 +337,9 @@ def github_tools(pack_man, toolname, repo):
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed matplotlib from python')
 				socket = github_tools(pack_man, 'can-utils', repo) #this repo is can-utils repo
+
+	#changes back to /tools
+	general_use.move_up_directory()
 
 def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	general_use.update(pack_man)
@@ -380,6 +379,13 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 						print ('ERROR CODE:', ext_rc)
 					else:
 						print ('EXTRACTION SUCCESSFUL: Successfully decompressed tar file. Successfully installed pyobd')
+						print ('Removing .tar.gz file...')
+						remove_rc = subprocess.run(['rm', '-rf', 'pyobd_0.9.3.tar.gz']).returncode
+						if remove_rc != 0:
+							print ('REMOVAL FAILED: Failed to remove pyobd tar.gz file')
+							print ('ERROR CODE', remove_rc)
+						else:
+							print ('REMOVAL SUCCESSFUL: Successfully removed pyobd tar.gz file')
 
 		elif toolname == 'o2oo':
 			print ('Beginning o2oo installation...')
@@ -415,6 +421,14 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 						print ('ERROR CODE:', mak_rc)
 					else:
 						print ('BUILD SUCCESSFUL: Successfully built o2oo and installed')
+						print ('Removing .tgz file...')
+						remove_rc = subprocess.run(['rm', '-rf', 'O2OO-0.9.tgz']).returncode
+						if remove_rc != 0:
+							print ('REMOVAL FAILED: Failed to remove o2oo .tgz file')
+							print ('ERROR CODE', remove_rc)
+						else:
+							print ('REMOVAL SUCCESSFUL: Successfully removed o2oo .tgz file')
+							general_use.move_up_directory()
 
 		elif toolname == 'romraider':
 			print ('Beginning romraider installation...')
@@ -448,6 +462,13 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 		print ('ERROR CODE:', install_rc)
 	else:
 		print ('INSTALLATION SUCCESSFUL: Successfully installed', toolname)
+		if toolname == 'gnuradio':
+			dep_rc = dependencies.commandline_install(pack_man, 'gr-osmosdr')
+			if dep_rc != 0: 
+				print ('INSTALLATION FAILED: Failed to install gr-osmosdr dependency. gnuradio may not have certain features')
+				print ('ERROR CODE:', dep_rc)
+			else:
+				print ('INSTALLATION SUCCESSFUL: Successfully installed gr-osmosdr dependency for gnuradio')
 
 
 
