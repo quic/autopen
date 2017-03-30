@@ -80,10 +80,14 @@ def check_symlink(source_file, symlink):
 def check_NPM(pack_man): #cant decide if should do this / count this as basics, like install ruby and gcc and homebrew so that later can just run brew install node? 
 
 	try:
+		print ('Checking nodejs existence...')
+		print ('If nodejs exists, version number will be printed below:')
 		check_node_existence_rc = subprocess.run(['/usr/bin/nodejs', '--version']).returncode
 	except FileNotFoundError:
 		check_node_existence_rc = -1
 	try:
+		print ('Checking node existence...')
+		print ('If node exists, version number will be printed below:')
 		check_npm_existence_rc = subprocess.run(['/usr/bin/node', '--version']).returncode
 	except FileNotFoundError:
 		check_npm_existence_rc = -1
