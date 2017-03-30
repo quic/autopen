@@ -16,6 +16,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.label import Label
 
 from kivy.lang import Builder
+from tools import install
 
 class AutoPen(App):
 
@@ -246,7 +247,19 @@ class AutoPen(App):
 
 		return self.mainpage
 
-
+class Loading(App):
+    def build(self):
+        mainpage = FloatLayout()
+        logo = Image(source='AutoPen.png', pos_hint={'center_x': 0.5, 'center_y': .6})
+        spiderman = Label(
+            text='[size=24][i]With Great Power comes Great Responsibility[/i][/size]',
+            markup=True,
+            pos_hint={'center_x': 0.5, 'center_y': .2})
+        enter = Button(text='enter', size_hint=(0.2,0.1), pos_hint={'center_x': 0.5, 'center_y': .1})
+        mainpage.add_widget(logo)
+        mainpage.add_widget(spiderman)
+        mainpage.add_widget(enter)
+        return mainpage
 #layout.add_widget(MainToolsScreen())
 
 if __name__ == "__main__":
