@@ -15,7 +15,7 @@ TO DO:
 		IMPLEMENTATIONS:
 			handle log.txt (send stderr to stdout: http://stackoverflow.com/questions/29580663/save-error-message-of-subprocess-command)
 				make errors red, possibly make stderr and stdout
-				log it and show to the user
+				log it and show to the user ( | tee log.txt)
 			Kivy needs to be installed in order to run? How to get around that
 			check if an update is available and install that update
 		SCRIPTS:
@@ -26,10 +26,12 @@ TO DO:
 			be able to replicate attacks on a tool
 			uninstall tool
 		SMALL CHANGES: 
-			fix all "with error codes" ---> "error code"
 			fix udsim code to print the correct library names
-			fix aircrack-ng error
 			caringcaribou hasn't been tested/not confirmed if install works because need to test it with socketCAN
+			can't run all testinstall ; add at the end of function to cd back into folder (cd ..)
+			UDSIM not working yet, need to do some more reading on how to use / install 
+			Katoolin isn't changing to executable user can use
+			add wasim & omar's dependencies
 
 	FRONT-END:
 		ADD:
@@ -54,7 +56,7 @@ TO DO:
 			Make sure the user knows that this will all be cloned in the current directory aka most likely ~/Documents/autopen/
 			Python3 is a requirement to run our application
 		Note:
-			ROMRAIDER: SUBARU
+			ROMRAIDER: SUBARU - THIS IS NOT WORKING, INVALID OR CORRUPT .JAR
 				Warning: RomRaider is intended for use only by experienced tuners who understand the consequences. As with any tuning solution, the potential
 				for engine damage is very high when altering your ECUs hard coded values. The use of appropriate equipment (ie, knock sensor, wideband oxygen 
 				sensor) is extremely important. By downloading RomRaider, you agree to assume all risks and accept its license. Use at your own risk.
@@ -105,7 +107,7 @@ def github_tools(pack_man, toolname, repo):
 	git_rc = dependencies.clone_git_repo(repo)
 	if git_rc != 0:
 		print ('CLONING FAILED: Failed to clone repository at', repo)
-		print ('WITH ERROR CODE: ', git_rc)
+		print ('ERROR CODE:', git_rc)
 	else:
 		print ('CLONING SUCCESSFUL: Successfully cloned repository at', repo)
 		back_index = repo.rfind('/')
@@ -123,14 +125,14 @@ def github_tools(pack_man, toolname, repo):
 			can_utils_rc = dependencies.commandline_install(pack_man, 'can-utils')
 			if can_utils_rc != 0:
 				print ("INSTALLATION FAILED: Failed to install can-utils")
-				print ('WITH ERROR CODE: ', can_utils_rc)
+				print ('ERROR CODE:', can_utils_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed can-utils')
 				print ('Ensuring CAN modules are enabled...')
 				modprobe_rc = subprocess.run(['sudo', 'modprobe', 'can']).returncode	#not sure if going to keep this yet mainly cuz might not be necessary, also need to check if redhat has modprobe, it should but need to check (also just check generally if other linux has this already installed)
 				if modprobe_rc != 0:
 					print ('CHECK FAILED: Failed to add a LKM to the kernel. Can-utils may not be fully functional')
-					print ('WITH ERROR CODE: ', modprobe_rc)
+					print ('ERROR CODE:', modprobe_rc)
 				else:
 					print ('CHECK SUCCESSFUL: Successfully added a LKM to the kernel')
 
@@ -139,22 +141,22 @@ def github_tools(pack_man, toolname, repo):
 			npm_check_rc = dependencies.check_NPM(pack_man) #needed for the following step
 			if npm_check_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install canbus-utils dependencies. Check node.js and npm status')
-				print ('WITH ERROR CODE:', npm_check_rc)
+				print ('ERROR CODE:', npm_check_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed node.js and npm')
 				print ('Installing canbus-utils...')
 				npm_rc = subprocess.run(['npm', 'install']).returncode
 				if npm_rc != 0:
 					print ('INSTALLATION FAILED: Failed to run "npm install". Cannot complete canbus-utils installation')
-					print ('WITH ERROR CODE: ', npm_rc)
+					print ('ERROR CODE:', npm_rc)
 				else:
 					print ('INSTALLATION SUCCESSFUL: Successfully installed canbus-utils')
-		elif toolname == 'kayak':
+		elif toolname == 'Kayak':
 			print ('Beginning kayak installation...')
 			check_maven_rc = dependencies.commandline_install(pack_man, 'maven')
 			if check_maven_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install maven. Cannot complete kayak installation')
-				print ('WITH ERROR CODE:', check_maven_rc)
+				print ('ERROR CODE:', check_maven_rc)
 			else:
 				print ('Installing jdk...')
 				jdk_rc = dependencies.commandline_install(pack_man, 'default-jdk')
@@ -165,7 +167,7 @@ def github_tools(pack_man, toolname, repo):
 					mvn_rc = (subprocess.run(['mvn', 'clean', 'package'])).returncode
 					if mvn_rc != 0:
 						print ('INSTALLATION FAILED: Failed to run "mvn clean package". Cannot complete kayak installation')
-						print ('WITH ERROR CODE: ', mvn_rc)
+						print ('ERROR CODE:', mvn_rc)
 					else:
 						print ('INSTALLATION SUCCESSFUL: Successfully installed kayak')
 
@@ -176,7 +178,7 @@ def github_tools(pack_man, toolname, repo):
 			load_rc = subprocess.run(['sudo', 'modprobe', 'can']).returncode #might have to install modprobe?
 			if load_rc != 0:
 				print ('LOAD FAILED: Failed to load CAN module. Cannot complete caringcaribou installation')
-				print ('WITH ERROR CODE: ', load_rc)
+				print ('ERROR CODE:', load_rc)
 			else:
 				print ('LOAD SUCCESSFUL: Successfully loaded CAN module')
 
@@ -189,19 +191,19 @@ def github_tools(pack_man, toolname, repo):
 				# -----------> handle the error that ip is not a command, 
 				if setup_can_rc != 0:
 					print ('SETUP FAILED: Failed to set-up can device.')
-					print ('WITH ERROR CODE: ', setup_can_rc)
+					print ('ERROR CODE:', setup_can_rc)
 				else:
 					print ('SETUP SUCCESSFUL: Successfully set-up can device. This will now display as a normal network interface as can0')
 					pcan_rc = dependencies.download_install(link_pythoncan)
 					if pcan_rc != 0:
 						print ('DOWNLOAD FAILED: Failed to download pythoncan from', link_pythoncan, 'Cannot complete caringcaribou installation')
-						print ('WITH ERROR CODE: ', pcan_rc)
+						print ('ERROR CODE:', pcan_rc)
 					else:
 						print ('DOWNLOAD SUCCESSFUL: Successfully downloaded pythoncan from', link_pythoncan)
 						setup_pcan_rc = subprocess.run(['sudo', 'python', 'setup.py', 'install']).returncode
 						if setup_pcan_rc != 0:
 							print ('DOWNLOAD SUCCESSFUL: Failed to install python-can. Cannot complete caringcaribou installation')
-							print ('WITH ERROR CODE: ', setup_pcan_rc)
+							print ('ERROR CODE:', setup_pcan_rc)
 						else:
 							print ('INSTALLATION SUCCESSFUL: Successfully installed python-can. Caringcaribou installation complete')
 
@@ -213,27 +215,27 @@ def github_tools(pack_man, toolname, repo):
 			gem_rc = dependencies.commandline_install(pack_man, 'rubygems')
 			if gem_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install gem. Cannot complete c0f installation')
-				print ('WITH ERROR CODE: ', gem_rc)
+				print ('ERROR CODE:', gem_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed gem')
 				headers_rc = dependencies.commandline_install(pack_man, 'ruby-dev')
 				if headers_rc != 0:
 					print ('INSTALLATION FAILED: Failed to install header files for ruby. Cannot complete c0f installation')
-					print ('WITH ERROR CODE:', headers_rc)
+					print ('ERROR CODE:', headers_rc)
 				else:
 					print ('INSTALLATION SUCCESSFUL: Successfully installed header files for ruby')
 					print ('Installing sqlite3 library...')
-					sql_rc = dependencies.commandline_install(pack_man, libsqlite3_dev)
+					sql_rc = dependencies.commandline_install(pack_man, "libsqlite3-dev")
 					if sql_rc != 0:
 						print ('INSTALLATION FAILED: Failed to install sqlite3 library')
-						print ('WITH ERROR CODE:'. sql_rc)
+						print ('ERROR CODE:'. sql_rc)
 					else:
 						print ('INSTALLATION SUCCESSFUL: Successfully installed sqlite3')
 						print ('Installing c0f...')
 						c0f_rc = subprocess.run(['gem', 'install', 'c0f']).returncode
 						if c0f_rc != 0:
 							print ('INSTALLATION FAILED: Failed to install c0f.')
-							print ('WITH ERROR CODE: ', c0f_rc)
+							print ('ERROR CODE:', c0f_rc)
 						else:
 							print ('INSTALLATION SUCCESSFUL: Successfully installed c0f')
 
@@ -250,7 +252,7 @@ def github_tools(pack_man, toolname, repo):
 				if j != 0:
 					final_rc = -1
 					print ('INSTALLATION FAILED: Could not install library libsdl2-', lib_names[i])
-					print ('WITH ERROR CODE: ', j)
+					print ('ERROR CODE:', j)
 				else:
 					print ('INSTALLATION SUCCESSFUL: Successfully installed library libsdl2-', i)
 			if final_rc != 0:
@@ -260,8 +262,14 @@ def github_tools(pack_man, toolname, repo):
 	
 			#Bluetooth tools below
 
-		elif toolname == 'bluelog': #has an optional web mode so when running want to add that functionality.  (just run make to run)
-			print ('INSTALLATION SUCCESSFUL: Successfully installed bluelog')
+		elif toolname == 'Bluelog': #has an optional web mode so when running want to add that functionality.  (just run make to run)
+			print ('Installing bluelog...')
+			ins_rc = subprocess.run(['sudo', 'make', 'install']).returncode
+			if ins_rc != 0:
+				print ('INSTALLATION FAILED: Failed to install bluelog')
+				print ('ERROR CODE:', ins_rc)
+			else:
+				print ('INSTALLATION SUCCESSFUL: Successfully installed bluelog')
 		elif toolname == 'bluemaho':
 			print ('Beginning bluemaho installation...')
 			print ('Installing bluemaho dependencies...')
@@ -288,7 +296,7 @@ def github_tools(pack_man, toolname, repo):
 					if i < 7:
 						#maybe we'll be nice and include which library is associate with what attack 
 						print ('INSTALLATION FAILED: Failed to install dependency', depend[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
-						print ('WITH ERROR CODE:', j)
+						print ('ERROR CODE:', j)
 						essential = j
 					else:
 						print ('INSTALLATION FAILED: Failed to install dependency', depend[i])
@@ -306,7 +314,7 @@ def github_tools(pack_man, toolname, repo):
 				build_rc = subprocess.run(['./build.sh']).returncode
 				if build_rc != 0:
 					print ('BUILD FAILED: Failed to build and complete installation of Bluemaho')
-					print ('WITH ERROR CODE:', build_rc)
+					print ('ERROR CODE:', build_rc)
 				else:
 					print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
 		elif toolname == 'katoolin':
@@ -317,7 +325,7 @@ def github_tools(pack_man, toolname, repo):
 			else:
 				print ('COPY SUCCESSFUL: Successfully copied katoolin.py to /usr/bin/katoolin')
 				print ("Setting /usr/bin/katoolin to executable...")
-				mode_rc = subprocess.run(["chmod", "754", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
+				mode_rc = subprocess.run(["sudo", "chmod", "754", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
 				if mode_rc != 0:
 					print ("CONVERSION FAILED: Could not make /usr/bin/katoolin executable")
 					print ("ERROR CODE:", mode_rc)
@@ -325,7 +333,7 @@ def github_tools(pack_man, toolname, repo):
 					print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
 					print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
 
-		elif toolname == 'do':
+		elif toolname == 'canutils-x':
 			mat_rc = dependencies.commandline_install(pack_man, 'python-matplotlib')
 			if mat_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install matplotlib from python. This is needed to run do')
@@ -342,7 +350,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	down_rc = dependencies.download_install(link)
 	if down_rc != 0:
 		print ('DOWNLOAD FAILED: Failed to download file for', toolname, 'using download link:', link)
-		print ('WITH ERROR CODE: ', down_rc)
+		print ('ERROR CODE:', down_rc)
 	else:
 		print ('DOWNLOAD SUCCESSFUL: Successfully downloaded file for', toolname)
 
@@ -353,23 +361,23 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 				if deb_rc != 0:
 					print ('Download Failed: Failed to download debian specific file') #need to figure out what this is for
 			print ('Installing pyserial...')
-			pyserial_rc = subprocess.run(['python3', '-m', 'pip', 'install', 'pyserial'])
+			pyserial_rc = subprocess.run(['python3', '-m', 'pip', 'install', 'pyserial']).returncode
 			if pyserial_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install pyserial. Cannot complete pyobd installation')
-				print ('WITH ERROR CODE:', pyserial_rc)
+				print ('ERROR CODE:', pyserial_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed pyserial')
 				wx_rc = dependencies.commandline_install(pack_man, 'python-wxgtk3.0')
 				if wx_rc != 0:
 					print ('INSTALLATION FAILED: Failed to install python-wxgtk3.0. Cannot complete pyobd installation')
-					print ('WITH ERROR CODE:', wx_rc)
+					print ('ERROR CODE:', wx_rc)
 				else:
 					print ('INSTALLATION SUCCESSFUL: Successfully installed python-wxgtk3')
 					print ('Extracting pyobd...')
 					ext_rc = subprocess.run(['tar', '-xzvf', 'pyobd_0.9.3.tar.gz']).returncode
 					if ext_rc != 0:
 						print ('EXTRACTION FAILED: Failed to decompress pyobd tar file')
-						print ('WITH ERROR CODE:', ext_rc)
+						print ('ERROR CODE:', ext_rc)
 					else:
 						print ('EXTRACTION SUCCESSFUL: Successfully decompressed tar file. Successfully installed pyobd')
 
@@ -378,7 +386,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 			extract_rc = subprocess.run(['tar', '-xzvf', 'O2OO-0.9.tgz']).returncode
 			if extract_rc != 0:
 				print ('EXTRACTION FAILED: Failed to decompress the o2oo tar file')
-				print ('WITH ERROR CODE:', extract_rc)
+				print ('ERROR CODE:', extract_rc)
 			else:
 				print ('EXTRACTION SUCCESSFUL: Successfully extracted o2oo tar file.')
 				print ('Installing o2oo dependencies...')
@@ -391,7 +399,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 				for i,j in enumerate(rc):
 					if j != 0:
 						print ('INSTALLATION FAILED: Failed to install dependency', l[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
-						print ('WITH ERROR CODE:', j)
+						print ('ERROR CODE:', j)
 						ins = j
 
 				if ins != 0:
@@ -404,7 +412,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 					mak_rc = subprocess.run(['sudo', 'make', 'install']).returncode
 					if mak_rc != 0:
 						print ('BUILD FAILED: Failed to build o2oo')
-						print ('WITH ERROR CODE:', mak_rc)
+						print ('ERROR CODE:', mak_rc)
 					else:
 						print ('BUILD SUCCESSFUL: Successfully built o2oo and installed')
 
@@ -413,7 +421,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 			rom_rc = dependencies.download_install(link)
 			if rom_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install RomRaiders.')
-				print ('WITH ERROR CODE:', rom_rc)
+				print ('ERROR CODE:', rom_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed RomRaiders')
 
@@ -433,11 +441,11 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 		install_rc = dependencies.commandline_install(pack_man, 'gnuradio')
 	elif toolname == 'aircrack-ng':
 		print ('Beginning aircrack-ng installation...')
-		air_rc = dependencies.commandline_install(pack_man, 'aircrack-ng')
+		install_rc = dependencies.commandline_install(pack_man, 'aircrack-ng')
 
 	if install_rc != 0:
 		print ('INSTALLATION FAILED: Failed to install', toolname)
-		print ('WITH ERROR CODE:', install_rc)
+		print ('ERROR CODE:', install_rc)
 	else:
 		print ('INSTALLATION SUCCESSFUL: Successfully installed', toolname)
 
