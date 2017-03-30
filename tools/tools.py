@@ -26,8 +26,6 @@ TO DO:
 			be able to replicate attacks on a tool
 			uninstall tool
 		SMALL CHANGES: 
-			remove python3 installation
-			in check_npm, the version is printed out, might want to add print statements around that --> blank is installed with version number bleh
 			fix all "with error codes" ---> "error code"
 			fix udsim code to print the correct library names
 			fix aircrack-ng error
