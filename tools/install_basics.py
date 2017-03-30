@@ -9,10 +9,6 @@ Assumes user is running as root and has apt-get installed
 
 '''
 
-#send STDERR to STDOUT: http://stackoverflow.com/questions/29580663/save-error-message-of-subprocess-command
-#right now it logs everything, once completed add functionality for errors to print in RED and for multiple logs to be made, complete, STDERR, etc.
-#current issue a lot of these asks do you want to continue, obvi need to say yes. How does one automate that? 
-
 import general_use
 import dependencies
 import subprocess
@@ -21,7 +17,8 @@ distro = general_use.check_distribution()
 pack_man = general_use.package_tool(distro)
 
 
-def install_python(pack_man):
+
+def update_python(pack_man):
 	'''
 	This function installs or updates Python 3 depending on whether it is already on the system or not
 	'''
@@ -36,7 +33,7 @@ def install_python(pack_man):
 	else:
 		print ('INSTALLATION SUCCESSFUL: Python 3 successfully installed')
 
-def install_git(pack_man):
+def update_git(pack_man):
 	'''
 		This function installs or updates git depending on whether it is already on the system or not
 	'''
@@ -78,8 +75,8 @@ def install_pip(pack_man):
 		else:
 			print ('UPGRADE SUCCESSFUL: Successfully upgraded pip to newest version')
 
-install_python(pack_man)
-install_git(pack_man)
+update_python(pack_man)
+update_git(pack_man)
 install_curl(pack_man)
 install_pip(pack_man)
 
