@@ -1,0 +1,13 @@
+#:import ListAdapter kivy.adapters.listadapter.ListAdapter
+#:import ListItemButton kivy.uix.listview.ListItemButton
+
+<FloatLayout>:
+    canvas.before:
+        Rectangle:
+            source: 'background.jpg'
+            pos: self.pos
+            size: self.size
+
+<ListItemButton>:
+    selected_color: 0.5, 0.5, 0.5, 1
+    deselected_color: 0.7, 0.7, 0.7, 1
