@@ -90,7 +90,6 @@ link_pyserial = 'https://sourceforge.net/projects/pyserial/files/pyserial/2.0/py
 link_pythoncan = 'https://bitbucket.org/hardbyte/python-can/get/77eea796362b.zip'
 link_package = 'https://pkgconfig.freedesktop.org/releases/pkg-config-0.21.tar.gz' #needed for bluelog
 
-it = open('installed.txt', 'w')
 
 def github_tools(pack_man, toolname, repo):
 	'''
@@ -99,6 +98,7 @@ def github_tools(pack_man, toolname, repo):
 	'''
 	general_use.update(pack_man)
 	f_rc = -1 
+	it = open('installed.txt', 'w')
 
 	print ("Cloning repository...")	#might install 
 	git_rc = dependencies.clone_git_repo(repo)
