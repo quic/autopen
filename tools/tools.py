@@ -21,7 +21,7 @@ TO DO:
 			write install.py script to run check_distro and run the correct function to install that script()
 			kali: create a separate install script / show certain tools as already installed because its in kali
 			uninstall tool
-		SMALL CHANGES: 
+		SMALL CHANGES:
 			fix udsim code to print the correct library names
 			caringcaribou hasn't been tested/not confirmed if install works because need to test it with socketCAN
 			UDSIM not working yet, need to do some more reading on how to use / install 
@@ -305,7 +305,7 @@ def github_tools(pack_man, toolname, repo):
 				print ('Building Bluemaho...')
 				c_dir = os.getcwd()
 				#last_slash = c_dir.rfind('/')
-				path = current_dir + '/bluemaho' + '/config'
+				path = c_dir + '/config'
 				os.chdir(path)
 				build_rc = subprocess.run(['./build.sh']).returncode
 				if build_rc != 0:
@@ -337,7 +337,39 @@ def github_tools(pack_man, toolname, repo):
 				print ('ERROR CODE:'. mat_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed matplotlib from python')
-				socket = github_tools(pack_man, 'can-utils', repo) #this repo is can-utils repo
+				socket = github_tools(pack_man, 'can-utils', repo) #this repo is can-utils repo [check if can-utils has already been installed - will be handled by exception handler]
+		elif toolname == 'j1939':
+			make_rc = subprocess.run(['make']).returncode #figure out whether this is make or make install
+			if make_rc != 0:
+				print ('INSTALLATION FAILED: Failed to install can-utils-j1939. Could not run create executables running make')
+				print ('ERROR CODE:', make_rc)
+			else:
+				print ('INSTALLATION SUCCESSFUL: Successfully installed can-utils-j1939')
+		elif toolname == 'canbadger':
+			print ('REPOSITORY AVAILABLE: The CANBadger repository has been cloned to your machine')
+			print ('If you need help, refer to the tutorial on the right side of the installation page')
+		elif toolname == 'canbadger-server':
+			essential = 0
+			libs = ['python-qt4', 'pyqt4-dev-tools', 'qtcreator']
+			rcs = [dependencies.commandline_install(pack_man, i) for i in libs]
+
+			for i,j in enumerate(rcs): #FIX THIS CODE BELOW
+				if j != 0:
+					if i < 7:
+						print ('INSTALLATION FAILED: Failed to install dependency', depend[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
+						print ('ERROR CODE:', j)
+						essential = j
+					else:
+						print ('INSTALLATION FAILED: Failed to install dependency', depend[i])
+						essential = -1
+
+			if essential != 0:
+				print ('INSTALLATION FAILED: Failed to install canbadger-server dependencies')
+			else:
+				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for canbadger-server')
+
+
+
 
 	#changes back to /tools
 	general_use.move_up_directory()
@@ -457,6 +489,12 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 	elif toolname == 'aircrack-ng':
 		print ('Beginning aircrack-ng installation...')
 		install_rc = dependencies.commandline_install(pack_man, 'aircrack-ng')
+	elif toolname == 'wireshark-commandline':
+		print ('Beginning wireshark command-line installation...')
+		install_rc = dependencies.commandline_install(pack_man, 'wireshark')
+	elif toolname == 'wireshark-gui':
+		print ('Beginning wireshark GUI installation...')
+		install_rc = dependencies.commandline_install(pack_man, 'wireshark-gnome')
 
 	if install_rc != 0:
 		print ('INSTALLATION FAILED: Failed to install', toolname)
