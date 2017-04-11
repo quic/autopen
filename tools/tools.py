@@ -85,12 +85,12 @@ import dependencies
 import subprocess
 import os
 
-
 link_pyobd_debian = 'http://www.obdtester.com/download/pyobd_0.9.3_all.deb'
 link_pyserial = 'https://sourceforge.net/projects/pyserial/files/pyserial/2.0/pyserial-2.0.zip/download'
 link_pythoncan = 'https://bitbucket.org/hardbyte/python-can/get/77eea796362b.zip'
 link_package = 'https://pkgconfig.freedesktop.org/releases/pkg-config-0.21.tar.gz' #needed for bluelog
 
+it = open('installed.txt', 'w')
 
 def github_tools(pack_man, toolname, repo):
 	'''
@@ -98,6 +98,7 @@ def github_tools(pack_man, toolname, repo):
 		rc stands for returncode
 	'''
 	general_use.update(pack_man)
+	f_rc = -1 
 
 	print ("Cloning repository...")	#might install 
 	git_rc = dependencies.clone_git_repo(repo)
@@ -125,10 +126,10 @@ def github_tools(pack_man, toolname, repo):
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed can-utils')
 				print ('Ensuring CAN modules are enabled...')
-				modprobe_rc = subprocess.run(['sudo', 'modprobe', 'can']).returncode	#not sure if going to keep this yet mainly cuz might not be necessary, also need to check if redhat has modprobe, it should but need to check (also just check generally if other linux has this already installed)
-				if modprobe_rc != 0:
+				f_rc = subprocess.run(['sudo', 'modprobe', 'can']).returncode	#not sure if going to keep this yet mainly cuz might not be necessary, also need to check if redhat has modprobe, it should but need to check (also just check generally if other linux has this already installed)
+				if f_rc != 0:
 					print ('CHECK FAILED: Failed to add a LKM to the kernel. Can-utils may not be fully functional')
-					print ('ERROR CODE:', modprobe_rc)
+					print ('ERROR CODE:', f_rc)
 				else:
 					print ('CHECK SUCCESSFUL: Successfully added a LKM to the kernel')
 
@@ -141,12 +142,13 @@ def github_tools(pack_man, toolname, repo):
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed node.js and npm')
 				print ('Installing canbus-utils...')
-				npm_rc = subprocess.run(['npm', 'install']).returncode
-				if npm_rc != 0:
+				f_rc = subprocess.run(['npm', 'install']).returncode
+				if f_rc != 0:
 					print ('INSTALLATION FAILED: Failed to run "npm install". Cannot complete canbus-utils installation')
-					print ('ERROR CODE:', npm_rc)
+					print ('ERROR CODE:', f_rc)
 				else:
 					print ('INSTALLATION SUCCESSFUL: Successfully installed canbus-utils')
+
 		elif toolname == 'Kayak':
 			print ('Beginning kayak installation...')
 			check_maven_rc = dependencies.commandline_install(pack_man, 'maven')
@@ -160,10 +162,10 @@ def github_tools(pack_man, toolname, repo):
 					print ('INSTALLATION FAILED: Failed to install jdk. This compiler is needed to run mvn clean. Cannot complete kayak installation')
 				else:
 					('Installing kayak...')
-					mvn_rc = (subprocess.run(['mvn', 'clean', 'package'])).returncode
-					if mvn_rc != 0:
+					f_rc = (subprocess.run(['mvn', 'clean', 'package'])).returncode
+					if f_rc != 0:
 						print ('INSTALLATION FAILED: Failed to run "mvn clean package". Cannot complete kayak installation')
-						print ('ERROR CODE:', mvn_rc)
+						print ('ERROR CODE:', f_rc)
 					else:
 						print ('INSTALLATION SUCCESSFUL: Successfully installed kayak')
 
@@ -196,10 +198,10 @@ def github_tools(pack_man, toolname, repo):
 						print ('ERROR CODE:', pcan_rc)
 					else:
 						print ('DOWNLOAD SUCCESSFUL: Successfully downloaded pythoncan from', link_pythoncan)
-						setup_pcan_rc = subprocess.run(['sudo', 'python', 'setup.py', 'install']).returncode
-						if setup_pcan_rc != 0:
+						f_rc = subprocess.run(['sudo', 'python', 'setup.py', 'install']).returncode
+						if f_rc != 0:
 							print ('DOWNLOAD SUCCESSFUL: Failed to install python-can. Cannot complete caringcaribou installation')
-							print ('ERROR CODE:', setup_pcan_rc)
+							print ('ERROR CODE:', f_rc)
 						else:
 							print ('INSTALLATION SUCCESSFUL: Successfully installed python-can. Caringcaribou installation complete')
 
@@ -228,16 +230,16 @@ def github_tools(pack_man, toolname, repo):
 					else:
 						print ('INSTALLATION SUCCESSFUL: Successfully installed sqlite3')
 						print ('Installing c0f...')
-						c0f_rc = subprocess.run(['gem', 'install', 'c0f']).returncode
-						if c0f_rc != 0:
+						f_rc = subprocess.run(['gem', 'install', 'c0f']).returncode
+						if f_rc != 0:
 							print ('INSTALLATION FAILED: Failed to install c0f.')
-							print ('ERROR CODE:', c0f_rc)
+							print ('ERROR CODE:', f_rc)
 						else:
 							print ('INSTALLATION SUCCESSFUL: Successfully installed c0f')
 
 		elif toolname == 'udsim': #know later that when user starts the program they have to run make in the file that they are in. Or maybe we can run make
 			print ('Beginning udsim installation...')
-			final_rc = 0
+			f_rc = 0
 
 			#lambda these map to function
 			ttf_dev = dependencies.commandline_install(pack_man, 'libsdl2-ttf-dev')
@@ -246,13 +248,14 @@ def github_tools(pack_man, toolname, repo):
 			lib_names = ['ttf-dev', 'image']
 			for i, j in enumerate(returncode_list):
 				if j != 0:
-					final_rc = -1
+					f_rc = -1
 					print ('INSTALLATION FAILED: Could not install library libsdl2-', lib_names[i])
 					print ('ERROR CODE:', j)
 				else:
 					print ('INSTALLATION SUCCESSFUL: Successfully installed library libsdl2-', i)
-			if final_rc != 0:
+			if f_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install libraries needed to compile UDSIM. Cannot complete udsim installation')
+				print ('ERROR CODE:', f_rc)
 			else:
 				print ('INSTALLATION COMPLETE: Successfully installed the libraries needed to compile UDSIM.')
 	
@@ -266,6 +269,7 @@ def github_tools(pack_man, toolname, repo):
 				print ('ERROR CODE:', ins_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed bluelog')
+				it.write('bluelog')
 		elif toolname == 'bluemaho':
 			print ('Beginning bluemaho installation...')
 			print ('Installing bluemaho dependencies...')
@@ -307,10 +311,10 @@ def github_tools(pack_man, toolname, repo):
 				#last_slash = c_dir.rfind('/')
 				path = c_dir + '/config'
 				os.chdir(path)
-				build_rc = subprocess.run(['./build.sh']).returncode
-				if build_rc != 0:
+				f_rc = subprocess.run(['./build.sh']).returncode
+				if f_rc != 0:
 					print ('BUILD FAILED: Failed to build and complete installation of Bluemaho')
-					print ('ERROR CODE:', build_rc)
+					print ('ERROR CODE:', f_rc)
 				else:
 					print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
 					general_use.move_up_directory()
@@ -322,10 +326,10 @@ def github_tools(pack_man, toolname, repo):
 			else:
 				print ('COPY SUCCESSFUL: Successfully copied katoolin.py to /usr/bin/katoolin')
 				print ("Setting /usr/bin/katoolin to executable...")
-				mode_rc = subprocess.run(["sudo", "chmod", "+x", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
-				if mode_rc != 0:
+				f_rc = subprocess.run(["sudo", "chmod", "+x", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
+				if f_rc != 0:
 					print ("CONVERSION FAILED: Could not make /usr/bin/katoolin executable")
-					print ("ERROR CODE:", mode_rc)
+					print ("ERROR CODE:", f_rc)
 				else:
 					print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
 					print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
@@ -338,11 +342,13 @@ def github_tools(pack_man, toolname, repo):
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed matplotlib from python')
 				socket = github_tools(pack_man, 'can-utils', repo) #this repo is can-utils repo [check if can-utils has already been installed - will be handled by exception handler]
+
+				#not done
 		elif toolname == 'j1939':
-			make_rc = subprocess.run(['make']).returncode #figure out whether this is make or make install
-			if make_rc != 0:
+			f_rc = subprocess.run(['make']).returncode #figure out whether this is make or make install
+			if f_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install can-utils-j1939. Could not run create executables running make')
-				print ('ERROR CODE:', make_rc)
+				print ('ERROR CODE:', f_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed can-utils-j1939')
 		elif toolname == 'canbadger':
@@ -356,27 +362,32 @@ def github_tools(pack_man, toolname, repo):
 			for i,j in enumerate(rcs): #FIX THIS CODE BELOW
 				if j != 0:
 					if i < 7:
-						print ('INSTALLATION FAILED: Failed to install dependency', depend[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
+						print ('INSTALLATION FAILED: Failed to install dependency', libs[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
 						print ('ERROR CODE:', j)
-						essential = j
+						f_rc = j
 					else:
-						print ('INSTALLATION FAILED: Failed to install dependency', depend[i])
-						essential = -1
+						print ('INSTALLATION FAILED: Failed to install dependency', libs[i])
+						f_rc = -1
 
-			if essential != 0:
+			if f_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install canbadger-server dependencies')
+				print ('ERROR CODE:', f_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for canbadger-server')
 
 
 
 
-	#changes back to /tools
+	#changes back to /tools --> writes to installed.txt if the tool has been installed successfully
 	general_use.move_up_directory()
+	if f_rc == 0:
+		it.write(toolname)
+	return f_rc
 
 def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	general_use.update(pack_man)
 	d = general_use.check_distribution()
+	f_rc = -1
 
 	#NOTE: If pyOBD link doesn't work tell them the install.html is available
 	down_rc = dependencies.download_install(link)
@@ -413,10 +424,10 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 					else:
 						print ('EXTRACTION SUCCESSFUL: Successfully decompressed tar file. Successfully installed pyobd')
 						print ('Removing .tar.gz file...')
-						remove_rc = subprocess.run(['rm', '-rf', 'pyobd_0.9.3.tar.gz']).returncode
-						if remove_rc != 0:
+						f_rc = subprocess.run(['rm', '-rf', 'pyobd_0.9.3.tar.gz']).returncode
+						if f_rc != 0:
 							print ('REMOVAL FAILED: Failed to remove pyobd tar.gz file')
-							print ('ERROR CODE', remove_rc)
+							print ('ERROR CODE', f_rc)
 						else:
 							print ('REMOVAL SUCCESSFUL: Successfully removed pyobd tar.gz file')
 
@@ -455,22 +466,26 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 					else:
 						print ('BUILD SUCCESSFUL: Successfully built o2oo and installed')
 						print ('Removing .tgz file...')
-						remove_rc = subprocess.run(['rm', '-rf', 'O2OO-0.9.tgz']).returncode
-						if remove_rc != 0:
+						f_rc = subprocess.run(['rm', '-rf', 'O2OO-0.9.tgz']).returncode
+						if f_rc != 0:
 							print ('REMOVAL FAILED: Failed to remove o2oo .tgz file')
-							print ('ERROR CODE', remove_rc)
+							print ('ERROR CODE', f_rc)
 						else:
 							print ('REMOVAL SUCCESSFUL: Successfully removed o2oo .tgz file')
 							general_use.move_up_directory()
 
 		elif toolname == 'romraider':
 			print ('Beginning romraider installation...')
-			rom_rc = dependencies.download_install(link)
-			if rom_rc != 0:
+			f_rc = dependencies.download_install(link)
+			if f_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install RomRaiders.')
-				print ('ERROR CODE:', rom_rc)
+				print ('ERROR CODE:', f_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed RomRaiders')
+
+		if f_rc == 0:
+			it.write(toolname)
+		return f_rc
 
 def installed_tools(pack_man, toolname): #this function is for tools that are apt-getable / yumable
 	general_use.update(pack_man)
@@ -508,6 +523,15 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 				print ('ERROR CODE:', dep_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed gr-osmosdr dependency for gnuradio')
+
+	if install_rc == 0:
+		it.write(toolname)
+	return install_rc
+
+
+
+
+it.close()
 
 
 
