@@ -11,6 +11,9 @@ def install(toolname):
 	repo_caringcaribou = 'https://github.com/CaringCaribou/caringcaribou.git' #want to check this to make sure it works, instructions a bit unclear
 	repo_c0f = 'https://github.com/zombieCraig/c0f.git'
 	repo_udsim = 'https://github.com/zombieCraig/UDSim.git'
+	repo_j1939 = 'https://github.com/wang701/can-utils-j1939.git'
+	repo_canbadger = 'https://github.com/Gutenshit/CANBadger.git'
+	repo_canbadger_server = 'https://github.com/Gutenshit/CANBadger-Server.git'
 
 	repo_katoolin = 'https://github.com/LionSec/katoolin.git'
 
@@ -41,6 +44,12 @@ def install(toolname):
 		tools.github_tools(pack_man, 'Bluelog', repo_bluelog)
 	elif toolname == 'bluemaho':
 		tools.github_tools(pack_man, 'bluemaho', repo_bluemaho)
+	elif toolname == 'j1939':
+		tools.github_tools(pack_man, 'j1939', repo_j1939)
+	elif toolname == 'canbadger':
+		tools.github_tools(pack_man, 'canbadger', repo_canbadger)
+	elif toolname == 'canbadger-server':
+		tools.github_tools(pack_man, 'canbadger-server', repo_canbadger_server)
 	elif toolname == 'pyobd':
 		tools.downloaded_tools(pack_man, 'pyobd', link_pyobd)
 	elif toolname == 'o2oo':
