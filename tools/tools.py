@@ -98,7 +98,7 @@ def github_tools(pack_man, toolname, repo):
 	'''
 	general_use.update(pack_man)
 	f_rc = -1 
-	it = open('installed.txt', 'w')
+	it = open('installed.txt', 'a')
 
 	print ("Cloning repository...")	#might install 
 	git_rc = dependencies.clone_git_repo(repo)
@@ -382,12 +382,14 @@ def github_tools(pack_man, toolname, repo):
 	general_use.move_up_directory()
 	if f_rc == 0:
 		it.write(toolname)
+	it.close()
 	return f_rc
 
 def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	general_use.update(pack_man)
 	d = general_use.check_distribution()
 	f_rc = -1
+	it = open('installed.txt', 'a')
 
 	#NOTE: If pyOBD link doesn't work tell them the install.html is available
 	down_rc = dependencies.download_install(link)
@@ -483,14 +485,17 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed RomRaiders')
 
-		if f_rc == 0:
-			it.write(toolname)
-		return f_rc
+	if f_rc == 0:
+		it.write(toolname)
+	it.close()
+	return f_rc
 
 def installed_tools(pack_man, toolname): #this function is for tools that are apt-getable / yumable
 	general_use.update(pack_man)
 
 	install_rc = -1
+	it = open('installed.txt', 'a')
+
 
 	if toolname == 'bluetooth tools': #this installs hciconfig, l2ping, hcitool, etc. 
 		print ('Beginning bluetooth tools installation...')
@@ -524,14 +529,14 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed gr-osmosdr dependency for gnuradio')
 
-	if install_rc == 0:
+	if install_rc == 0 & toolname != 'gnuradio':
 		it.write(toolname)
+	elif dep_rc == 0 & toolname == 'gnuradio':
+		it.write(toolname)
+	it.close()
 	return install_rc
 
 
-
-
-it.close()
 
 
 
