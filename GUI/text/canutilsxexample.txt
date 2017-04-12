@@ -1,0 +1,1 @@
+Click the buttons to set the settings and/or run the program. The live plots are displayed on the left and can be configured from the "Live Monitoring"

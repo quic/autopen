@@ -1,0 +1,31 @@
+			with open("canutils.txt", "r") as stream:
+				labeltext = stream.read()
+			label = Label(text=labeltext, markup=True, text_size=(400,680), pos_hint={'x':0, 'y':.15})
+			self.mainpage.add_widget(label)
+			with open("canutilsexample.txt", "r") as stream:
+				labeltext = stream.read()
+			example = Label(text=labeltext, markup=True, text_size=(400, 680), pos_hint={'x': 0.3, 'y': .25})
+			self.mainpage.add_widget(example)
+
+canutils.txt
+[size=32][b]Can-utils[/b][/size]
+[size=20]by [i]ZombieCraig[/i]
+
+SocketCAN userspace utilities and tools
+
+CAN is a message-based network protocol designed for vehicles originally initially created by Robert Bosch GmbH. SocketCAN is a set of open source CAN drivers and a networking stack contributed by Volkswagen Research to the Linux kernel.
+
+This package contains some userspace utilities for Linux SocketCAN subsystem: asc2log, bcmserver, canbusload, can-calc-bit-timing, candump, canfdtest, cangen, cangw, canlogserver, canplayer, cansend, cansniffer, isotpdump, isotprecv, isotpperf, isotpsend, isotpserver, isotpsniffer, isotptun, log2asc, log2long, slcan_attach, slcand and slcanpty.
+[/size]
+
+canutilsexample.txt
+To listen to traffic on the bus, we can use candump.
+
+To show all traffic in real time on device can0:
+
+candump can0
+
+The displayed messages can be filtered using a mask and identifier. Two filter types are available:
+
+[can_id]:[can_mask] matches when [received_can_id] & [can_mask] == [can_id] & [mask]
+[can_id]~[can_mask] matches when [received_can_id] & [can_mask] != [can_id] & [mask]

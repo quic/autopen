@@ -1,0 +1,3 @@
+[size=32][b]Can-utils-X[/b][/size]
+GUI Based implementation of can-utils by ZombieCraig. Functionally works the same, with GUI of liveplots and active data streams similar to Vehicle Spy 3.
+Uses matplotlib.
