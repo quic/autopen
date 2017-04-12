@@ -16,12 +16,19 @@ import subprocess
 distro = general_use.check_distribution()
 pack_man = general_use.package_tool(distro)
 
+installed_tools = []
+try:
+	it = open('installed.txt', 'r')y
+	installed_tools = it.readlines()
+except FileNotFoundError:
+	pass
+
 def install_python(pack_man):
 	'''
 	This function installs or updates Python 3 depending on whether it is already on the system or not
 	'''
 
-	print ('Installing Python 3...')
+	print ('Installing/Updating Python 3...')
 
 	p_rc = dependencies.commandline_install(pack_man, "python3")
 	if p_rc != 0:

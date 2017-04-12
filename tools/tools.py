@@ -1,4 +1,4 @@
-	'''
+'''
 
 #Reference Links for me, might remove later we'll see how life goes 
 	can-utils : https://discuss.cantact.io/t/using-can-utils/24 (eric evenchick)
@@ -90,7 +90,6 @@ link_pyserial = 'https://sourceforge.net/projects/pyserial/files/pyserial/2.0/py
 link_pythoncan = 'https://bitbucket.org/hardbyte/python-can/get/77eea796362b.zip'
 link_package = 'https://pkgconfig.freedesktop.org/releases/pkg-config-0.21.tar.gz' #needed for bluelog
 
-
 def github_tools(pack_man, toolname, repo):
 	'''
 		This function installs the tools that use github
@@ -111,10 +110,7 @@ def github_tools(pack_man, toolname, repo):
 		dot_index = repo.rfind('.')
 		folder_name = repo[back_index:dot_index]
 		print ('Changing directory to', folder_name[1:], '...')
-		current_dir = os.getcwd()
-		path = current_dir + folder_name
-		os.chdir(path)
-
+			
 		if toolname == 'can-utils': #this will install SocketCAN first as it is needed to be able to run can-utils
 		#ADD HER CODE INSTALLING SOCKET CAN, WRITE FUNCTION IN DEPENDENCIES
 		#REMOVE TO COMMANDLINE OPTION
@@ -352,10 +348,10 @@ def github_tools(pack_man, toolname, repo):
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed can-utils-j1939')
 		elif toolname == 'canbadger':
+			f_rc = 0
 			print ('REPOSITORY AVAILABLE: The CANBadger repository has been cloned to your machine')
 			print ('If you need help, refer to the tutorial on the right side of the installation page')
 		elif toolname == 'canbadger-server':
-			essential = 0
 			libs = ['python-qt4', 'pyqt4-dev-tools', 'qtcreator']
 			rcs = [dependencies.commandline_install(pack_man, i) for i in libs]
 
@@ -509,12 +505,15 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 	elif toolname == 'aircrack-ng':
 		print ('Beginning aircrack-ng installation...')
 		install_rc = dependencies.commandline_install(pack_man, 'aircrack-ng')
-	elif toolname == 'wireshark-commandline':
-		print ('Beginning wireshark command-line installation...')
+	elif toolname == 'wireshark':
+		print ('Beginning wireshark installation...')
 		install_rc = dependencies.commandline_install(pack_man, 'wireshark')
-	elif toolname == 'wireshark-gui':
-		print ('Beginning wireshark GUI installation...')
-		install_rc = dependencies.commandline_install(pack_man, 'wireshark-gnome')
+	elif toolname == 'tshark':
+		print ('Beginning tshark installation...')
+		installed_rc = dependencies.commandline_install(pack_man, 'tshark')
+	elif toolname == 'gqrx':
+		print ('Beginning gqrx installation...')
+		install_rc = dependencies.commandline_install(pack_man, 'gqrx-sdr')
 
 	if install_rc != 0:
 		print ('INSTALLATION FAILED: Failed to install', toolname)
@@ -528,10 +527,24 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 				print ('ERROR CODE:', dep_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed gr-osmosdr dependency for gnuradio')
+		elif toolname == 'gqrx':
+			dep_rc = dependencies.commandline_install(pack_man, 'libvolk1-bin')
+			if dep_rc != 0:
+				print ('INSTALLATION FAILED: Failed to install libvolk1-bin. gqrx will still work as expected')
+				print ('libvolk1-bin is a tool that optimizes GNU Radio performance')
+			else:
+				print ('INSTALLATION SUCCESSFUL: Successfully installed libvolk1-bin. This optimizes gqrx usage')
+				run_rc = subprocess.run(['volk_profile']).returncode
+				if run_rc != 0:
+					print ('RUN FAILED: Failed to run volk_profile to complete gqrx usage optimization')
+					print ('gqrx will still run as expected')
+					print ('ERROR CODE:', run_rc)
+				else:
+					print ('RUN SUCCESSFUL: Successfully ran volk_profile. gqrx optimization complete')
 
-	if install_rc == 0 & toolname != 'gnuradio':
-		it.write(toolname)
-	elif dep_rc == 0 & toolname == 'gnuradio':
+
+	#don't necessarily need to not include in list of installed tools, just might want to list that the libraries were not installed. (log.txt file)
+	if install_rc == 0: 
 		it.write(toolname)
 	it.close()
 	return install_rc

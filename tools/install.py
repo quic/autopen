@@ -50,10 +50,12 @@ def install(toolname):
 		tools.github_tools(pack_man, 'canbadger', repo_canbadger)
 	elif toolname == 'canbadger-server':
 		tools.github_tools(pack_man, 'canbadger-server', repo_canbadger_server)
+
 	elif toolname == 'pyobd':
 		tools.downloaded_tools(pack_man, 'pyobd', link_pyobd)
 	elif toolname == 'o2oo':
 		tools.downloaded_tools(pack_man, 'o2oo', link_o2oo)
+
 	elif toolname == 'bluetooth tools':
 		tools.installed_tools(pack_man, 'bluetooth tools')
 	elif toolname == 'btscanner':
@@ -62,6 +64,12 @@ def install(toolname):
 		tools.installed_tools(pack_man, 'gnuradio')
 	elif toolname == 'aircrack-ng':
 		tools.installed_tools(pack_man, 'aircrack-ng')
+	elif toolname == 'gqrx':
+		tools.installed_tools(pack_man, 'gqrx')
+	elif toolname == 'wireshark-cl':
+		tools.installed_tools(pack_man, 'wireshark-commandline')
+	elif toolname == 'tshark':
+		tools.installed_tools(pack_man, 'tshark')
 
 
 

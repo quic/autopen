@@ -51,8 +51,12 @@ def open_(toolname, option):
 		op_rc = subprocess.run(['btscanner']).returncode
 	elif toolname == 'gnuradio':
 		op_rc = subprocess.run(['gnuradio-companion']).returncode
-	elif toolname == 'can-utils-x':
+	elif toolname == 'can-utils-x':	#i think i have to change this to cd into the directory but will have to change this to cd into directory ? 
 		op_rc = subprocess.run(['python', 'main.py']).returncode
+	elif toolname == 'gqrx':
+		op_rc = subprocess.run(['gqrx']).returncode
+	elif toolname == 'wireshark':
+		op_rc = subprocess.run(['wireshark']).returncode
 
 	if op_rc != 0:
 		print ('STARTUP FAILED: Failed to open', toolname)
