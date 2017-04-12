@@ -290,6 +290,7 @@ Builder.load_string("""
 			Button:
 				text: 'Wireshark'
 				size_hint: .25, .1
+				on_press: root.wireshark()
 
 		Button:
 			text: 'Back'
@@ -603,12 +604,12 @@ class CanPage(Screen):
 
 	def can_utils(widget):
 
-		with open("canutils.txt", "r") as stream:
-			labeltext1 = stream.read()
-		widget.ids["label1"].text = labeltext1
-		with open("canutilsexample.txt", "r") as stream:
-			labeltext2 = stream.read()
-		widget.ids["label2"].text = labeltext2
+		#with open("canutils.txt", "r") as stream:
+		#	labeltext1 = stream.read()
+		#widget.ids["label1"].text = labeltext1
+		#with open("canutilsexample.txt", "r") as stream:
+		#	labeltext2 = stream.read()
+		#widget.ids["label2"].text = labeltext2
 
 
 		def callback(self):
@@ -628,6 +629,17 @@ class CanPage(Screen):
 
 
 class BluetoothWifiPage(Screen):
+
+	def wireshark(widget):
+		def callback(self):
+			install.install('wireshark')
+
+		i = Button(text='Install', size_hint= (.15, .05), pos_hint= {'x':.3, 'y':.1})
+		o = Button(text='Open', size_hint=(.15, .05), pos_hint={'x':.5, 'y':.1})
+		widget.add_widget(i)
+		widget.add_widget(o)
+		i.bind(on_press=callback)
+
 	pass
 
 class SDRPage(Screen):
