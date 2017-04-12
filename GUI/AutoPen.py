@@ -13,6 +13,8 @@ from kivy.uix.scrollview import ScrollView
 from kivy.properties import StringProperty
 from kivy.uix.textinput import TextInput
 
+import install
+
 Builder.load_string("""
 
 <WelcomePage>:
@@ -207,7 +209,7 @@ Builder.load_string("""
 				text: 'PyOBD'
 				size_hint: .25, .1
 			Button:
-				text: '0200'
+				text: 'O2OO'
 				size_hint: .25, .1
 		Button:
 			text: 'Back'
@@ -476,7 +478,7 @@ Builder.load_string("""
 			spacing: 10
 			padding: [50,50,50,90]
 			Button:
-				text: '0200'
+				text: 'O2OO'
 				size_hint: .30, .1
 			Button:
 				text: 'aircrack-ng'
@@ -536,10 +538,7 @@ Builder.load_string("""
 				text: 'UDSim'
 				size_hint: .30, .1
 			Button:
-				text: 'Wireshark (Command Line)'
-				size_hint: .30, .1
-			Button: 
-				text: 'Wireshark (GUI)'
+				text: 'Wireshark'
 				size_hint: .30, .1
 
 		Button:
@@ -580,22 +579,50 @@ class Terms(Screen):
 
 class ToolsPage(Screen):
 
-	def find(self):
+	def find(self):	#doing this atm, but will fix functionality later
 		t = (self.ids['search'].text).lower()
+		can = ['o2oo', 'c0f', 'canbadger', 'canbus-utils', 'can-utils', 'can-utils-j1939', 'can-utils-x', 'caring caribou', 'pyobd', 'kayak', 'udsim']
+		b_w = ['aircrack-ng', 'bluelog', 'bluemaho', 'bluetooth tools', 'btscanner', 'tshark', 'wireshark']
+		sdr = ['gnu radio', 'gqrx']
+		mis = ['katoolin']
+		
+		if t in can:
+			screen_manager.current = 'can'
+		elif t in b_w:
+			screen_manager.current = 'bw'
+		elif t in sdr:
+			screen_manager.current = 'sdr'
+		elif t in mis:
+			screen_manager.current = 'miscellaneous'
+	
 		#make it pop up suggestions?		
 	pass
 
 class CanPage(Screen):
 
+
 	def can_utils(widget):
+
 		with open("canutils.txt", "r") as stream:
 			labeltext1 = stream.read()
 		widget.ids["label1"].text = labeltext1
 		with open("canutilsexample.txt", "r") as stream:
 			labeltext2 = stream.read()
 		widget.ids["label2"].text = labeltext2
-		#example = ScrollableLabel(text=labeltext, pos_hint={'x': 0.65, 'top': 0.9}, size_hint=(0.3,0.7))
-		return labeltext1
+
+
+		def callback(self):
+			install.install('can-utils')
+
+		i = Button(text='Install', size_hint= (.25, .1), pos_hint= {'x':.4, 'y':.1})
+		widget.add_widget(i)
+		i.bind(on_press=callback)
+		#with open('installed.txt', 'r') as stream:
+		#	tls = stream.readlines()
+		#if 'can_utils' in tls:
+		#	widget.remove_widget(i)	
+		#	o = Button(text='Open', size_hint= (.25, .1), pos_hint= {'x':.3, 'y':.1}, background_color=[0,1,0,.65])#this should be green
+		#	u = Button(text= 'Update', size_hint= (.25,.1), pos_hint= {'x':.4, 'y':.1})
 
 	pass
 
@@ -622,7 +649,7 @@ screen_manager.add_widget(Terms(name='terms'))
 screen_manager.add_widget(BluetoothWifiPage(name='bw'))
 screen_manager.add_widget(CanPage(name='can'))
 screen_manager.add_widget(SDRPage(name='sdr'))
-screen_manager.add_widget(MiscellaneousPage(name='miscellanoues'))
+screen_manager.add_widget(MiscellaneousPage(name='miscellaneous'))
 screen_manager.add_widget(SeeAllPage(name='seeall'))
 class potentApp(App):
 
