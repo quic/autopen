@@ -70,6 +70,7 @@ TOOLS MAY BE INCLUDED:
 		(this one not sure if im going to install yet)
 
 TO DO LATER:
+	1. CREATE A PACKAGE
 
 
 TO DO (LOGISTICS):
@@ -110,26 +111,8 @@ def github_tools(pack_man, toolname, repo):
 		dot_index = repo.rfind('.')
 		folder_name = repo[back_index:dot_index]
 		print ('Changing directory to', folder_name[1:], '...')
-			
-		if toolname == 'can-utils': #this will install SocketCAN first as it is needed to be able to run can-utils
-		#ADD HER CODE INSTALLING SOCKET CAN, WRITE FUNCTION IN DEPENDENCIES
-		#REMOVE TO COMMANDLINE OPTION
-			print ('Beginning can-utils installation...')
-			can_utils_rc = dependencies.commandline_install(pack_man, 'can-utils')
-			if can_utils_rc != 0:
-				print ("INSTALLATION FAILED: Failed to install can-utils")
-				print ('ERROR CODE:', can_utils_rc)
-			else:
-				print ('INSTALLATION SUCCESSFUL: Successfully installed can-utils')
-				print ('Ensuring CAN modules are enabled...')
-				f_rc = subprocess.run(['sudo', 'modprobe', 'can']).returncode	#not sure if going to keep this yet mainly cuz might not be necessary, also need to check if redhat has modprobe, it should but need to check (also just check generally if other linux has this already installed)
-				if f_rc != 0:
-					print ('CHECK FAILED: Failed to add a LKM to the kernel. Can-utils may not be fully functional')
-					print ('ERROR CODE:', f_rc)
-				else:
-					print ('CHECK SUCCESSFUL: Successfully added a LKM to the kernel')
 
-		elif toolname == 'canbus-utils':	#find out if socketCAN needs to be installed to be able to use it
+		if toolname == 'canbus-utils':	#find out if socketCAN needs to be installed to be able to use it
 			print ('Beginning canbus-utils installation...')
 			npm_check_rc = dependencies.check_NPM(pack_man) #needed for the following step
 			if npm_check_rc != 0:
@@ -492,7 +475,6 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 	install_rc = -1
 	it = open('installed.txt', 'a')
 
-
 	if toolname == 'bluetooth tools': #this installs hciconfig, l2ping, hcitool, etc. 
 		print ('Beginning bluetooth tools installation...')
 		install_rc = dependencies.commandline_install(pack_man, 'bluetooth')
@@ -508,6 +490,9 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 	elif toolname == 'wireshark':
 		print ('Beginning wireshark installation...')
 		install_rc = dependencies.commandline_install(pack_man, 'wireshark')
+	elif toolname == 'can-utils':
+		print ('Beginning can-utils installation...')
+		install_rc = dependencies.commandline_install(pack_man, 'can-utils')
 	elif toolname == 'tshark':
 		print ('Beginning tshark installation...')
 		installed_rc = dependencies.commandline_install(pack_man, 'tshark')
