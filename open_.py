@@ -11,7 +11,9 @@ def open_(toolname, option):
 
 	#tools not with 'open' button : can-utils, canbus-utils, c0f, 'UDSim', bluetooth tools (provide a list with the commands it allows), aircrack-ng
 
-	t = ['Kayak', 'caringcaribou', 'Bluelog', 'bluemaho']
+	op_rc = -1
+
+	t = ['Kayak', 'caringcaribou', 'Bluelog', 'bluemaho', 'canbus-utils']
 	if toolname in t:
 		current = os.getcwd()
 		path = current + '/' + toolname
@@ -24,11 +26,17 @@ def open_(toolname, option):
 		path = current_dir + kayak_run_path
 		os.chdir(path)
 		op_rc = subprocess.run(['./kayak']).returncode
+	elif toolname == 'can-utils':
+		command = option.split(' ')
+		op_rc = subprocess.run(command).returncode
+	elif toolname == 'canbus-utils':
+		comamnd = option.split(' ')
+		op_rc = subprocess.run(command).returncode
 	elif toolname == 'caringcaribou':
 		current_dir = os.getcwd()
 		path = current_dir + '/tool'
 		os.chdir(path)
-		op_rc = subprocess.run(['./cc.py', '-h', option]).returncode	#option here will be the module
+		op_rc = subprocess.run(['./cc.py', '-h', option]).returncode #option here will be the module
 	elif toolname == 'katoolin':
 		op_rc = subprocess.run(['katoolin']).returncode
 	elif toolname == 'Bluelog':

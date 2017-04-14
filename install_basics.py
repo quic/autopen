@@ -72,7 +72,7 @@ def install_pip(pack_man):
 		print ('ERROR CODE:', pip_rc)
 	else:
 		print ('INSTALLATION COMPLETE: Successfully installed pip')
-		upgrade_rc = subprocess.run(['pip', 'install', '--upgrade', 'pip']).returncode
+		upgrade_rc = subprocess.run(['pip3', 'install', '--upgrade', 'pip3']).returncode
 		if upgrade_rc != 0:
 			print ('UPGRADE FAILED: Failed to upgrade pip. This may cause trouble when installing libraries')
 			print ('ERROR CODE:', upgrade_rc)

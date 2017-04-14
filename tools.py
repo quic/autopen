@@ -111,6 +111,7 @@ def github_tools(pack_man, toolname, repo):
 		dot_index = repo.rfind('.')
 		folder_name = repo[back_index:dot_index]
 		print ('Changing directory to', folder_name[1:], '...')
+		os.chdir(os.getcwd() + folder_name)
 
 		if toolname == 'canbus-utils':	#find out if socketCAN needs to be installed to be able to use it
 			print ('Beginning canbus-utils installation...')
@@ -313,7 +314,7 @@ def github_tools(pack_man, toolname, repo):
 					print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
 					print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
 
-		elif toolname == 'canutils-x':
+		elif toolname == 'can-utils-x':
 			mat_rc = dependencies.commandline_install(pack_man, 'python-matplotlib')
 			if mat_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install matplotlib from python. This is needed to run do')
@@ -475,6 +476,7 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 	install_rc = -1
 	it = open('installed.txt', 'a')
 
+
 	if toolname == 'bluetooth tools': #this installs hciconfig, l2ping, hcitool, etc. 
 		print ('Beginning bluetooth tools installation...')
 		install_rc = dependencies.commandline_install(pack_man, 'bluetooth')
@@ -526,6 +528,14 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 					print ('ERROR CODE:', run_rc)
 				else:
 					print ('RUN SUCCESSFUL: Successfully ran volk_profile. gqrx optimization complete')
+		elif toolname == 'can-utils':
+			print ('Ensuring CAN modules are enabled...')
+			f_rc = subprocess.run(['sudo', 'modprobe', 'can']).returncode	#not sure if going to keep this yet mainly cuz might not be necessary, also need to check if redhat has modprobe, it should but need to check (also just check generally if other linux has this already installed)
+			if f_rc != 0:
+				print ('CHECK FAILED: Failed to add a LKM to the kernel. Can-utils may not be fully functional')
+				print ('ERROR CODE:', f_rc)
+			else:
+				print ('CHECK SUCCESSFUL: Successfully added a LKM to the kernel')
 
 
 	#don't necessarily need to not include in list of installed tools, just might want to list that the libraries were not installed. (log.txt file)
