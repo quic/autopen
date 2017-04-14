@@ -14,6 +14,7 @@ from kivy.properties import StringProperty
 from kivy.uix.textinput import TextInput
 
 import install
+from text import *
 
 Builder.load_string("""
 
@@ -141,6 +142,7 @@ Builder.load_string("""
 		TextInput:
 			id: search
 			multiline: False
+			keyboard_suggestions: True
 			focus: True
 			pos_hint: {'x':.65, 'top':0.99}
 			size_hint: (0.24,0.05)
@@ -418,6 +420,9 @@ Builder.load_string("""
 				text: 'Katoolin'
 				size_hint: .25, .1
 			Button:
+				text: 'Dojge'
+				size_hint: .25, .1
+			Button:
 				text: ''
 				background_color: 0,0,0,0
 		Button:
@@ -518,6 +523,9 @@ Builder.load_string("""
 				text: 'Caring Caribou'
 				size_hint: .30, .1
 			Button:
+				text: 'Dojge'
+				size_hint: .30, .1
+			Button:
 				text: 'GNU Radio'
 				size_hint: .30, .1
 			Button:
@@ -604,12 +612,12 @@ class CanPage(Screen):
 
 	def can_utils(widget):
 
-		#with open("canutils.txt", "r") as stream:
-		#	labeltext1 = stream.read()
-		#widget.ids["label1"].text = labeltext1
-		#with open("canutilsexample.txt", "r") as stream:
-		#	labeltext2 = stream.read()
-		#widget.ids["label2"].text = labeltext2
+		with open("text/canutilsx.txt", "r") as stream:
+			labeltext1 = stream.read()
+		widget.ids["label1"].text = labeltext1
+		with open("text/canutilsxexample.txt", "r") as stream:
+			labeltext2 = stream.read()
+		widget.ids["label2"].text = labeltext2
 
 
 		def callback(self):
