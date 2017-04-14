@@ -12,8 +12,10 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.scrollview import ScrollView
 from kivy.properties import StringProperty
 from kivy.uix.textinput import TextInput
+from kivy.uix.popup import Popup
 
 import install
+import open_
 from text import *
 
 Builder.load_string("""
@@ -180,39 +182,60 @@ Builder.load_string("""
 				font_size: '25sp'
 				size_hint: .25, .1
 			Button:
+				id: can_utils
 				text: 'CAN-utils'
 				size_hint: .25, .1
-				on_press: root.can_utils()
+				on_release: root.can_utils()
 			Button:
+				id: canbus_utils
 				text: 'CANbus-utils'
 				size_hint: .25, .1
+				on_press: root.can()
 			Button:
+				id: can_utils_x
 				text: 'CAN-utils-X'
 				size_hint: .25, .1
+				on_press: root.can()
 			Button:
+				id: can_utils_j1939
 				text: 'CAN-utils-j1939'
 				size_hint: .25, .1
+				on_press: root.can()
 			Button:
+				id: canbadger
 				text: 'CANBadger'
 				size_hint: .25, .1
+				on_press: root.can()
 			Button:
+				id: caring_caribou
 				text: 'Caring Caribou'
 				size_hint: .25, .1
+				on_press: root.can()
 			Button:
+				id: kayak
 				text: 'Kayak'
 				size_hint: .25, .1
+				on_press: root.can()
 			Button:
+				id: c0f
 				text: 'c0f'
 				size_hint: .25, .1
+				on_press: root.can()
 			Button:
+				id: udsim
 				text: 'UDSim'
 				size_hint: .25, .1
+				on_press: root.can()
 			Button:
+				id: pyobd
 				text: 'PyOBD'
 				size_hint: .25, .1
+				on_press: root.can()
 			Button:
+				id: o2oo
 				text: 'O2OO'
 				size_hint: .25, .1
+				on_press: root.can()
 		Button:
 			text: 'Back'
 			size_hint: .1, .05
@@ -609,8 +632,38 @@ class ToolsPage(Screen):
 
 class CanPage(Screen):
 
-
 	def can_utils(widget):
+
+		def open_callback(self):	#this functionality will be a little different
+			box = FloatLayout()
+			box.add_widget(Label(text='Candump', size_hint=(.25,.1), pos_hint={'x':0,'y':.8}))
+			box.add_widget(TextInput(text=u'enter the name of interface', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}))
+			box.add_widget(Label(text='Canread', size_hint=(.25,.1)))
+
+			#asc2log, bcmserver, canbusload, can-calc-bit-timing, candump, canfdtest, cangen, cangw, canlogserver, canplayer, cansend, cansniffer, isotpdump, isotprecv, isotpperf, isotpsend, isotpserver, isotpsniffer, isotptun, log2asc, log2long, slcan_attach, slcand and slcanpty
+
+			popup = Popup(title='Please Select a program to run', content=box, size_hint=(.5, .5), size=(400,400))
+			popup.open()
+
+			rc_o = install.test('open')
+			print (rc_o)
+
+		def install_callback(self):
+			rc_i = install.test('water')
+			if rc_i == 0:
+				widget.remove_widget(i)
+				o = Button(text='Open', size_hint= (.20, .075), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
+				o.bind(on_press=open_callback)
+				u = Button(text= 'Update', size_hint= (.20,.075), pos_hint= {'x':.5, 'y':.075}, background_color=[0,0,1,.65])
+				widget.add_widget(o)
+				widget.add_widget(u)
+			elif rc_i != 0:
+				i.background_color = [1,0,0,.65]
+				i.text = 'Failed to Install'
+
+		i = Button(text='Install', size_hint= (.20, .075), pos_hint= {'x':.4, 'y':.075})
+		widget.add_widget(i)
+		i.bind(on_press=install_callback)
 
 		with open("text/canutilsx.txt", "r") as stream:
 			labeltext1 = stream.read()
@@ -620,12 +673,6 @@ class CanPage(Screen):
 		widget.ids["label2"].text = labeltext2
 
 
-		def callback(self):
-			install.install('can-utils')
-
-		i = Button(text='Install', size_hint= (.25, .1), pos_hint= {'x':.4, 'y':.1})
-		widget.add_widget(i)
-		i.bind(on_press=callback)
 		#with open('installed.txt', 'r') as stream:
 		#	tls = stream.readlines()
 		#if 'can_utils' in tls:
