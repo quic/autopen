@@ -5,7 +5,6 @@ import tools
 import subprocess
 
 def install(toolname):
-	repo_can_utils = 'https://github.com/linux-can/can-utils.git'
 	repo_canbus_utils = 'https://github.com/digitalbond/canbus-utils.git'
 	repo_kayak = 'https://github.com/dschanoeh/Kayak.git'
 	repo_caringcaribou = 'https://github.com/CaringCaribou/caringcaribou.git' #want to check this to make sure it works, instructions a bit unclear
@@ -26,9 +25,8 @@ def install(toolname):
 
 	d = general_use.check_distribution()
 	pack_man = general_use.package_tool(d)
-	if toolname == 'can-utils':
-		tools.github_tools(pack_man, 'can-utils', repo_can_utils)
-	elif toolname == 'canbus-utils':
+
+	if toolname == 'canbus-utils':
 		tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)
 	elif toolname == 'kayak':
 		tools.github_tools(pack_man, 'Kayak', repo_kayak)
@@ -66,10 +64,19 @@ def install(toolname):
 		tools.installed_tools(pack_man, 'aircrack-ng')
 	elif toolname == 'gqrx':
 		tools.installed_tools(pack_man, 'gqrx')
+	elif toolname == 'can-utils':
+		tools.installed_tools(pack_man, 'can-utils')
 	elif toolname == 'wireshark':
 		tools.installed_tools(pack_man, 'wireshark')
 	elif toolname == 'tshark':
 		tools.installed_tools(pack_man, 'tshark')
 
+def test(name):
+	if name == 'water':
+		print ('install yes')
+		return 0
+	elif name == 'open':
+		print ('open yes')
+		return 0
 
 
