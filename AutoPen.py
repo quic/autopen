@@ -7,6 +7,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.scrollview import ScrollView
@@ -185,57 +186,57 @@ Builder.load_string("""
 				id: can_utils
 				text: 'CAN-utils'
 				size_hint: .25, .1
-				on_release: root.can_utils()
+				on_release: root.can_options('can-utils')
 			Button:
 				id: canbus_utils
 				text: 'CANbus-utils'
 				size_hint: .25, .1
-				on_press: root.canbus_utils()
+				on_press: root.can_options('canbus-utils')
 			Button:
 				id: can_utils_x
 				text: 'CAN-utils-X'
 				size_hint: .25, .1
-				on_press: root.can_utils_x()
+				on_press: root.can_options('can-utils-x')
 			Button:
 				id: can_utils_j1939
 				text: 'CAN-utils-j1939'
 				size_hint: .25, .1
-				on_press: root.can_utils_j1939()
+				on_press: root.can_options('j1939')
 			Button:
 				id: canbadger
 				text: 'CANBadger'
 				size_hint: .25, .1
-				on_press: root.canbadger()
+				on_press: root.can_options('canbadger')
 			Button:
 				id: caring_caribou
 				text: 'Caring Caribou'
 				size_hint: .25, .1
-				on_press: root.caring_caribou()
+				on_press: root.can_options('caringcaribou')
 			Button:
 				id: kayak
 				text: 'Kayak'
 				size_hint: .25, .1
-				on_press: root.kayak()
+				on_press: root.can_options('kayak')
 			Button:
 				id: c0f
 				text: 'c0f'
 				size_hint: .25, .1
-				on_press: root.c0f()
+				on_press: root.can_options('c0f')
 			Button:
 				id: udsim
 				text: 'UDSim'
 				size_hint: .25, .1
-				on_press: root.udsim()
+				on_press: root.can_options('udsim')
 			Button:
 				id: pyobd
 				text: 'PyOBD'
 				size_hint: .25, .1
-				on_press: root.pyobd()
+				on_press: root.can_options('pyobd')
 			Button:
 				id: o2oo
 				text: 'O2OO'
 				size_hint: .25, .1
-				on_press: root.o2oo()
+				on_press: root.can_options('o2oo')
 		Button:
 			text: 'Back'
 			size_hint: .1, .05
@@ -634,29 +635,116 @@ class ToolsPage(Screen):
 
 class CanPage(Screen):
 
-	def can_utils(widget):
+	def can_options(widget, value):	#for buttons that use a pop-up at open
+
+		v = value
 
 		def double(self):
 			self.text = ''
 
 		def run(self):
 			input_ = self.text
-			s = 'candump' + input_
-			rc_o = open_.open_('can-utils', s)
-			print (rc_o)
+			s = self.id + ' ' + input_
+			rc_o = open_.open_('open') #THIS IS STILL IN TEST, CHANGE TO OPEN_.OPEN_(toolname, s)
 
-		def open_callback(self):	#this functionality will be a little different
-			box = FloatLayout()
-			box.add_widget(Label(text='Candump', size_hint=(.25,.1), pos_hint={'x':0,'y':.8}))
-			box.add_widget(TextInput(text=u'enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+		#this is the function for the popup
+		def open_callback(self):
+			box = GridLayout(cols=2)
 
-			#asc2log, bcmserver, canbusload, can-calc-bit-timing, candump, canfdtest, cangen, cangw, canlogserver, canplayer, cansend, cansniffer, isotpdump, isotprecv, isotpperf, isotpsend, isotpserver, isotpsniffer, isotptun, log2asc, log2long, slcan_attach, slcand and slcanpty
+			#scroll = ScrollView(pos_hint={'x': 0.65, 'top': 0.9}, size_hint=(0.3,0.7))
+			#scroll.add_widget(box)
+
+			if v == 'can-utils':
+				#fix this, not scrollable
+				box.add_widget(Label(text='asc2log', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='asc2log', text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				box.add_widget(Label(text='bcmserver', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='bcmserver', text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				box.add_widget(Label(text='canbusload', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='canbusload',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				box.add_widget(Label(text='can-calc-bit-timing', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='can-calc-bit-timing',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				box.add_widget(Label(text='candump', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='candump',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				box.add_widget(Label(text='canfdtest', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='canfdtest',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				box.add_widget(Label(text='cangen', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='cangen',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				box.add_widget(Label(text='cangw', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='cangw',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='canlogserver', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='canlogserver',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='canplayer', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='canplayer',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='cansend', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='cansend',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='cansniffer', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='cansniffer',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='isotprecv', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='isotprecv',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='isotpdump', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='isotpdump',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='isotpperf', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='isotpperf',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='isotpsend', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='isotpsend',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='isotpserver', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='isotpserver',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='isotpsniffer', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='isotpsniffer',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='isotptun', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='isotptun',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='log2asc', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='log2asc',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='log2long', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='log2long',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='slcan_attach', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='slcan_attach',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='slcand', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='slcand',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				# box.add_widget(Label(text='slcanpty', size_hint=(.25,.1)))
+				# box.add_widget(TextInput(id='slcanpty',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
 			
-			popup = Popup(title='Please Select a program to run', content=box, size_hint=(.6, .7))
-			popup.open()
+				popup = Popup(title='Please Select a program to run', content=box, size_hint=(.8, .9))
+				popup.open()
 
-		def install_callback(self):
-			rc_i = install.test('water')
+			elif v == 'canbus-utils':
+				box.add_widget(Label(text='init', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='init.js',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				box.add_widget(Label(text='canbus_ids', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='canbus_ids.js', text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				box.add_widget(Label(text='decode_obdii', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='decode_obdii.js', text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				box.add_widget(Label(text='fuzz', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='fuzz.js',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				box.add_widget(Label(text='unique_ids', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='unique_ids.js',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+				box.add_widget(Label(text='watch_id', size_hint=(.25,.1)))
+				box.add_widget(TextInput(id='watch_id.js',text=u'Enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
+	
+				popup = Popup(title='Please Select a program to run', content=box, size_hint=(.8, .9))
+				popup.open()
+
+			# elif v == 'caringcaribou':
+
+
+			# 	popup = Popup(title='Please Select a program to run', content=box, size_hint=(.8, .9))
+			# 	popup.open()
+
+
+
+		#this if the function that executes when install in pressed
+		def install_callback(self): 
+			if v == 'can-utils':
+				rc_i = install.install('can-utils')
+			elif v == 'canbus-utils':
+				rc_i = install.install('canbus-utils')
+			elif v == 'caringcaribou':
+				rc_i = install.install('caringcaribou')
+			elif v == 'c0f':
+				rc_i = install.install('c0f')
+
+			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
 				widget.remove_widget(i)
 				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
@@ -675,244 +763,12 @@ class CanPage(Screen):
 		widget.add_widget(i)
 		i.bind(on_press=install_callback)
 
-		with open("text/canutils.txt", "r") as stream:
-			labeltext1 = stream.read()
-		widget.ids["label1"].text = labeltext1
-		with open("text/canutilsexample.txt", "r") as stream:
-			labeltext2 = stream.read()
-		widget.ids["label2"].text = labeltext2
-
-
-	def can_bus_utils(widget):
-
-		def double(self):
-			self.text = ''
-
-		def run(self):
-			input_ = self.text
-			s = 'unique_ids' + input_
-			rc_o = open_.open_('canbus-utils', s)
-			print (rc_o)
-
-		def open_callback(self):	#this functionality will be a little different
-			box = FloatLayout()
-			box.add_widget(Label(text='unique_ids', size_hint=(.25,.1), pos_hint={'x':0,'y':.8}))
-			box.add_widget(TextInput(text=u'enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
-
-			#asc2log, bcmserver, canbusload, can-calc-bit-timing, candump, canfdtest, cangen, cangw, canlogserver, canplayer, cansend, cansniffer, isotpdump, isotprecv, isotpperf, isotpsend, isotpserver, isotpsniffer, isotptun, log2asc, log2long, slcan_attach, slcand and slcanpty
-			
-			popup = Popup(title='Please Select a program to run', content=box, size_hint=(.6, .7))
-			popup.open()
-
-		def install_callback(self):
-			rc_i = install.install('canbus-utils')
-			if rc_i == 0:
-				widget.remove_widget(i)
-				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
-				o.bind(on_press=open_callback)
-				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
-				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
-
-				widget.add_widget(o)
-				widget.add_widget(up)
-				widget.add_widget(un)
-			elif rc_i != 0:
-				i.background_color = [1,0,0,.65]
-				i.text = 'Failed to Install'
-
-		i = Button(text='Install', size_hint= (.20, .075), pos_hint= {'x':.4, 'y':.075})
-		widget.add_widget(i)
-		i.bind(on_press=install_callback)
-
-		with open("text/canbusutils.txt", "r") as stream:
-			labeltext1 = stream.read()
-		widget.ids["label1"].text = labeltext1
-		with open("text/canbusutilsexample.txt", "r") as stream:
-			labeltext2 = stream.read()
-		widget.ids["label2"].text = labeltext2
-
-	def can_utils_x(widget):
-
-		def open_callback(self):	#this functionality will be a little different
-			rc_o = open_.open_('can-utils-x', s)
-			print (rc_o)
-
-		def install_callback(self):
-			rc_i = install.install('can-utils-x')
-			if rc_i == 0:
-				widget.remove_widget(i)
-				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
-				o.bind(on_press=open_callback)
-				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
-				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
-
-				widget.add_widget(o)
-				widget.add_widget(up)
-				widget.add_widget(un)
-			elif rc_i != 0:
-				i.background_color = [1,0,0,.65]
-				i.text = 'Failed to Install'
-
-		i = Button(text='Install', size_hint= (.20, .075), pos_hint= {'x':.4, 'y':.075})
-		widget.add_widget(i)
-		i.bind(on_press=install_callback)
-
-		#with open("text/canutilsx.txt", "r") as stream:
+		#with open("canutils.txt", "r") as stream:
 		#	labeltext1 = stream.read()
 		#widget.ids["label1"].text = labeltext1
-		#with open("text/canbusutilsxexample.txt", "r") as stream:
+		#with open("canutilsexample.txt", "r") as stream:
 		#	labeltext2 = stream.read()
 		#widget.ids["label2"].text = labeltext2
-
-
-	def can_utils_j1939(self):
-
-		def double(self):
-			self.text = ''
-
-		def run(self):
-			input_ = self.text
-			s = 'candump' + input_
-			rc_o = open_.open_('j1939', s)
-			print (rc_o)
-
-		def open_callback(self):	#this functionality will be a little different
-			box = FloatLayout()
-			box.add_widget(Label(text='Candump', size_hint=(.25,.1), pos_hint={'x':0,'y':.8}))
-			box.add_widget(TextInput(text=u'enter the name of interface, e.g., can0', multiline=False, font_size=10,  size_hint=(.75, .1), pos_hint={'x':.25, 'y':.8}, on_double_tap=double, on_text_validate=run))
-
-			#asc2log, bcmserver, canbusload, can-calc-bit-timing, candump, canfdtest, cangen, cangw, canlogserver, canplayer, cansend, cansniffer, isotpdump, isotprecv, isotpperf, isotpsend, isotpserver, isotpsniffer, isotptun, log2asc, log2long, slcan_attach, slcand and slcanpty
-			
-			popup = Popup(title='Please Select a program to run', content=box, size_hint=(.6, .7))
-			popup.open()
-
-		def install_callback(self):
-			rc_i = install.install('j1939')
-			if rc_i == 0:
-				widget.remove_widget(i)
-				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
-				o.bind(on_press=open_callback)
-				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
-				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
-
-				widget.add_widget(o)
-				widget.add_widget(up)
-				widget.add_widget(un)
-			elif rc_i != 0:
-				i.background_color = [1,0,0,.65]
-				i.text = 'Failed to Install'
-
-		i = Button(text='Install', size_hint= (.20, .075), pos_hint= {'x':.4, 'y':.075})
-		widget.add_widget(i)
-		i.bind(on_press=install_callback)
-
-		#with open("text/canutils.txt", "r") as stream:
-		#	labeltext1 = stream.read()
-		#widget.ids["label1"].text = labeltext1
-		#with open("text/canutilsexample.txt", "r") as stream:
-		#	labeltext2 = stream.read()
-		#widget.ids["label2"].text = labeltext2
-
-	def caring_caribou(self):
-#SITLL FIXINGGGGGJ
-		def run(self):
-			input_ = self.text
-			#rc_o = open_.open_('j1939', s)
-			#print (rc_o)
-
-		def install_callback(self):
-			rc_i = install.install('caringcaribou')
-			if rc_i == 0:
-				widget.remove_widget(i)
-				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
-				o.bind(on_press=open_callback)
-				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
-				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
-
-				widget.add_widget(o)
-				widget.add_widget(up)
-				widget.add_widget(un)
-			elif rc_i != 0:
-				i.background_color = [1,0,0,.65]
-				i.text = 'Failed to Install'
-
-		i = Button(text='Install', size_hint= (.20, .075), pos_hint= {'x':.4, 'y':.075})
-		widget.add_widget(i)
-		i.bind(on_press=install_callback)
-
-		#with open("text/canutils.txt", "r") as stream:
-		#	labeltext1 = stream.read()
-		#widget.ids["label1"].text = labeltext1
-		#with open("text/canutilsexample.txt", "r") as stream:
-		#	labeltext2 = stream.read()
-		#widget.ids["label2"].text = labeltext2
-
-	def kayak(self):
-
-		def open_callback(self):	#this functionality will be a little different
-			rc_o = open_.open_('kayak', 'None')
-			print (rc_o)
-
-		def install_callback(self):
-			rc_i = install.install('kayak')
-			if rc_i == 0:
-				widget.remove_widget(i)
-				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
-				o.bind(on_press=open_callback)
-				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
-				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
-
-				widget.add_widget(o)
-				widget.add_widget(up)
-				widget.add_widget(un)
-			elif rc_i != 0:
-				i.background_color = [1,0,0,.65]
-				i.text = 'Failed to Install'
-
-		i = Button(text='Install', size_hint= (.20, .075), pos_hint= {'x':.4, 'y':.075})
-		widget.add_widget(i)
-		i.bind(on_press=install_callback)
-
-		#with open("text/kayak.txt", "r") as stream:
-		#	labeltext1 = stream.read()
-		#widget.ids["label1"].text = labeltext1
-		#with open("text/kayakexample.txt", "r") as stream:
-		#	labeltext2 = stream.read()
-		#widget.ids["label2"].text = labeltext2
-
-	def o2oo(self):
-
-		def open_callback(self):	#this functionality will be a little different
-			rc_o = open_.open_('o2oo', 'None')
-			print (rc_o)
-
-		def install_callback(self):
-			rc_i = install.install('o2oo')
-			if rc_i == 0:
-				widget.remove_widget(i)
-				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
-				o.bind(on_press=open_callback)
-				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
-				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
-
-				widget.add_widget(o)
-				widget.add_widget(up)
-				widget.add_widget(un)
-			elif rc_i != 0:
-				i.background_color = [1,0,0,.65]
-				i.text = 'Failed to Install'
-
-		i = Button(text='Install', size_hint= (.20, .075), pos_hint= {'x':.4, 'y':.075})
-		widget.add_widget(i)
-		i.bind(on_press=install_callback)
-
-		#with open("text/o2oo.txt", "r") as stream:
-		#	labeltext1 = stream.read()
-		#widget.ids["label1"].text = labeltext1
-		#with open("text/o2ooexample.txt", "r") as stream:
-		#	labeltext2 = stream.read()
-		#widget.ids["label2"].text = labeltext2
-
 
 
 	pass
@@ -946,10 +802,10 @@ class BluetoothWifiPage(Screen):
 		widget.add_widget(i)
 		i.bind(on_press=install_callback)
 
-		with open("text/wireshark.txt", "r") as stream:
+		with open("wireshark.txt", "r") as stream:
 			labeltext1 = stream.read()
 		widget.ids["label1"].text = labeltext1
-		with open("text/wireshark.txt", "r") as stream:
+		with open("wiresharkexample.txt", "r") as stream:
 			labeltext2 = stream.read()
 		widget.ids["label2"].text = labeltext2
 

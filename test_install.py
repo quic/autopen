@@ -53,10 +53,6 @@ def test():
 
 
 
-
-
-
-
 	EXCEPTIONS TO CATCH:
 		1. if the repo has already been cloned, want to keep going
 		2. in dependencies in check_NPM (wrap command -v in exception catching FileNotFoundError), this is because if it's not there it throws this error

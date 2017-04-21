@@ -10,7 +10,6 @@ def open_(toolname, option):
 	'''
 
 	#tools not with 'open' button : can-utils, canbus-utils, c0f, 'UDSim', bluetooth tools (provide a list with the commands it allows), aircrack-ng
-
 	op_rc = -1
 
 	t = ['Kayak', 'caringcaribou', 'Bluelog', 'bluemaho', 'canbus-utils']

@@ -18,7 +18,6 @@ TO DO:
 			check if an update is available and install that update
 		SCRIPTS:
 			need to write scripts to implement/replicate attacks using tool/to provide to tool
-			write install.py script to run check_distro and run the correct function to install that script()
 			kali: create a separate install script / show certain tools as already installed because its in kali
 			uninstall tool
 		SMALL CHANGES:
@@ -26,6 +25,7 @@ TO DO:
 			caringcaribou hasn't been tested/not confirmed if install works because need to test it with socketCAN
 			UDSIM not working yet, need to do some more reading on how to use / install 
 			add omar's dependencies
+			move database to frontend
 
 	FRONT-END:
 		ADD:
@@ -65,7 +65,7 @@ TOOLS MAY BE INCLUDED:
 		will provide a section in here with the github link and the website link so that the user can build their own
 		Also, will possibly provide steps on how to do so (will learn how to do this first)
 	METASPLOIT HARDWARE BRIDGE
-	CANBAGGER TOOLS 
+	CANBADGER TOOLS 
 	AVRDUDESS:
 		(this one not sure if im going to install yet)
 
@@ -77,7 +77,6 @@ TO DO (LOGISTICS):
 	1. test live demo for may 5 to make sure it will work
 	2. might set up video conferencing to BU
 	3. Documentation
-	4. Test plan for tomorrow 
 
 '''
 

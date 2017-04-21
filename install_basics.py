@@ -71,13 +71,13 @@ def install_pip(pack_man):
 		print ('INSTALLATION FAILED: Failed to install pip. This is needed to install some dependencies for tools')
 		print ('ERROR CODE:', pip_rc)
 	else:
-		print ('INSTALLATION COMPLETE: Successfully installed pip')
-		upgrade_rc = subprocess.run(['pip3', 'install', '--upgrade', 'pip3']).returncode
-		if upgrade_rc != 0:
-			print ('UPGRADE FAILED: Failed to upgrade pip. This may cause trouble when installing libraries')
-			print ('ERROR CODE:', upgrade_rc)
-		else:
-			print ('UPGRADE SUCCESSFUL: Successfully upgraded pip to newest version')
+		print ('INSTALLATION COMPLETE: Successfully installed pip')		#pip upgrade isn't working for some reason
+	#	upgrade_rc = subprocess.run(['pip3', 'install', '--upgrade', 'pip3']).returncode
+	#	if upgrade_rc != 0:
+	#		print ('UPGRADE FAILED: Failed to upgrade pip. This may cause trouble when installing libraries')
+	#		print ('ERROR CODE:', upgrade_rc)
+	#	else:
+	#		print ('UPGRADE SUCCESSFUL: Successfully upgraded pip to newest version')
 
 install_python(pack_man)
 update_git(pack_man)

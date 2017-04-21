@@ -72,11 +72,7 @@ def install(toolname):
 		tools.installed_tools(pack_man, 'tshark')
 
 def test(name):
-	if name == 'water':
-		print ('install yes')
-		return 0
-	elif name == 'open':
-		print ('open yes')
-		return 0
+	return 0
+
 
 
