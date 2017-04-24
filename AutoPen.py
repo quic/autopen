@@ -19,6 +19,7 @@ from kivy.uix.checkbox import CheckBox
 from kivy.uix.widget import Widget
 from kivy.properties import Property
 
+import install_basics
 import install
 import open_
 #from text import *
@@ -778,7 +779,7 @@ class CanPage(Screen):
 
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
-			rc_i = install.test(v)
+			rc_i = install.install(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
@@ -887,7 +888,7 @@ class BluetoothWifiPage(Screen):
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 
-			rc_i = install.test(v)
+			rc_i = install.install(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
@@ -945,7 +946,7 @@ class SDRPage(Screen):
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 
-			rc_i = install.test(v)
+			rc_i = install.install(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
@@ -991,9 +992,9 @@ class MiscellaneousPage(Screen):
 		def open_callback(self):	#this functionality will be a little different
 
 			if v == 'katoolin':
-				rc_o = open_.test('katoolin')
+				rc_o = open_.open_('katoolin')
 			elif v == 'tio':
-				rc_o = open_.test('tio')
+				rc_o = open_.open_('tio')
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
@@ -1002,7 +1003,7 @@ class MiscellaneousPage(Screen):
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 
-			rc_i = install.test(v)
+			rc_i = install.install(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
