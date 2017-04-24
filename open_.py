@@ -35,10 +35,11 @@ def open_(toolname, option):
 		current_dir = os.getcwd()
 		path = current_dir + '/tool'
 		os.chdir(path)
-		op_rc = subprocess.run(['./cc.py', '-h', option]).returncode #option here will be the module
+		o = '/modules/' + option
+		op_rc = subprocess.run(['./cc.py', o]).returncode #option here will be the module
 	elif toolname == 'katoolin':
 		op_rc = subprocess.run(['katoolin']).returncode
-	elif toolname == 'Bluelog':
+	elif toolname == 'bluelog':
 		op_rc = subprocess.run(['./bluelog']).returncode	#works if you have a bluetooth device up
 	elif toolname == 'bluemaho':
 		op_rc = subprocess.run(['./bluemaho.py']).returncode
@@ -70,4 +71,7 @@ def open_(toolname, option):
 		print ('ERROR CODE:', op_rc)
 	else:
 		print ('STARTUP SUCCESSFUL: Successfully opened', toolname)
+
+def test(tool):
+	return 0
 
