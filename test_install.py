@@ -38,7 +38,7 @@ def test():
 	tools.downloaded_tools(pack_man, 'pyobd', link_pyobd) #WxPython and some other library	#DONE BUT NOT SURE IF WORKS
 	tools.downloaded_tools(pack_man, 'o2oo', link_o2oo) #DONE
 
-	tools.installed_tools(pack_man, 'bluetooth tools') #this function is for tools that are apt-getable / yumable 	DONE
+	tools.installed_tools(pack_man, 'bluez') #this function is for tools that are apt-getable / yumable 	DONE
 	tools.installed_tools(pack_man, 'btscanner') #DONE
 	tools.installed_tools(pack_man, 'gnuradio')
 	tools.installed_tools(pack_man, 'aircrack-ng')

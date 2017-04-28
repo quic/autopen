@@ -19,7 +19,6 @@ TO DO:
 		SCRIPTS:
 			need to write scripts to implement/replicate attacks using tool/to provide to tool
 			kali: create a separate install script / show certain tools as already installed because its in kali
-			uninstall tool
 		SMALL CHANGES:
 			fix udsim code to print the correct library names
 			caringcaribou hasn't been tested/not confirmed if install works because need to test it with socketCAN
@@ -29,11 +28,8 @@ TO DO:
 
 	FRONT-END:
 		ADD:
-			install all button
 			highlight the buttons that are already installed, maybe gray out and make italics
-		FUNCTIONALITY:
-			need to pass a variable from front end to backend function call so do ---> on_press = install.install(toolname)
-			install > open or install > not installed (in red)
+			Loading/new welcome page for first page so that install_basics can not just sit there
 		IMPLEMENTATION:
 			can we make it that our tool will know which tools they have installed?
 				OPTION 1: have a checklist to select which tools you already have and tailor the buttons to that
@@ -65,7 +61,6 @@ TOOLS MAY BE INCLUDED:
 		will provide a section in here with the github link and the website link so that the user can build their own
 		Also, will possibly provide steps on how to do so (will learn how to do this first)
 	METASPLOIT HARDWARE BRIDGE
-	CANBADGER TOOLS 
 	AVRDUDESS:
 		(this one not sure if im going to install yet)
 
@@ -75,7 +70,6 @@ TO DO LATER:
 
 TO DO (LOGISTICS):
 	1. test live demo for may 5 to make sure it will work
-	2. might set up video conferencing to BU
 	3. Documentation
 
 '''
@@ -238,7 +232,7 @@ def github_tools(pack_man, toolname, repo):
 			else:
 				print ('INSTALLATION COMPLETE: Successfully installed the libraries needed to compile UDSIM.')
 	
-			#Bluetooth tools below
+			#bluez below
 
 		elif toolname == 'Bluelog': #has an optional web mode so when running want to add that functionality.  (just run make to run)
 			print ('Installing bluelog...')
@@ -333,7 +327,7 @@ def github_tools(pack_man, toolname, repo):
 		elif toolname == 'canbadger':
 			f_rc = 0
 			print ('REPOSITORY AVAILABLE: The CANBadger repository has been cloned to your machine')
-			print ('If you need help, refer to the tutorial on the right side of the installation page')
+			print ('If you need help, refer to the tutorial on the right side of the tool page to build the hardware')
 		elif toolname == 'canbadger-server':
 			libs = ['python-qt4', 'pyqt4-dev-tools', 'qtcreator']
 			rcs = [dependencies.commandline_install(pack_man, i) for i in libs]
@@ -353,7 +347,6 @@ def github_tools(pack_man, toolname, repo):
 				print ('ERROR CODE:', f_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for canbadger-server')
-
 
 
 
@@ -476,8 +469,8 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 	it = open('installed.txt', 'a')
 
 
-	if toolname == 'bluetooth tools': #this installs hciconfig, l2ping, hcitool, etc. 
-		print ('Beginning bluetooth tools installation...')
+	if toolname == 'bluez': #this installs hciconfig, l2ping, hcitool, etc. 
+		print ('Beginning bluez installation...')
 		install_rc = dependencies.commandline_install(pack_man, 'bluetooth')
 	elif toolname == 'btscanner':
 		print ('Beginning btscanner installation...')

@@ -4,12 +4,15 @@ import tools
 import os
 import subprocess
 
+
+#OPEN TOOLS IN THE BACKGROUND
+
 def open_(toolname, option):
 	'''
 	This function opens the specified tool
 	'''
 
-	#tools not with 'open' button : can-utils, canbus-utils, c0f, 'UDSim', bluetooth tools (provide a list with the commands it allows), aircrack-ng
+	#tools not with 'open' button : can-utils, canbus-utils, c0f, 'UDSim', bluez (provide a list with the commands it allows), aircrack-ng
 	op_rc = -1
 
 	t = ['Kayak', 'caringcaribou', 'Bluelog', 'bluemaho', 'canbus-utils']
@@ -26,11 +29,9 @@ def open_(toolname, option):
 		os.chdir(path)
 		op_rc = subprocess.run(['./kayak']).returncode
 	elif toolname == 'can-utils':
-		command = option.split(' ')
-		op_rc = subprocess.run(command).returncode
+		op_rc = subprocess.run(['/bin/bash']).returncode
 	elif toolname == 'canbus-utils':
-		comamnd = option.split(' ')
-		op_rc = subprocess.run(command).returncode
+		op_rc = subprocess.run(['/bin/bash']).returncode
 	elif toolname == 'caringcaribou':
 		current_dir = os.getcwd()
 		path = current_dir + '/tool'

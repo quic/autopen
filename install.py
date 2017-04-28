@@ -44,18 +44,18 @@ def install(toolname):
 		tools.github_tools(pack_man, 'bluemaho', repo_bluemaho)
 	elif toolname == 'j1939':
 		tools.github_tools(pack_man, 'j1939', repo_j1939)
-	elif toolname == 'canbadger':
-		tools.github_tools(pack_man, 'canbadger', repo_canbadger)
-	elif toolname == 'canbadger-server':
-		tools.github_tools(pack_man, 'canbadger-server', repo_canbadger_server)
+	elif toolname == 'canbadger-hw':
+		tools.github_tools(pack_man, 'canbadger-hw', repo_canbadger)
+	elif toolname == 'canbadger-sw':
+		tools.github_tools(pack_man, 'canbadger-sw', repo_canbadger_server)
 
 	elif toolname == 'pyobd':
 		tools.downloaded_tools(pack_man, 'pyobd', link_pyobd)
 	elif toolname == 'o2oo':
 		tools.downloaded_tools(pack_man, 'o2oo', link_o2oo)
 
-	elif toolname == 'bluetooth tools':
-		tools.installed_tools(pack_man, 'bluetooth tools')
+	elif toolname == 'bluez':
+		tools.installed_tools(pack_man, 'bluez')
 	elif toolname == 'btscanner':
 		tools.installed_tools(pack_man, 'btscanner')
 	elif toolname == 'gnuradio':

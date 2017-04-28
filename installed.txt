@@ -1,0 +1,4 @@
+can-utils
+wireshark
+canbadger
+udsim

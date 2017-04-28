@@ -16,13 +16,6 @@ import subprocess
 distro = general_use.check_distribution()
 pack_man = general_use.package_tool(distro)
 
-installed_tools = []
-try:
-	it = open('installed.txt', 'r')
-	installed_tools = it.readlines()
-except FileNotFoundError:
-	pass
-
 def install_python(pack_man):
 	'''
 	This function installs or updates Python 3 depending on whether it is already on the system or not
