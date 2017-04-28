@@ -173,7 +173,7 @@ Builder.load_string("""
 		id: can_float
 		canvas.before:
 			Rectangle:
-				source: 'background.jpg'
+				source: 'images/background.jpg'
 				pos: self.pos
 				size: self.size
 		BoxLayout:
@@ -528,73 +528,96 @@ Builder.load_string("""
 			spacing: 10
 			padding: [90,90,90,90]
 			ToggleButton:
-				id: 'o2oo'
+				id: o2oo
 				text: 'O2OO'
 				size_hint: .30, .1
 			ToggleButton:
-				id: 'aircrack-ng'
+				id: aircrack-ng
 				text: 'aircrack-ng'
 				size_hint: .30, .1
 			ToggleButton:
+				id: bluelog
 				text: 'Bluelog'
 				size_hint: .30, .1
 			ToggleButton:
+				id: bluemaho
 				text: 'Bluemaho'
 				size_hint: .30, .1
 			ToggleButton:
+				id: bluez
 				text: 'bluez Package'
 				size_hint: .30, .1
 			ToggleButton:
+				id: btscanner
 				text: 'BTscanner'
 				size_hint: .30, .1
 			ToggleButton:
+				id: c0f
 				text: 'c0f'
 				size_hint: .30, .1
 			ToggleButton:
+				id: canbadger-hw
 				text: 'CANBadger-HW'
 				size_hint: .30, .1
 			ToggleButton:
+				id: canbadger-sw
 				text: 'CANBadger-SW'
+				size_hint: .30, .1
 			ToggleButton:
+				id: canbus_utils
 				text: 'CANbus-utils'
 				size_hint: .30, .1
 			ToggleButton:
+				id: can_utils
 				text: 'CAN-utils'
 				size_hint: .30, .1
+				on_press: root.to_install('can-utils')
 			ToggleButton:
+				id: j1939
 				text: 'CAN-utils-j1939'
 				size_hint: .30, .1
 			ToggleButton:
+				id: can_utils_x
 				text: 'CAN-utils-X'
 				size_hint: .30, .1
 			ToggleButton:
+				id: caringcaribou
 				text: 'Caring Caribou'
 				size_hint: .30, .1
 			ToggleButton:
-				text: 'Dojge'
+				id: tio
+				text: 'Tio'
 				size_hint: .30, .1
 			ToggleButton:
+				id: gnu_radio
 				text: 'GNU Radio'
 				size_hint: .30, .1
 			ToggleButton:
+				id: gqrx
 				text: 'gqrx'
 				size_hint: .30, .1
 			ToggleButton:
+				id: katoolin
 				text: 'Katoolin'
 				size_hint: .30, .1
 			ToggleButton:
+				id: kayak
 				text: 'Kayak'
 				size_hint: .30, .1
 			ToggleButton:
+				id: pyobd
 				text: 'PyOBD'
 				size_hint: .30, .1
 			ToggleButton:
+				id: tshark
 				text: 'tshark'
 				size_hint: .30, .1
 			ToggleButton:
+				id: udsim
 				text: 'UDSim'
 				size_hint: .30, .1
 			ToggleButton:
+				id: wireshark
 				text: 'Wireshark'
 				size_hint: .30, .1
 		Button:
@@ -637,9 +660,10 @@ can = ['o2oo', 'c0f', 'canbadger-hw', 'canbadger-sw', 'canbus-utils', 'can-utils
 b_w = ['aircrack-ng', 'bluelog', 'bluemaho', 'bluez', 'btscanner', 'tshark', 'wireshark']
 sdr = ['gnu radio', 'gqrx']
 mis = ['katoolin']
+all_tools = can + b_w + sdr + mis
 
-maybe = []
-
+tools_to_install = []
+broken = []
 
 class ScrollableLabel(ScrollView):
 	text = StringProperty('')
@@ -661,7 +685,6 @@ class ToolsPage(Screen):
 	def find(self):	#doing this atm, but will fix functionality later
 		t = (self.ids['search'].text).lower()
 
-		
 		if t in can:
 			screen_manager.current = 'can'
 		elif t in b_w:
@@ -688,90 +711,90 @@ class CanPage(Screen):
 
 
 		if v == 'can-utils-x':
-			with open("canutilsx.txt", "r") as stream:
+			with open("text/canutilsx.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("canutilsx_example.txt", "r") as stream:
+			with open("text/canutilsx_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'canbadger':
-			with open("canbadger.txt", "r") as stream:
+			with open("text/canbadger.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("canbadger_example.txt", "r") as stream:
+			with open("text/canbadger_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'kayak':
-			with open("kayak.txt", "r") as stream:
+			with open("text/kayak.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("kayak_example.txt", "r") as stream:
+			with open("text/kayak_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'udsim':
-			with open("udsim.txt", "r") as stream:
+			with open("text/udsim.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("udsim_example.txt", "r") as stream:
+			with open("text/udsim_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'pyobd':
-			with open("pyobd.txt", "r") as stream:
+			with open("text/pyobd.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("pyobd_example.txt", "r") as stream:
+			with open("text/pyobd_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'o2oo':
-			with open("o2oo.txt", "r") as stream:
+			with open("text/text/o2oo.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("o2oo_example.txt", "r") as stream:
+			with open("text/o2oo_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'c0f':
-			with open("c0f.txt", "r") as stream:
+			with open("text/c0f.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("c0f_example.txt", "r") as stream:
+			with open("text/c0f_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'can-utils':
-			with open("canutils.txt", "r") as stream:
+			with open("text/canutils.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("canutils_example.txt", "r") as stream:
+			with open("text/canutils_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'canbus-utils':
-			with open("canbus_utils.txt", "r") as stream:
+			with open("text/canbus_utils.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("canbus_utils_example.txt", "r") as stream:
+			with open("text/canbus_utils_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'caringcaribou':
-			with open("caringcaribou.txt", "r") as stream:
+			with open("text/caringcaribou.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("caringcaribou_example.txt", "r") as stream:
+			with open("text/caringcaribou_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'j1939':
-			with open("j1939.txt", "r") as stream:
+			with open("text/j1939.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("j1939_example.txt", "r") as stream:
+			with open("text/j1939_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
@@ -821,6 +844,14 @@ class CanPage(Screen):
 				widget.remove_widget(un)
 				widget.add_widget(i)
 
+		#fixes the problem for when buttons were being recreated and never removed when clicked
+		for child in widget.children:
+			if isinstance(child,Button):
+				widget.remove_widget(child)
+			#if child == 'up' or child == 'un' or child == 'o' or child == 'i':
+				#widget.remove_widget(child.id)
+
+
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 			rc_i = install.test(v)
@@ -869,59 +900,63 @@ class BluetoothWifiPage(Screen):
 
 		v = value
 
+		for i in installed_tools:	#if we cant get this to work , add a "see what tools are installed" button
+			if i in b_w:
+				widget.ids[i].background_color = [1,1,1,.65]
+
 		if v == 'aircrack-ng':
-			with open("aircrack_ng.txt", "r") as stream:
+			with open("text/aircrack_ng.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("aircrack_ng_example.txt", "r") as stream:
+			with open("text/aircrack_ng_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'bluelog':
-			with open("bluelog.txt", "r") as stream:
+			with open("text/bluelog.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("bluelog_example.txt", "r") as stream:
+			with open("text/bluelog_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'bluemaho':
-			with open("bluemaho.txt", "r") as stream:
+			with open("text/bluemaho.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("bluemaho.txt", "r") as stream:
+			with open("text/bluemaho.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'btscanner':
-			with open("btscanner.txt", "r") as stream:
+			with open("text/btscanner.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("btscanner_example.txt", "r") as stream:
+			with open("text/btscanner_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'package':
-			with open("package.txt", "r") as stream:
+			with open("text/package.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("package_example.txt", "r") as stream:
+			with open("text/package_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'tshark':
-			with open("tshark.txt", "r") as stream:
+			with open("text/tshark.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("tshark_example.txt", "r") as stream:
+			with open("text/tshark_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'wireshark':
-			with open("wireshark.txt", "r") as stream:
+			with open("text/wireshark.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("wireshark_example.txt", "r") as stream:
+			with open("text/wireshark_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
@@ -957,6 +992,10 @@ class BluetoothWifiPage(Screen):
 				widget.remove_widget(up)
 				widget.remove_widget(un)
 				widget.add_widget(i)
+
+		for child in widget.children:
+			if isinstance(child,Button):
+				widget.remove_widget(child)
 
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
@@ -1001,19 +1040,25 @@ class SDRPage(Screen):
 
 	def sdr(widget, value):
 
+		v = value
+
+		for i in installed_tools:	#if we cant get this to work , add a "see what tools are installed" button
+			if i in sdr:
+				widget.ids[i].background_color = [1,1,1,.65]
+
 		if v == 'gnuradio':
-			with open("gnuradio.txt", "r") as stream:
+			with open("text/gnuradio.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("gnuradio_example.txt", "r") as stream:
+			with open("text/gnuradio_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'gqrx':
-			with open("gqrx.txt", "r") as stream:
+			with open("text/gqrx.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("gqrx_example.txt", "r") as stream:
+			with open("text/gqrx_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
@@ -1040,6 +1085,10 @@ class SDRPage(Screen):
 				widget.remove_widget(up)
 				widget.remove_widget(un)
 				widget.add_widget(i)
+
+		for child in widget.children:
+			if isinstance(child,Button):
+				widget.remove_widget(child)
 
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
@@ -1083,19 +1132,25 @@ class MiscellaneousPage(Screen):
 
 	def mis(widget,value):
 
+		v = value
+
+		for i in installed_tools:	#if we cant get this to work , add a "see what tools are installed" button
+			if i in mis:
+				widget.ids[i].background_color = [1,1,1,.65]
+
 		if v == 'katoolin':
-			with open("katoolin.txt", "r") as stream:
+			with open("text/katoolin.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("katoolin.txt", "r") as stream:
+			with open("text/katoolin.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'tio':
-			with open("tio.txt", "r") as stream:
+			with open("text/tio.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
-			with open("tio_example.txt", "r") as stream:
+			with open("text/tio_example.txt", "r") as stream:
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
@@ -1122,6 +1177,10 @@ class MiscellaneousPage(Screen):
 				widget.remove_widget(up)
 				widget.remove_widget(un)
 				widget.add_widget(i)
+
+		for child in widget.children:
+			if isinstance(child,Button):
+				widget.remove_widget(child)
 
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
@@ -1162,20 +1221,32 @@ class MiscellaneousPage(Screen):
 	pass
 
 class SeeAllPage(Screen, Widget):
+#mention that they need to navigate to the page in order to open the tool
 
-	def to_install(widget, name, value):
+	for i in installed_tools:	#if we cant get this to work , add a "see what tools are installed" button
+		if i in all_tools:
+			widget.ids[i].background_color = [1,1,1,.65]
 
-		if value == 'down':
-			maybe.append(name)
+
+	state = 'down'
+
+	def to_install(self, name):
+
+		if self.state == 'down':
+			self.state = 'normal'
+			tools_to_install.append(name)
 		else:
-			maybe.remove(name)
+			self.state = 'down'
+			tools_to_install.remove(name)
 
 	def install_all(widget):
 
-		for i in maybe:
-			print (i)
-
-		
+		for i in tools_to_install:
+			rc_i = install.test(i)
+			if rc_i != 0:
+				broken.append(i)
+			if rc_i == 0:
+				installed_tools.append(i)
 
 	pass
 
