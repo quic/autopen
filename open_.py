@@ -7,7 +7,7 @@ import subprocess
 
 #OPEN TOOLS IN THE BACKGROUND
 
-def open_(toolname, option):
+def open_(toolname):
 	'''
 	This function opens the specified tool
 	'''
@@ -36,7 +36,7 @@ def open_(toolname, option):
 		current_dir = os.getcwd()
 		path = current_dir + '/tool'
 		os.chdir(path)
-		o = '/modules/' + option
+		o = '/modules/'
 		op_rc = subprocess.run(['./cc.py', o]).returncode #option here will be the module
 	elif toolname == 'katoolin':
 		op_rc = subprocess.run(['katoolin']).returncode
@@ -50,11 +50,12 @@ def open_(toolname, option):
 		os.chdir(path)
 		op_rc = subprocess.run(['./pyobd']).returncode
 	elif toolname == 'O2OO':	#isn't going to work unless 
-		o = './' + option	#make sure that when this is called it passes O2OO- before the name and not the button name
+		#o = './' + option	#make sure that when this is called it passes O2OO- before the name and not the button name
 		current = os.getcwd()
 		path = current + '/O2OO-0.9'
 		os.chdir(path)
-		op_rc = subprocess.run([o]).returncode
+		#op_rc = subprocess.run([o]).returncode
+		op_rc = subprocess.run(['/bin/bash']).returncode
 	elif toolname == 'btscanner':
 		#mention that this command will just show a list of the devices that are available; else can run btscanner (path to file name) and then potentially have a reset button
 		op_rc = subprocess.run(['btscanner']).returncode

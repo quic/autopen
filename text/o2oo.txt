@@ -1,0 +1,6 @@
+[size=32][b]O2OO[/b][/size]
+
+Introduction
+
+O2OO is a (OBD-II compliant) car diagnostic tool. It reads sensor data from a car into an sqlite database. It can dump the measured values, generate graphs of the data and create a spreadsheetfile (tested with Libre Office and Excel 2010). That way you can analyse the behaviour of your car. O2OO can also produce a PDF-file with more indept data. This program should work with all cars made after 1996 (US) or 2001 (EU).
+O2OO can also retrieve the location from a GPS module and store it in the same database. It then can create a Google Maps KML-file, coloring the route-line with a color depending on a sensor-reading.

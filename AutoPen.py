@@ -33,7 +33,7 @@ Builder.load_string("""
 		id: welcome_float
 		canvas.before:
 			Rectangle:
-				source: 'welcome_background.jpg'
+				source: 'images/background_side.jpg'
 				pos: self.pos
 				size: self.size
 		Label:
@@ -82,7 +82,7 @@ Builder.load_string("""
 		id: main_float
 		canvas.before:
 			Rectangle:
-				source: 'background.jpg'
+				source: 'images/background_front.jpg'
 				pos: self.pos
 				size: self.size
 		Label:
@@ -173,7 +173,7 @@ Builder.load_string("""
 		id: can_float
 		canvas.before:
 			Rectangle:
-				source: 'images/background.jpg'
+				source: 'images/background_off_side.jpg'
 				pos: self.pos
 				size: self.size
 		BoxLayout:
@@ -274,7 +274,7 @@ Builder.load_string("""
 				valign:'middle'
 		ScrollableLabel:
 			pos_hint:{'x': 0.65, 'top': 0.9}
-			size_hint:(0.3,0.7)
+			size_hint:(0.3,0.6)
 			Label:
 				id: label2
 				size_hint_y: None
@@ -284,6 +284,8 @@ Builder.load_string("""
 				font_size: 14
 				markup: True
 				valign:'middle'
+	FloatLayout:
+		id: dynbutton
 
 <BluetoothWifiPage>:
 	id: bt_main
@@ -291,7 +293,7 @@ Builder.load_string("""
 		id: bt_float
 		canvas.before:
 			Rectangle:
-				source: 'background.jpg'
+				source: 'images/background_off_side.jpg'
 				pos: self.pos
 				size: self.size
 		BoxLayout:
@@ -361,16 +363,18 @@ Builder.load_string("""
 				valign:'middle'
 		ScrollableLabel:
 			pos_hint:{'x': 0.65, 'top': 0.9}
-			size_hint:(0.3,0.7)
+			size_hint:(0.3,0.6)
 			Label:
 				id: label2
 				size_hint_y: None
-				height: label1.texture_size[1]
-				text_size: label1.width, None
+				height: label2.texture_size[1]
+				text_size: label2.width, None
 				text: ''
-				font_size: 20
+				font_size: 14
 				markup: True
 				valign:'middle'
+	FloatLayout:
+		id: dynbutton
 
 <SDRPage>:
 	id: sdr_main
@@ -378,7 +382,7 @@ Builder.load_string("""
 		id: sdr_float
 		canvas.before:
 			Rectangle:
-				source: 'background.jpg'
+				source: 'images/background_off_side.jpg'
 				pos: self.pos
 				size: self.size
 		BoxLayout:
@@ -429,23 +433,26 @@ Builder.load_string("""
 				valign:'middle'
 		ScrollableLabel:
 			pos_hint:{'x': 0.65, 'top': 0.9}
-			size_hint:(0.3,0.7)
+			size_hint:(0.3,0.6)
 			Label:
 				id: label2
 				size_hint_y: None
-				height: label1.texture_size[1]
-				text_size: label1.width, None
+				height: label2.texture_size[1]
+				text_size: label2.width, None
 				text: ''
-				font_size: 20
+				font_size: 14
 				markup: True
 				valign:'middle'
+	FloatLayout:
+		id: dynbutton
+
 <MiscellaneousPage>
 	id: mis
 	FloatLayout:
 		id: mis_float
 		canvas.before:
 			Rectangle:
-				source: 'background.jpg'
+				source: 'images/background_off_side.jpg'
 				pos: self.pos
 				size: self.size
 		BoxLayout:
@@ -496,23 +503,26 @@ Builder.load_string("""
 				valign:'middle'
 		ScrollableLabel:
 			pos_hint:{'x': 0.65, 'top': 0.9}
-			size_hint:(0.3,0.7)
+			size_hint:(0.3,0.6)
 			Label:
 				id: label2
 				size_hint_y: None
-				height: label1.texture_size[1]
-				text_size: label1.width, None
+				height: label2.texture_size[1]
+				text_size: label2.width, None
 				text: ''
-				font_size: 20
+				font_size: 14
 				markup: True
 				valign:'middle'
+	FloatLayout:
+		id: dynbutton
+
 <SeeAllPage>:
 	id: seeall
 	FloatLayout:
 		id: seeall_float
 		canvas.before:
 			Rectangle:
-				source: 'background.jpg'
+				source: 'images/background_off_side.jpg'
 				pos: self.pos
 				size: self.size
 		Label:
@@ -647,10 +657,10 @@ Builder.load_string("""
 
 """)
 
+installed_tools = []
 
 try:
 	already_installed = open('installed.txt', 'r')
-	installed_tools = []
 	for i in already_installed.readlines():
 		installed_tools.append(i.strip('\n'))
 except FileNotFoundError:
@@ -751,7 +761,7 @@ class CanPage(Screen):
 			widget.ids["label2"].text = labeltext2
 
 		elif v == 'o2oo':
-			with open("text/text/o2oo.txt", "r") as stream:
+			with open("text/o2oo.txt", "r") as stream:
 				labeltext1 = stream.read()
 			widget.ids["label1"].text = labeltext1
 			with open("text/o2oo_example.txt", "r") as stream:
@@ -803,93 +813,98 @@ class CanPage(Screen):
 		#opens the tool on enter with the appropriate arguments
 		def open_callback(self):
 			if v == 'can-utils-x':
-				rc_o = open_.test('can-utils-x')
+				rc_o = open_.open_('can-utils-x')
 			elif v == 'canbadger':
-				rc_o = open_.test('canbadger-hw')
+				rc_o = open_.open_('canbadger-hw')
 			elif v == 'canbadger-sw':
-				rc_o = open_.test('canbadger-sw')
+				rc_o = open_.open_('canbadger-sw')
 			elif v == 'kayak':
-				rc_o = open_.test('kayak')
+				rc_o = open_.open_('kayak')
 			elif v == 'udsim':
-				rc_o = open_.test('udsim')
+				rc_o = open_.open_('udsim')
 			elif v == 'pyobd':
-				rc_o = open_.test('pyobd')
+				rc_o = open_.open_('pyobd')
 			elif v == 'o2oo':
-				rc_o = open_.test('o2oo')
+				rc_o = open_.open_('o2oo')
 			elif v == 'c0f':
-				rc_o = open_.test('c0f')
+				rc_o = open_.open_('c0f')
 			elif v == 'can-utils':
-				rc_o = open_.test('can-utils')
+				rc_o = open_.open_('can-utils')
 			elif v == 'canbus-utils':
-				rc_o = open_.test('canbus-utils')
+				rc_o = open_.open_('canbus-utils')
 			elif v == 'caringcaribou':
-				rc_o = open_.test('caringcaribou')
+				rc_o = open_.open_('caringcaribou')
 			elif v == 'j1939':
-				rc_o = open_.test('j1939')
+				rc_o = open_.open_('j1939')
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
 				o.text = 'Failed to install'
 
 		def uninstall_callback(self):
-			rc_u = uninstall.test(v)
+			rc_u = uninstall.uninstall(v)
 
 			if rc_u != 0:
 				un.background_color = [1,0,0,.65]
 				un.text = 'Failed to uninstall'
 			else:
 				un.background_color = [0,1,0,.65]
-				widget.remove_widget(o)
-				widget.remove_widget(up)
-				widget.remove_widget(un)
-				widget.add_widget(i)
+				widget.ids.dynbutton.remove_widget(o)
+				widget.ids.dynbutton.remove_widget(up)
+				widget.ids.dynbutton.remove_widget(un)
+				widget.ids.dynbutton.add_widget(i)
 
 		#fixes the problem for when buttons were being recreated and never removed when clicked
-		for child in widget.children:
-			if isinstance(child,Button):
-				widget.remove_widget(child)
-			#if child == 'up' or child == 'un' or child == 'o' or child == 'i':
-				#widget.remove_widget(child.id)
-
-
+		# for child in widget.children:
+		# 	if isinstance(child,Button):
+		# 		widget.ids.dynbutton.remove_widget(child)
+		# widget.ids.dynbutton.clear_widgets()
+		
 		#this if the function that executes when install in pressed
+
+
+		o = Button(id='o', text='Open', size_hint=(.15, .07), pos_hint={'x': .3, 'y': .075}, background_color=[0, 1, 0, .65])  # this should be green
+		up = Button(id='up', text='Update', size_hint=(.15, .07), pos_hint={'x': .45, 'y': .075}, background_color=[0, 0, 1, .65])
+		un = Button(id='un', text='Uninstall', size_hint=(.15, .07), pos_hint={'x': .60, 'y': .075},	background_color=[0, 0, 1, .75])
+		i = Button(id='i', text='Install', size_hint=(.20, .075), pos_hint={'x': .4, 'y': .075})
+		
 		def install_callback(self): 
-			rc_i = install.test(v)
+			rc_i = install.install(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
-				widget.remove_widget(i)
+				widget.ids.dynbutton.remove_widget(i)
 				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
 				o.bind(on_press=open_callback)
 				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
 				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
 				un.bind(on_press=uninstall_callback)
 
-				widget.add_widget(o)
-				widget.add_widget(up)
-				widget.add_widget(un)
+				widget.ids.dynbutton.add_widget(o)
+				widget.ids.dynbutton.add_widget(up)
+				widget.ids.dynbutton.add_widget(un)
 			elif rc_i != 0:
 				i.background_color = [1,0,0,.65]
 				i.text = 'Failed to Install'
 
 
+		widget.ids.dynbutton.clear_widgets()
+
+		tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
+
 		if v in installed_tools:
 			widget.ids[v].background_color = [1,1,1,.65]
-
-			o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
 			o.bind(on_press=open_callback)
-			up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
-			un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
 			un.bind(on_press=uninstall_callback)
 
-			widget.add_widget(o)
-			widget.add_widget(up)
-			widget.add_widget(un)
+			widget.ids.dynbutton.add_widget(o)
+			widget.ids.dynbutton.add_widget(up)
+			widget.ids.dynbutton.add_widget(un)
+			widget.ids.dynbutton.add_widget(tryme)
 		else:
-			i = Button(text='Install', size_hint= (.20, .075), pos_hint= {'x':.4, 'y':.075})
-			widget.add_widget(i)
+			widget.ids.dynbutton.add_widget(i)
 			i.bind(on_press=install_callback)
-
+			#widget.ids.scroll2.remove_widget(widget.ids.label2)
 
 	pass
 
@@ -964,76 +979,80 @@ class BluetoothWifiPage(Screen):
 		def open_callback(self):
 
 			if v == 'aircrack-ng':
-				rc_o = open_.test('aircrack-ng')
+				rc_o = open_.open_('aircrack-ng')
 			elif v == 'bluelog':
-				rc_o = open_.test('bluelog')
+				rc_o = open_.open_('bluelog')
 			elif v == 'btscanner':
-				rc_o = open_.test('btscanner')
+				rc_o = open_.open_('btscanner')
 			elif v == 'bluez':
-				rc_o = open_.test('bluez')
+				rc_o = open_.open_('bluez')
 			elif v == 'tshark':
-				rc_o = open_.test('tshark')
+				rc_o = open_.open_('tshark')
 			elif v == 'wireshark':
-				rc_o = open_.test('wireshark')
+				rc_o = open_.open_('wireshark')
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
 				o.text = 'Failed to install'
 
 		def uninstall_callback(self):
-			rc_u = uninstall.test(v)
+			rc_u = uninstall.uninstall(v)
 
 			if rc_u != 0:
 				un.background_color = [1,0,0,.65]
 				un.text = 'Failed to uninstall'
 			else:
 				un.background_color = [0,1,0,.65]
-				widget.remove_widget(o)
-				widget.remove_widget(up)
-				widget.remove_widget(un)
-				widget.add_widget(i)
+				widget.ids.dynbutton.remove_widget(o)
+				widget.ids.dynbutton.remove_widget(up)
+				widget.ids.dynbutton.remove_widget(un)
+				widget.ids.dynbutton.add_widget(i)
 
-		for child in widget.children:
-			if isinstance(child,Button):
-				widget.remove_widget(child)
+		# for child in widget.children:
+		# 	if isinstance(child,Button):
+		# 		widget.ids.dynbutton.remove_widget(child)
 
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 
-			rc_i = install.test(v)
+			rc_i = install.install(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
-				widget.remove_widget(i)
+				widget.ids.dynbutton.remove_widget(i)
 				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
 				o.bind(on_press=open_callback)
 				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
 				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
 				un.bind(on_press=uninstall_callback)
 
-				widget.add_widget(o)
-				widget.add_widget(up)
-				widget.add_widget(un)
+				widget.ids.dynbutton.add_widget(o)
+				widget.ids.dynbutton.add_widget(up)
+				widget.ids.dynbutton.add_widget(un)
 			elif rc_i != 0:
 				i.background_color = [1,0,0,.65]
 				i.text = 'Failed to Install'
 
+		widget.ids.dynbutton.clear_widgets()
 
+		o = Button(id='o', text='Open', size_hint=(.15, .07), pos_hint={'x': .3, 'y': .075}, background_color=[0, 1, 0, .65])  # this should be green
+		up = Button(id='up', text='Update', size_hint=(.15, .07), pos_hint={'x': .45, 'y': .075}, background_color=[0, 0, 1, .65])
+		un = Button(id='un', text='Uninstall', size_hint=(.15, .07), pos_hint={'x': .60, 'y': .075},	background_color=[0, 0, 1, .75])
+		i = Button(id='i', text='Install', size_hint=(.20, .075), pos_hint={'x': .4, 'y': .075})
+		tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
 		if v in installed_tools:
-			o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
+			widget.ids[v].background_color = [1,1,1,.65]
 			o.bind(on_press=open_callback)
-			up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
-			un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
 			un.bind(on_press=uninstall_callback)
 
-			widget.add_widget(o)
-			widget.add_widget(up)
-			widget.add_widget(un)
+			widget.ids.dynbutton.add_widget(o)
+			widget.ids.dynbutton.add_widget(up)
+			widget.ids.dynbutton.add_widget(un)
+			widget.ids.dynbutton.add_widget(tryme)
 		else:
-			i = Button(text='Install', size_hint= (.20, .075), pos_hint= {'x':.4, 'y':.075})
-			widget.add_widget(i)
+			widget.ids.dynbutton.add_widget(i)
 			i.bind(on_press=install_callback)
-
+			#widget.ids.scroll2.remove_widget(widget.ids.label2)
 	pass
 
 class SDRPage(Screen):
@@ -1065,66 +1084,72 @@ class SDRPage(Screen):
 		def open_callback(self):	#this functionality will be a little different
 
 			if v == 'gnuradio':
-				rc_o = open_.test('gnuradio')
+				rc_o = open_.open_('gnuradio')
 			elif v == 'gqrx':
-				rc_o = open_.test('gqrx')
+				rc_o = open_.open_('gqrx')
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
 				o.text = 'Failed to install'
 
 		def uninstall_callback(self):
-			rc_u = uninstall.test(v)
+			rc_u = uninstall.uninstall(v)
 
 			if rc_u != 0:
 				un.background_color = [1,0,0,.65]
 				un.text = 'Failed to uninstall'
 			else:
 				un.background_color = [0,1,0,.65]
-				widget.remove_widget(o)
-				widget.remove_widget(up)
-				widget.remove_widget(un)
-				widget.add_widget(i)
+				widget.ids.dynbutton.remove_widget(o)
+				widget.ids.dynbutton.remove_widget(up)
+				widget.ids.dynbutton.remove_widget(un)
+				widget.ids.dynbutton.add_widget(i)
 
-		for child in widget.children:
-			if isinstance(child,Button):
-				widget.remove_widget(child)
+		# for child in widget.children:
+		# 	if isinstance(child,Button):
+		# 		widget.ids.dynbutton.remove_widget(child)
 
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 
-			rc_i = install.test(v)
+			rc_i = install.install(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
-				widget.remove_widget(i)
+				widget.ids.dynbutton.remove_widget(i)
 				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
 				o.bind(on_press=open_callback)
 				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
 				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
 				un.bind(on_press=uninstall_callback)
 
-				widget.add_widget(o)
-				widget.add_widget(up)
-				widget.add_widget(un)
+				widget.ids.dynbutton.add_widget(o)
+				widget.ids.dynbutton.add_widget(up)
+				widget.ids.dynbutton.add_widget(un)
 			elif rc_i != 0:
 				i.background_color = [1,0,0,.65]
 				i.text = 'Failed to Install'
 
+		widget.ids.dynbutton.clear_widgets()
+
+		o = Button(id='o', text='Open', size_hint=(.15, .07), pos_hint={'x': .3, 'y': .075}, background_color=[0, 1, 0, .65])  # this should be green
+		up = Button(id='up', text='Update', size_hint=(.15, .07), pos_hint={'x': .45, 'y': .075}, background_color=[0, 0, 1, .65])
+		un = Button(id='un', text='Uninstall', size_hint=(.15, .07), pos_hint={'x': .60, 'y': .075},	background_color=[0, 0, 1, .75])
+		i = Button(id='i', text='Install', size_hint=(.20, .075), pos_hint={'x': .4, 'y': .075})
+		tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
 		if v in installed_tools:
-			o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
+			widget.ids[v].background_color = [1,1,1,.65]
 			o.bind(on_press=open_callback)
-			up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
-			un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
 			un.bind(on_press=uninstall_callback)
 
-			widget.add_widget(o)
-			widget.add_widget(up)
-			widget.add_widget(un)
+			widget.ids.dynbutton.add_widget(o)
+			widget.ids.dynbutton.add_widget(up)
+			widget.ids.dynbutton.add_widget(un)
+			widget.ids.dynbutton.add_widget(tryme)
 		else:
-			i = Button(text='Install', size_hint= (.20, .075), pos_hint= {'x':.4, 'y':.075})
-			widget.add_widget(i)
+			widget.ids.dynbutton.add_widget(i)
 			i.bind(on_press=install_callback)
+			#widget.ids.scroll2.remove_widget(widget.ids.label2)
 
 	pass
 
@@ -1157,76 +1182,80 @@ class MiscellaneousPage(Screen):
 		def open_callback(self):	#this functionality will be a little different
 
 			if v == 'katoolin':
-				rc_o = open_.test('katoolin')
+				rc_o = open_.open_('katoolin')
 			elif v == 'tio':
-				rc_o = open_.test('tio')
+				rc_o = open_.open_('tio')
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
 				o.text = 'Failed to install'
 
 		def uninstall_callback(self):
-			rc_u = uninstall.test(v)
+			rc_u = uninstall.uninstall(v)
 
 			if rc_u != 0:
 				un.background_color = [1,0,0,.65]
 				un.text = 'Failed to uninstall'
 			else:
 				un.background_color = [0,1,0,.65]
-				widget.remove_widget(o)
-				widget.remove_widget(up)
-				widget.remove_widget(un)
-				widget.add_widget(i)
+				widget.ids.dynbutton.remove_widget(o)
+				widget.ids.dynbutton.remove_widget(up)
+				widget.ids.dynbutton.remove_widget(un)
+				widget.ids.dynbutton.add_widget(i)
 
-		for child in widget.children:
-			if isinstance(child,Button):
-				widget.remove_widget(child)
+		# for child in widget.children:
+		# 	if isinstance(child,Button):
+		# 		widget.ids.dynbutton.remove_widget(child)
 
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 
-			rc_i = install.test(v)
+			rc_i = install.install(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
-				widget.remove_widget(i)
+				widget.ids.dynbutton.remove_widget(i)
 				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
 				o.bind(on_press=open_callback)
 				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
 				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
 				un.bind(on_press=uninstall_callback)
 
-				widget.add_widget(o)
-				widget.add_widget(up)
-				widget.add_widget(un)
+				widget.ids.dynbutton.add_widget(o)
+				widget.ids.dynbutton.add_widget(up)
+				widget.ids.dynbutton.add_widget(un)
 			elif rc_i != 0:
 				i.background_color = [1,0,0,.65]
 				i.text = 'Failed to Install'
 
+		widget.ids.dynbutton.clear_widgets()
+
+		o = Button(id='o', text='Open', size_hint=(.15, .07), pos_hint={'x': .3, 'y': .075}, background_color=[0, 1, 0, .65])  # this should be green
+		up = Button(id='up', text='Update', size_hint=(.15, .07), pos_hint={'x': .45, 'y': .075}, background_color=[0, 0, 1, .65])
+		un = Button(id='un', text='Uninstall', size_hint=(.15, .07), pos_hint={'x': .60, 'y': .075},	background_color=[0, 0, 1, .75])
+		i = Button(id='i', text='Install', size_hint=(.20, .075), pos_hint={'x': .4, 'y': .075})
+		tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
 		if v in installed_tools:
-			o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
+			widget.ids[v].background_color = [1,1,1,.65]
 			o.bind(on_press=open_callback)
-			up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
-			un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
 			un.bind(on_press=uninstall_callback)
 
-			widget.add_widget(o)
-			widget.add_widget(up)
-			widget.add_widget(un)
+			widget.ids.dynbutton.add_widget(o)
+			widget.ids.dynbutton.add_widget(up)
+			widget.ids.dynbutton.add_widget(un)
+			widget.ids.dynbutton.add_widget(tryme)
 		else:
-			i = Button(text='Install', size_hint= (.20, .075), pos_hint= {'x':.4, 'y':.075})
-			widget.add_widget(i)
+			widget.ids.dynbutton.add_widget(i)
 			i.bind(on_press=install_callback)
-
+			#widget.ids.scroll2.remove_widget(widget.ids.label2)
 	pass
 
-class SeeAllPage(Screen, Widget):
+class SeeAllPage(Screen):
 #mention that they need to navigate to the page in order to open the tool
 
-	for i in installed_tools:	#if we cant get this to work , add a "see what tools are installed" button
-		if i in all_tools:
-			widget.ids[i].background_color = [1,1,1,.65]
-
+	# for i in installed_tools:	#if we cant get this to work , add a "see what tools are installed" button
+	# 	if i in all_tools:
+	# 		widget.ids[i].background_color = [1,1,1,.65]
 
 	state = 'down'
 
@@ -1237,18 +1266,31 @@ class SeeAllPage(Screen, Widget):
 			tools_to_install.append(name)
 		else:
 			self.state = 'down'
-			tools_to_install.remove(name)
+			try:
+				tools_to_install.remove(name)
+			except:
+				pass
 
-	def install_all(widget):
+	def install_selected(widget):
 
+		print (tools_to_install)
 		for i in tools_to_install:
+			print (i)
 			rc_i = install.test(i)
 			if rc_i != 0:
 				broken.append(i)
 			if rc_i == 0:
 				installed_tools.append(i)
 
+	def install_all(widget):
+		for i in all_tools:
+			rc_i = install.test(i)
+			if rc_i != 0:
+				broken.append(i)
+			if rc_i == 0:
+				installed_tools.append(i)
 	pass
+
 
 
 screen_manager = ScreenManager()
@@ -1261,7 +1303,7 @@ screen_manager.add_widget(BluetoothWifiPage(name='bw'))
 screen_manager.add_widget(CanPage(name='can'))
 screen_manager.add_widget(SDRPage(name='sdr'))
 screen_manager.add_widget(MiscellaneousPage(name='miscellaneous'))
-screen_manager.add_widget(SeeAllPage(name='seeall'))
+#screen_manager.add_widget(SeeAllPage(name='seeall'))
 class potentApp(App):
 
 	def build(self):

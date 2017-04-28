@@ -543,15 +543,3 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-

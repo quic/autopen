@@ -1,0 +1,1 @@
+TShark is a terminal oriented version of Wireshark designed for capturing and displaying packets when an interactive user interface isn’t necessary or available. It supports the same options as wireshark. For more information on tshark see the manual pages (man tshark).

@@ -1,0 +1,3 @@
+[size=32][b]Kayak[/b][/size]
+
+Kayak is an application for CAN bus diagnosis and monitoring. Its main goals are a simple interface and platform independence. It is implemented in pure Java and has no platform specific dependencies. Kayak is based on SocketCAN and the connection to a SocketCAN bus takes place using TCP/IP and a socketcand server. Therefore the bus access is network transparent and can be shared with multiple users.

@@ -1,0 +1,41 @@
+Note that these are only basic cases. Please look at the man pages for more details.
+
+[b]slcand[/b] is a daemon that links a serial interface to a virtual CAN device.
+Usage:
+sudo slcand -o -c -s0 /dev/ttyACM0 can0
+This will bring up a CAN interface called can0 at 10k bus speed (s0-s8, where s8 is 1M bus speed), using the CAN interface driver ttyACM0.
+Please note that the driver name may be different and require you to find out what it is first.
+
+
+[b]candump[/b] is a utility that allows the user to look at all the CAN traffic traveling on the network.
+Basic Usage:
+candump can0
+This will show all traffic on the CAN bus in real time
+Filtering:
+candump can0,0x161:0x7FF
+This will show only the messages with ARB ID 161
+Saving Output:
+candump -l can0
+
+[b]cansniffer[/b] is a utility that allows the user to filter more reliably through CAN traffic. It can be used side by side with candump.
+Basic Usage:
+cansniffer -cae can0
+This will slowly begin to weed out the ARB ID that do not change, making it easier to spot the ARB IDs that are active.
+
+[b]cansend[/b] is a utility that allows the user to send a specific CAN message onto the CAN bus.
+Basic Usage:
+cansend can0 161#1122334455667788
+This will send a message on the CAN bus with ARB ID 161 and data of 1122334455667788 (8 bytes)
+
+[b]cangen[/b] is a utility that allows the user to send a series of messages along the CAN bus.
+Basic Usage:
+cangen can0
+This will continously send random messages on the CAN bus
+Specific ID:
+cangen can0 -g 4 -I 161
+This will continously send CAN messages with ARB ID 161 and random data at 4 millisecond intervals.
+
+[b]canplayer[/b] is a utility that allows the user to replay logged CAN traffic. Requires output from candump (see Saving Output under candump).
+Basic Usage:
+canplayer -I [filename]
+This will replay the candump data from the log file. Please note that the -l modifier for candump formats the data specifically for playback.

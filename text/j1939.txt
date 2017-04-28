@@ -1,0 +1,7 @@
+[size=32][b]Can-utils-J1939[/b][/size]
+
+Version of can-utils for J1939 buses.
+
+Please use ONLY on vehicles with J1939 Can Buses. This includes trucks and large vehicles.
+
+https://github.com/wang701/can-utils-j1939

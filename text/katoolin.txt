@@ -1,0 +1,9 @@
+katoolin
+
+Automatically install all Kali linux tools
+
+Features
+
+Add Kali linux repositories
+Remove kali linux repositories
+Install Kali linux tools
