@@ -10,6 +10,8 @@ Autopen has only been tested on Ubuntu and Kali Linux. Other linux distributions
 Python 3 and pip3 must be installed in order to run the tool. 
 
 sudo apt-get install python3
+
+
 sudo apt-get install python3-pip
 
 ## Dependencies
@@ -17,6 +19,8 @@ sudo apt-get install python3-pip
 To run Autopen, having Python 3 and pip3 installed, the following dependencies must be installed. 
 
 pip3 install python3-kivy
+
+
 pip3 install cython==0.23
 
 ## Running the Program
