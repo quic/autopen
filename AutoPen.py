@@ -541,44 +541,54 @@ Builder.load_string("""
 				id: o2oo
 				text: 'O2OO'
 				size_hint: .30, .1
+				on_press: root.to_install('o2oo')
 			ToggleButton:
 				id: aircrack-ng
 				text: 'aircrack-ng'
 				size_hint: .30, .1
+				on_press: root.to_install('aircrack-ng')
 			ToggleButton:
 				id: bluelog
 				text: 'Bluelog'
 				size_hint: .30, .1
+				on_press: root.to_install('bluelog')
 			ToggleButton:
 				id: bluemaho
 				text: 'Bluemaho'
 				size_hint: .30, .1
+				on_press: root.to_install('bluemaho')
 			ToggleButton:
 				id: bluez
 				text: 'bluez Package'
 				size_hint: .30, .1
+				on_press: root.to_install('bluez')
 			ToggleButton:
 				id: btscanner
 				text: 'BTscanner'
 				size_hint: .30, .1
+				on_press: root.to_install('btscanner')
 			ToggleButton:
 				id: c0f
 				text: 'c0f'
 				size_hint: .30, .1
+				on_press: root.to_install('c0f')
 			ToggleButton:
 				id: canbadger-hw
 				text: 'CANBadger-HW'
 				size_hint: .30, .1
+				on_press: root.to_install('canbadger-hw')
 			ToggleButton:
 				id: canbadger-sw
 				text: 'CANBadger-SW'
 				size_hint: .30, .1
+				on_press: root.to_install('canbadger-sw')
 			ToggleButton:
-				id: canbus_utils
+				id: canbus-utils
 				text: 'CANbus-utils'
 				size_hint: .30, .1
+				on_press: root.to_install('canbus-utils')
 			ToggleButton:
-				id: can_utils
+				id: can-utils
 				text: 'CAN-utils'
 				size_hint: .30, .1
 				on_press: root.to_install('can-utils')
@@ -586,55 +596,67 @@ Builder.load_string("""
 				id: j1939
 				text: 'CAN-utils-j1939'
 				size_hint: .30, .1
+				on_press: root.to_install('j1939')
 			ToggleButton:
-				id: can_utils_x
+				id: can-utils-x
 				text: 'CAN-utils-X'
 				size_hint: .30, .1
+				on_press: root.to_install('can-utils-x')
 			ToggleButton:
 				id: caringcaribou
 				text: 'Caring Caribou'
 				size_hint: .30, .1
+				on_press: root.to_install('caringcaribou')
 			ToggleButton:
 				id: tio
 				text: 'Tio'
 				size_hint: .30, .1
+				on_press: root.to_install('tio')
 			ToggleButton:
-				id: gnu_radio
+				id: gnu-radio
 				text: 'GNU Radio'
 				size_hint: .30, .1
+				on_press: root.to_install('gnu-radio')
 			ToggleButton:
 				id: gqrx
 				text: 'gqrx'
 				size_hint: .30, .1
+				on_press: root.to_install('gqrx')
 			ToggleButton:
 				id: katoolin
 				text: 'Katoolin'
 				size_hint: .30, .1
+				on_press: root.to_install('katoolin')
 			ToggleButton:
 				id: kayak
 				text: 'Kayak'
 				size_hint: .30, .1
+				on_press: root.to_install('kayak')
 			ToggleButton:
 				id: pyobd
 				text: 'PyOBD'
 				size_hint: .30, .1
+				on_press: root.to_install('pyobd')
 			ToggleButton:
 				id: tshark
 				text: 'tshark'
 				size_hint: .30, .1
+				on_press: root.to_install('tshakr')
 			ToggleButton:
 				id: udsim
 				text: 'UDSim'
 				size_hint: .30, .1
+				on_press: root.to_install('udsim')
 			ToggleButton:
 				id: wireshark
 				text: 'Wireshark'
 				size_hint: .30, .1
+				on_press: root.to_install('wireshark')
 		Button:
 			text: 'Install'
 			size_hint: .3, .07
 			pos_hint: {'x':.35, 'y': .05}
-			on_press: root.install_all()
+			on_press: root.install_selected()
 		Button:
 			text: 'Install All'
 			size_hint: .3, .07
@@ -1260,6 +1282,7 @@ class SeeAllPage(Screen):
 	state = 'down'
 
 	def to_install(self, name):
+		print (self.state)
 
 		if self.state == 'down':
 			self.state = 'normal'
@@ -1303,7 +1326,7 @@ screen_manager.add_widget(BluetoothWifiPage(name='bw'))
 screen_manager.add_widget(CanPage(name='can'))
 screen_manager.add_widget(SDRPage(name='sdr'))
 screen_manager.add_widget(MiscellaneousPage(name='miscellaneous'))
-#screen_manager.add_widget(SeeAllPage(name='seeall'))
+screen_manager.add_widget(SeeAllPage(name='seeall'))
 class potentApp(App):
 
 	def build(self):
