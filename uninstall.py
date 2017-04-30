@@ -34,6 +34,8 @@ def uninstall(toolname):
 	else:
 		path = curr
 
+	os.chdir(path)
+
 	#wrap in exception so that if path isn't correct it doesn't crash program
 	#catch will be a print statement that prints out the directory that the user is in and tells them to go to that directory
 
