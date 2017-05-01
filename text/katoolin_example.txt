@@ -1,0 +1,7 @@
+Usage
+
+Typing the number of a tool will install it
+Typing 0 will install all Kali Linux tools
+back : Go back
+gohome : Go to the main menu
+By installing armitage , you will install metasploit

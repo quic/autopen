@@ -1,0 +1,1 @@
+Canutils contains some userspace utilities for Linux SocketCAN subsystem: asc2log, bcmserver, canbusload, can-calc-bit-timing, candump, canfdtest, cangen, cangw, canlogserver, canplayer, cansend, cansniffer, isotpdump, isotprecv, isotpperf, isotpsend, isotpserver, isotpsniffer, isotptun, log2asc, log2long, slcan_attach, slcand and slcanpty.
