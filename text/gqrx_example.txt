@@ -1,0 +1,15 @@
+Installation
+In order to use gqrx you will need to install gnuradio and gqrx packages with the following command for Linux Debian:
+
+$ sudo apt-get install gnuradio gqrx
+Once gnuradio and gqrx are installed (above procedure depends on which OS you are using):
+
+Connect the FunCube Dongle Pro+ receiver to the PC USB-2 port (do not use a USB-3 port as it may not work reliably on all PC). Use an USB extension cable for the connection to the PC to distance the receiver from the PC (hefty source of noise) and minimise the mechanical loads applied to the dongle connectors.
+Connect the antenna to the female SMA connector of the FunCube dongle. For HF and VHF, I found it convenient to use 1m of RG-174 coax terminated at one end with a male SMA and a male BNC at the other end such that I can reuse my HF antenna tuning box.
+
+Starting gqrx
+Having the device connected to the PC and the appropriate antenna, open a terminal and launch gqrx with the line command:
+$ gqrx
+
+Using gqrx
+Full in-depth guid can be found at http://gqrx.dk/doc/practical-tricks-and-tips

@@ -1,0 +1,9 @@
+Configuration
+1. all configuration is in 'config' dir.
+2. for using bluemaho propertly you need to build tools and exploits. check if you satisfy 'requirements' for bluemaho. then run 'build.sh'. if you see 'Building complete!' message, than all went OK. if not - try to play around requirements.
+3. 'default.conf' is a default configuration file, you can edit it if you need to change some options, path to files and commands used by bluemaho, theme etc. by default you don't need to change it if you do all from 'requirements' chapter. but, please, view it, for example just for setting 'user_location' variable for defining you location, which will be used for tracking function.
+4. 'themes' - directory with themes for bluemaho GUI. You can set path to default theme with 'theme' variable in 'default.conf'
+
+
+Run and use
+you can run BlueMaho typing in console 'bluemaho.py'. For verbose output in console (and redirecting std_err and std_out) run 'bluemaho.py -v'. it saves founded devices to 'bluemaho.log' by default, you can change it in 'config/defaul.conf'. enjoy! 

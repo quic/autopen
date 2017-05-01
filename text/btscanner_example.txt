@@ -1,0 +1,14 @@
+Usage
+
+Syntax
+bt scanner [options]
+
+Options
+
+	--help	        Display help
+	--cfg=<file>	Use <file> as the config file
+	--no-reset	Do not reset the Bluetooth adapter before scanning
+
+Example
+
+user@hostname:~$ sudo btscanner
