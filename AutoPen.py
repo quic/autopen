@@ -163,7 +163,7 @@ Builder.load_string("""
 			on_press: root.find()
 
 		Image:
-			source: "AutoPenBlack.png"
+			source: "images/AutoPenBlack.png"
 			size_hint: 0.1,0.1
 			pos_hint: {'x':0, 'y':0.88}
 
@@ -631,26 +631,31 @@ Builder.load_string("""
 				id: kayak
 				text: 'Kayak'
 				size_hint: .30, .1
+				state: 'normal'
 				on_press: root.to_install('kayak')
 			ToggleButton:
 				id: pyobd
 				text: 'PyOBD'
 				size_hint: .30, .1
+				state: 'normal'
 				on_press: root.to_install('pyobd')
 			ToggleButton:
 				id: tshark
 				text: 'tshark'
 				size_hint: .30, .1
-				on_press: root.to_install('tshakr')
+				state: 'normal'
+				on_press: root.to_install('tshark')
 			ToggleButton:
 				id: udsim
 				text: 'UDSim'
 				size_hint: .30, .1
+				state: 'normal'
 				on_press: root.to_install('udsim')
 			ToggleButton:
 				id: wireshark
 				text: 'Wireshark'
 				size_hint: .30, .1
+				state: 'normal'
 				on_press: root.to_install('wireshark')
 		Button:
 			text: 'Install'
@@ -1279,16 +1284,15 @@ class SeeAllPage(Screen):
 	# 	if i in all_tools:
 	# 		widget.ids[i].background_color = [1,1,1,.65]
 
-	state = 'down'
+	def to_install(widget, name):
+		print (widget.ids[name].state)
 
-	def to_install(self, name):
-		print (self.state)
-
-		if self.state == 'down':
-			self.state = 'normal'
+		if widget.ids[name].state == 'down' and name not in tools_to_install:
+			widget.ids[name].state = 'normal'
+			print (widget.ids[name].state)
 			tools_to_install.append(name)
 		else:
-			self.state = 'down'
+			widget.ids[name].state = 'down'
 			try:
 				tools_to_install.remove(name)
 			except:
