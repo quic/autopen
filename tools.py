@@ -64,10 +64,6 @@ TOOLS MAY BE INCLUDED:
 	AVRDUDESS:
 		(this one not sure if im going to install yet)
 
-TO DO LATER:
-	1. CREATE A PACKAGE
-
-
 TO DO (LOGISTICS):
 	1. test live demo for may 5 to make sure it will work
 	3. Documentation
@@ -535,11 +531,6 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 		it.write(toolname)
 	it.close()
 	return install_rc
-
-
-
-
-
 
 
 
