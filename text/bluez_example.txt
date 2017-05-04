@@ -1,0 +1,311 @@
+Requirements
+
+In order to use BlueZ, you need to have at least a 2.4.4 Linux kernel. The 2.4.6 kernel has BlueZ built-in.
+In case, if you want to use the latest version of BlueZ ( see section 2.1 for download instructions), you
+should disable native BlueZ support.
+BlueZ can be used with USB or Serial interface based Bluetooth devices. Additionally, Bluez provides
+Virtual HCI device (vhci) which can be used to test your Bluetooth applications. This is very useful if you
+do not have any real Bluetooth devices.
+
+
+Compilation and Installation
+
+To configure BlueZ run
+./configure
+to configure BlueZ for your kernel. The configure command automatically searches for all the required
+components and packages. Optionally, the configure support the following options:
+--enable-debug enable BlueZ debugging
+--with-kernel=<path> kernel source path (default is /usr/src/linux)
+Once the Configure ran successfully, to compile and install run BlueZ, run:
+make install
+That’s it!. Now, follow the next section to use BlueZ. See the README and configure.help for further
+compilation instructions including instructions for cross-compilation.
+As usually it is good to check /var/log/messages for any output messages.
+
+If you want to update your Linux kernel tree with the up to date CVS version run make update and
+recompile your kernel.
+If you want the latest stuff don’t enable Bluetooth support in the kernel and use BlueZ - 1.2 or the latest
+CVS code instead. Be sure to have control of which modules you are loading.
+
+
+Loading BlueZ Modules
+
+The following lines need to be present in your /etc/modules.conf always in order for BlueZ to work
+correctly:
+alias net-pf-31 bluez
+alias bt-proto-0 l2cap
+If you want to use UART based Bluetooth devices, add the following line to your /etc/modules.conf
+in addition to the above:
+alias tty-ldisc-15 hci_uart
+If you want to use the Virtual HCI device, add the following line to your /etc/modules.conf:
+alias char-major-10-250 hci_vhci
+After making any of the above changes, you can run ”depmod -a” to enable auto-loading of BlueZ
+modules.
+Manual loading of the modules can be done by:
+modprobe bluez
+modprobe hci_uart UART support. Optional
+modprobe hci_usb USB support. Optional
+modprobe l2cap
+You should see the BlueZ modules if you run lsmod. If there are any errors, check your
+/var/log/messages file.
+
+
+Device Intitialization
+
+UART Devices
+Make sure that your /etc/hcid.conf is correct (tty, speed, flow, etc). See the example provided with
+the package (daemons/hcid.conf). Start hcid.
+To configure the UART devices you need to use the tool hciattach. It can be called either manually or
+from the PCMCIA cardmgr scripts. The syntax is given in the Tools section.
+#
+# HCI daemon configuration file.
+#
+# $Id: bluezhowto.tex,v 1.5.1.2 2001/11/14 12:03:10 beutel Exp $
+#
+# HCId options
+options {
+# Automaticaly initialize new devices
+autoinit yes;
+}
+# Default settings for HCI devices
+default {
+# Local device name
+name BlueZ;
+# Local device class
+class 0x100;
+# Default packet type
+pkt_type DH1,DM1;
+}
+# HCI devices with UART interface configured without the use of hciattach
+#uart {
+# /dev/ttyS0 57600 flow ericsson;
+# /dev/ttyS1 57600 flow ericsson;
+#}
+USB Device
+Be sure to have USB support properly installed on your system. Plug in your USB device, check that the
+USB stack is loaded (usb-core and uhci or usb-uhci or ohci) and do:
+modprobe hci_usb
+Devices get initialized when they are plugged in (USB) or on the startup of the deamon (UART). When
+configured correctly they should be brought up automatically. Check your kernel and system logs for
+error messages.
+You can manually bring device up by using the hciconfig command:
+hciconfig hci0 up
+
+
+Debugging the BlueZ Driver
+
+If things go wrong don’t panic but follow these guidelines.
+Check  the system log /var/log/messages  the debug output from the BlueZ driver  for dead processes, like hcid  if you are loading the right modules compiled for your current kernel from the right location.
+Also please try this:
+cvs update get the very latest CVS code
+make distclean clean any changes in the code
+./configure --enable-debug enable debug output in the BlueZ driver
+make update will make sure that Bluetooth headers in the kernel-tree are uptodate
+make
+make install install the newly comiled modules and tools
+
+Does it still hang ? If it does:  reboot  unplug all Bluetooth USB devices (maybe even unplug all data and power connections for a while
+if you are using developer hardware)  comment out all uart devices in /etc/hcid.conf  kill hcid (if it was running)  start emulator hciemud localhost:10  start hcid
+If you decide to call for help please include the following information in addition to you system logs:  What bluetooth device are you using (Ericsson, Digi, etc.)?  GCC version?  What do you do and when exactly does it hang?  cat /etc/hcid.conf
+
+
+Tools
+
+hciconfig - HCI device configuration utility
+hciconfig hciX [up Open and initialize HCI device
+|down Close HCI device
+|reset Reset HCI device
+|rstat] Reset stat conters
+|auth Enable Authentication
+|noauth Disable Authentication
+|encrypt Enable Encryption
+|noencrypt Disable Encryption
+|piscan Set page scan and inquiry scan mode
+|noscan Disable scan modes
+|iscan Set inquiry scan mode only
+|pscan Set page scan mode only
+|inq [length] Inquiry of devices
+|ptype [type] Set packet type
+|lm [mode] Get/Set default link mode
+|lp [policy] Get/Set default link policy
+|conn Show active connections
+|features Show features
+|name [name] Get/Set local name
+|class [class] Get/Set class of device
+|version Display version information
+To query the current default packet type:
+hciconfig hci0 ptype
+To set the new packet type:
+hciconfig hci0 ptype <types list separated by comma>
+hciattach - HCI UART driver initialization utility
+hciattach <tty> <type | id> [speed] [flow]
+A simple utility that initializes a given serial port. It can be called either manually or from the PCMCIA
+cardmgr scripts. It is also working hot-plug for UART based PCMCIA devices. Using this tool you can
+add/delete UART devices without restarting HCId.
+hciattach ttyS0 xircom 115200 flow
+hciattach ttyS1 ericsson 115200 flow
+hciattach ttyS2 any 57600
+The PCMCIA cardmgr calls it like:
+hciattach ttyS1 0x0123,0x4567
+l2ping - L2CAP ping
+l2ping [-S source addr] [-s size] [-c count] [-f] <bd_addr>
+l2test - L2CAP testing
+l2test <mode> [-b bytes] [-P psm] [-I imtu] [-O omtu] [bd_addr]
+Modes: -d Dump (server)
+-c Reconnect (client)
+-m Multiple connects (client)
+-r Receive (server)
+-s Send (client)
+Options: -I Incoming MTU that we accept
+-O Minimum outgoing MTU that we need
+-b Size of the data chunks in kb
+-P Use this PSM
+If you have several devices on one box this may be useful:
+-S <Source BD address>
+A simple throughput test using l2test:
+Server: l2test -I 2000 -r
+Client: l2test -O 2000 -s <bd_addr>
+scotest - SCO testing
+scotest <mode> [-b bytes] [bd_addr]
+Modes: -d Dump (server)
+-c Reconnect (client)
+-m Multiple connects (client)
+-r Receive (server)
+-s Send (client)
+
+
+Additional Tools
+
+hcidump - HCI packet analyzer
+hcidump <-i hciX> [-h]
+hcitool - Generic writing and monitoring to the HCI interface
+hcitool [-i hciX] OGF OCF param...
+where OGF Is the OpCode Group Field (00-3F),
+OCF is the OpCode Command Field (0000-03FF),
+param... are parameters.
+Each parameter is a sequence of bytes. Bytes are entered in hexadecimal form without spaces, most
+significant byte first. The size of each parameter is determined based on the number of bytes entered.
+An example to do an inquiry using LAP 0x9E8B33 for 10  1.28 sec and unlimited responses is:
+hcitool -i hci0 01 0001 33 8b 9e 10 00
+and to stop the inquiry:
+hcitool -i hci0 01 0002
+hciemud - HCI Emulation daemon
+hciemud [-n] local_address
+
+
+Tools Examples
+
+Trace 1: DualPPro SMP machine. 2 Bluetooth devices (Ericsson AppTK) connected via UART.
+bluetooth11:/> uname -a
+Linux bluetooth11.qualcomm.com 2.4.4 #4 SMP Mon Apr 30 18:55:18 PDT 2001
+bluetooth11:/> cat /etc/modules.conf
+alias eth0 tlan
+alias char-major-108 ppp_async
+alias char-major-10-200 tun
+# BlueZ
+alias net-pf-31 bluez
+alias bt-proto-0 l2cap
+alias tty-ldisc-14 hci_uart
+bluetooth11:/> cat /etc/hcid.conf
+#
+# HCI daemon configuration file.
+#
+# $Id: bluezhowto.tex,v 1.5.1.2 2001/11/14 12:03:10 beutel Exp $
+#
+# HCI devices with UART interface
+uart {
+/dev/ttyS0 115200 flow ericsson;
+/dev/ttyS1 115200 flow ericsson;
+#/dev/ttyS0 57600 flow;
+}
+bluetooth11:/> lsmod
+Module Size Used by
+tlan 25056 1 (autoclean)
+bluetooth11:/> hcid
+bluetooth11:/> hciconfig
+hci0: Type: UART
+BD Address: 00:D0:B7:03:4B:F0 ACL MTU: 672:10 SCO: MTU 0:0
+UP RUNNING NORMAL PSCAN ISCAN
+RX bytes:62 acl:0 sco:0 events:7 errors:0
+TX bytes:36 acl:0 sco:0 commands:7 errors:0
+hci1: Type: UART
+BD Address: 00:D0:B7:03:4B:85 ACL MTU: 800:10 SCO: MTU 0:0
+UP RUNNING NORMAL PSCAN ISCAN
+RX bytes:62 acl:0 sco:0 events:7 errors:0
+TX bytes:36 acl:0 sco:0 commands:7 errors:0
+bluetooth11:/> lsmod
+Module Size Used by
+hci_uart 4656 2 (autoclean)
+bluez 22544 3 (autoclean) [hci_uart]
+bluetooth11:/> l2ping 00:D0:B7:03:4B:85
+Ping: 00:D0:B7:03:4B:85 from 00:D0:B7:03:4B:F0 (data size 20) ...
+20 bytes from 00:D0:B7:03:4B:85 id 200 time 48.91ms
+20 bytes from 00:D0:B7:03:4B:85 id 201 time 50.02ms
+2 sent, 2 received, 0% loss
+bluetooth11:/usr/src/bluez/tools> ./l2test -r -b 10 -I 2000 &
+[1] 22761
+l2test[22761]: Waiting for connection on psm 10 ...
+bluetooth11:/usr/src/bluez/tools> ./l2test -s 00:D0:B7:03:4B:85
+l2test[22763]: Connected [imtu 672, omtu 2000, flush_to 65535]
+l2test[22763]: Sending ...
+l2test[22764]: Connect from 00:D0:B7:03:4B:F0 [imtu 2000, omtu 672, flush_to 65535]
+l2test[22764]: Receiving ...
+l2test[22764]: 10240 bytes in 0.01m speed 11.12 kb
+l2test[22764]: 10240 bytes in 0.01m speed 11.12 kb
+l2test[22764]: 10240 bytes in 0.02m speed 11.00 kb
+l2test[22764]: 10240 bytes in 0.01m speed 11.12 kb
+l2test[22764]: 10240 bytes in 0.01m speed 11.12 kb
+l2test[22764]: 10240 bytes in 0.01m speed 11.12 kb
+<ctrl-c>
+l2test[22764]: Read failed. Connection reset by peer(104)
+l2test[22764]: Disconnect
+bluetooth11:/> lsmod
+Module Size Used by
+l2cap 17520 0 (autoclean)
+hci_uart 4656 2 (autoclean)
+bluez 22544 3 (autoclean) [l2cap hci_uart]
+tlan 25056 1 (autoclean)
+Trace 2: Notebook (Compaq PIII). 1 Bluetooth device (Ericsson AppTK) connected via USB.
+btdemo1:˜>lsmod
+Module Size Used by
+uhci 23040 0 (unused)
+eepro100 15984 1 (autoclean)
+usbcore 48784 1 [uhci]
+btdemo1:˜>modprobe l2cap
+btdemo1:˜>lsmod
+Module Size Used by
+l2cap 15552 0 (unused)
+bluez 20624 0 [l2cap]
+uhci 23040 0 (unused)
+eepro100 15984 1 (autoclean)
+usbcore 48784 1 [uhci]
+btdemo1:˜>modprobe hci_usb
+btdemo1:˜>hciconfig
+hci0: Type: USB
+BD Address: 00:00:00:00:00:00 ACL MTU: 0:0 SCO: MTU 0:0
+DOWN NORMAL
+RX bytes:0 acl:0 sco:0 events:0 errors:0
+TX bytes:0 acl:0 sco:0 commands:0 errors:0
+btdemo1:˜>hciconfig hci0 up
+btdemo1:˜>hciconfig
+hci0: Type: USB
+BD Address: 00:D0:B7:03:4B:3B ACL MTU: 672:10 SCO: MTU 255:255
+UP RUNNING NORMAL PSCAN ISCAN
+RX bytes:61 acl:0 sco:0 events:8 errors:0
+TX bytes:33 acl:0 sco:0 commands:8 errors:0
+btdemo1:˜>l2ping aa:aa:aa:aa:aa:aa
+Can’t connect.: Host is down
+Trace3: Setting packet types on Ericsson AppTK
+bluez:/usr/src>hciconfig hci0
+hci0: Type: USB
+BD Address: 00:D0:B7:03:4B:3D ACL MTU: 672:10 SCO: MTU 255:255
+UP RUNNING NORMAL PSCAN ISCAN
+RX bytes:55 acl:0 sco:0 events:7 errors:0
+TX bytes:29 acl:0 sco:0 commands:7 errors:0
+bluez:/usr/src>hciconfig hci0 ptype
+hci0: Type: USB
+Default packet type: DM1 DM3 DM5 DH1 DH3 DH5
+bluez:/usr/src>hciconfig hci0 ptype DH1,DH5
+bluez:/usr/src>hciconfig hci0 ptype
+hci0: Type: USB
+Default packet type: DH1 DH5

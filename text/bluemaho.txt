@@ -1,5 +1,6 @@
 BlueMaho is GUI-shell (interface) for suite of tools for testing security of bluetooth devices. It is freeware, opensource, written on python, uses wxPyhon. It can be used for testing BT-devices for known vulnerabilities and major thing to do – testing to find unknown vulns. Also it can form nice statistics.
 
+
 Features:
 
 scan for devices, show advanced info, SDP records, vendor etc
@@ -15,3 +16,50 @@ form nice statistics (uniq devices by day/hour, vendors, services etc)
 test remote device for known vulnerabilities (see exploits for more details)
 test remote device for unknown vulnerabilities (see tools for more details)
 themes! you can customize it
+
+
+What tools and exploits it consist of?
+
+Tools:
+
+atshell.c by Bastian Ballmann (modified attest.c by Marcel Holtmann)
+bccmd by Marcel Holtmann
+bdaddr.c by Marcel Holtmann
+bluetracker.py by smiley
+carwhisperer v0.2 by Martin Herfurt
+psm_scan and rfcomm_scan from bt_audit-0.1.1 by Collin R. Mulliner
+BSS (Bluetooth Stack Smasher) v0.8 by Pierre Betouin
+btftp v0.1 by Marcel Holtmann
+btobex v0.1 by Marcel Holtmann
+greenplaque v1.5 by digitalmunition.com
+L2CAP packetgenerator by Bastian Ballmann
+obex stress tests 0.1
+redfang v2.50 by Ollie Whitehouse
+ussp-push v0.10 by Davide Libenzi
+exploits/attacks:
+Bluebugger v0.1 by Martin J. Muench
+bluePIMp by Kevin Finisterre
+BlueZ hcidump v1.29 DoS PoC by Pierre Betouin
+helomoto by Adam Laurie
+hidattack v0.1 by Collin R. Mulliner
+Mode 3 abuse attack
+Nokia N70 l2cap packet DoS PoC Pierre Betouin
+opush abuse (prompts flood) DoS attack
+Sony-Ericsson reset display PoC by Pierre Betouin
+you can add your own tools by editing 'exploits/exploits.lst' and 'tools/tools.lst'
+
+
+Requirements:
+
+OS (tested with Debian 4.0 Etch / 2.6.18)
+python (python 2.4 http://www.python.org)
+wxPython (python-wxgtk2.6 http://www.wxpython.org)
+BlueZ (3.9/3.24) http://www.bluez.org
+Eterm to open tools somewhere, you can set another term in 'config/defaul.conf' changing the value of 'cmd_term' variable. (tested with 1.1 ver)
+pkg-config(0.21), 'tee' used in tools/showmaxlocaldevinfo.sh, openobex, obexftp
+libopenobex1 + libopenobex-dev (needed by ussp-push)
+libxml2, libxml2-dev (needed by btftp)
+libusb-dev (needed by bccmd)
+libreadline5-dev (needed by atshell.c)
+lightblue-0.3.3 (needed by obexstress.py)
+hardware: any bluez compatible bluetooth-device
