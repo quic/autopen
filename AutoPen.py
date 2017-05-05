@@ -23,6 +23,7 @@ from kivy.properties import OptionProperty
 import install
 import open_
 import uninstall
+import update
 #from text import *
 
 Builder.load_string("""
@@ -76,6 +77,37 @@ Builder.load_string("""
 				root.manager.transition.direction = 'left'
 				root.manager.transition.duration = .5
 				root.manager.current = 'terms'
+
+<HowTo>:
+	id: howto
+	FloatLayout:
+		id: howto_float
+		canvas.before:
+			Rectangle:
+				source: 'images/background_side.jpg'
+				pos: self.pos
+				size: self.size
+		ScrollableLabel:
+			pos_hint:{'x': 0.65, 'top': 0.9}
+			size_hint:(0.3,0.5)
+			Label:
+				id: label1
+				size_hint_y: None
+				height: label1.texture_size[1]
+				text_size: label1.width, None
+				text: ''
+				font_size: 24
+				markup: True
+				valign:'middle'
+		Button:
+			text: 'Back'
+			size_hint: .1, .05
+			pos_hint: {'x':0, 'y': 0} 
+			on_press:
+				root.manager.transition.direction = "right"
+				root.manager.transition.duration = .5
+				root.manager.current = "welcome"
+
 <ToolsPage>:
 	id: tools_main
 	FloatLayout:
@@ -470,10 +502,6 @@ Builder.load_string("""
 				size_hint: .25, .1
 				on_press: root.mis('katoolin')
 			Button:
-				text: 'Tio'
-				size_hint: .25, .1
-				on_press: root.mis('tio')
-			Button:
 				text: ''
 				background_color: 0,0,0,0
 		Button:
@@ -691,6 +719,7 @@ try:
 	for i in already_installed.readlines():
 		installed_tools.append(i.strip('\n'))
 except FileNotFoundError:
+	
 	pass
 
 can = ['o2oo', 'c0f', 'canbadger-hw', 'canbadger-sw', 'canbus-utils', 'can-utils', 'can-utils-j1939', 'can-utils-x', 'caringcaribou', 'pyobd', 'kayak', 'udsim']
@@ -708,7 +737,10 @@ class ScrollableLabel(ScrollView):
 class WelcomePage(Screen):
 	pass
 
-class HowTo(Screen):
+class HowTo(Screen,widget):
+	with open("text/canutilsx.txt", "r") as stream:
+		labeltext1 = stream.read()
+	self.ids["label1"].text = labeltext1
 	pass
 
 class About(Screen):
@@ -843,14 +875,25 @@ class CanPage(Screen):
 
 		#opens the tool on enter with the appropriate arguments
 		def open_callback(self):
-			rc_o = open_.open_(v)
+			rc_o = open_.test(v)
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
 				o.text = 'Failed to install'
 
+		def update_callback(self):
+			layout = FloatLayout()
+			rc_up = update.test(v)
+
+			if rc_up != 0:
+				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center')), size_hint=(None,None), size=(300,200))
+			else:
+				popup = Popup(title=v, content=Label(text='Successfully updated!', size_hint=(None,None), size=(300,200))
+
+			popup.open()
+
 		def uninstall_callback(self):
-			rc_u = uninstall.uninstall(v)
+			rc_u = uninstall.test(v)
 
 			if rc_u != 0:
 				un.background_color = [1,0,0,.65]
@@ -877,7 +920,7 @@ class CanPage(Screen):
 		i = Button(id='i', text='Install', size_hint=(.20, .075), pos_hint={'x': .4, 'y': .075})
 		
 		def install_callback(self): 
-			rc_i = install.install(v)
+			rc_i = install.test(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
@@ -885,6 +928,7 @@ class CanPage(Screen):
 				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
 				o.bind(on_press=open_callback)
 				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
+				up.bind(on_press=update_callback)
 				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
 				un.bind(on_press=uninstall_callback)
 
@@ -904,6 +948,7 @@ class CanPage(Screen):
 			widget.ids[v].background_color = [1,1,1,.65]
 			o.bind(on_press=open_callback)
 			un.bind(on_press=uninstall_callback)
+			up.bind(on_press=update_callback)
 
 			widget.ids.dynbutton.add_widget(o)
 			widget.ids.dynbutton.add_widget(up)
@@ -986,14 +1031,25 @@ class BluetoothWifiPage(Screen):
 		#opens the tool on enter with the appropriate arguments
 		def open_callback(self):
 
-			rc_o = open_.open_(v)
+			rc_o = open_.test(v)
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
 				o.text = 'Failed to install'
 
+		def update_callback(self):
+			layout = FloatLayout()
+			rc_up = update.test(v)
+
+			if rc_up != 0:
+				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center')), size_hint=(None,None), size=(300,200))
+			else:
+				popup = Popup(title=v, content=Label(text='Successfully updated!', size_hint=(None,None), size=(300,200))
+
+			popup.open()
+
 		def uninstall_callback(self):
-			rc_u = uninstall.uninstall(v)
+			rc_u = uninstall.test(v)
 
 			if rc_u != 0:
 				un.background_color = [1,0,0,.65]
@@ -1012,7 +1068,7 @@ class BluetoothWifiPage(Screen):
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 
-			rc_i = install.install(v)
+			rc_i = install.test(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
@@ -1020,6 +1076,7 @@ class BluetoothWifiPage(Screen):
 				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
 				o.bind(on_press=open_callback)
 				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
+				up.bind(on_press=update_callback)
 				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
 				un.bind(on_press=uninstall_callback)
 
@@ -1041,6 +1098,7 @@ class BluetoothWifiPage(Screen):
 			widget.ids[v].background_color = [1,1,1,.65]
 			o.bind(on_press=open_callback)
 			un.bind(on_press=uninstall_callback)
+			up.bind(on_press=update_callback)
 
 			widget.ids.dynbutton.add_widget(o)
 			widget.ids.dynbutton.add_widget(up)
@@ -1080,11 +1138,22 @@ class SDRPage(Screen):
 
 		def open_callback(self):	#this functionality will be a little different
 
-			rc_o = open_.open_(v)
+			rc_o = open_.test(v)
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
 				o.text = 'Failed to install'
+
+		def update_callback(self):
+			layout = FloatLayout()
+			rc_up = update.test(v)
+
+			if rc_up != 0:
+				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center')), size_hint=(None,None), size=(300,200))
+			else:
+				popup = Popup(title=v, content=Label(text='Successfully updated!', size_hint=(None,None), size=(300,200))
+
+			popup.open()
 
 		def uninstall_callback(self):
 			rc_u = uninstall.uninstall(v)
@@ -1106,7 +1175,7 @@ class SDRPage(Screen):
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 
-			rc_i = install.install(v)
+			rc_i = install.test(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
@@ -1114,6 +1183,7 @@ class SDRPage(Screen):
 				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
 				o.bind(on_press=open_callback)
 				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
+				up.bind(on_press=update_callback)
 				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
 				un.bind(on_press=uninstall_callback)
 
@@ -1135,6 +1205,7 @@ class SDRPage(Screen):
 			widget.ids[v].background_color = [1,1,1,.65]
 			o.bind(on_press=open_callback)
 			un.bind(on_press=uninstall_callback)
+			up.bind(on_press=update_callback)
 
 			widget.ids.dynbutton.add_widget(o)
 			widget.ids.dynbutton.add_widget(up)
@@ -1165,24 +1236,27 @@ class MiscellaneousPage(Screen):
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
-		elif v == 'tio':
-			with open("text/tio.txt", "r") as stream:
-				labeltext1 = stream.read()
-			widget.ids["label1"].text = labeltext1
-			with open("text/tio_example.txt", "r") as stream:
-				labeltext2 = stream.read()
-			widget.ids["label2"].text = labeltext2
-
 		def open_callback(self):	#this functionality will be a little different
 
-			rc_o = open_.open_(v)
+			rc_o = open_.test(v)
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
 				o.text = 'Failed to install'
 
+		def update_callback(self):
+			layout = FloatLayout()
+			rc_up = update.test(v)
+
+			if rc_up != 0:
+				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center')), size_hint=(None,None), size=(300,200))
+			else:
+				popup = Popup(title=v, content=Label(text='Successfully updated!', size_hint=(None,None), size=(300,200))
+
+			popup.open()
+
 		def uninstall_callback(self):
-			rc_u = uninstall.uninstall(v)
+			rc_u = uninstall.test(v)
 
 			if rc_u != 0:
 				un.background_color = [1,0,0,.65]
@@ -1201,7 +1275,7 @@ class MiscellaneousPage(Screen):
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 
-			rc_i = install.install(v)
+			rc_i = install.test(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
@@ -1209,6 +1283,7 @@ class MiscellaneousPage(Screen):
 				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
 				o.bind(on_press=open_callback)
 				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
+				up.bind(on_press=update_callback)
 				un = Button(text= 'Uninstall', size_hint= (.15, .07), pos_hint= {'x':.60, 'y':.075}, background_color=[0,0,1,.75])
 				un.bind(on_press=uninstall_callback)
 
@@ -1230,6 +1305,7 @@ class MiscellaneousPage(Screen):
 			widget.ids[v].background_color = [1,1,1,.65]
 			o.bind(on_press=open_callback)
 			un.bind(on_press=uninstall_callback)
+			up.bind(on_press=update_callback)
 
 			widget.ids.dynbutton.add_widget(o)
 			widget.ids.dynbutton.add_widget(up)
