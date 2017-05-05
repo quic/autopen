@@ -1007,7 +1007,7 @@ class CanPage(Screen):
 
 		widget.ids.dynbutton.clear_widgets()
 
-		tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
+		#tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
 
 		if v in installed_tools:
 			widget.ids[v].background_color = [1,1,1,.65]
@@ -1018,7 +1018,7 @@ class CanPage(Screen):
 			widget.ids.dynbutton.add_widget(o)
 			widget.ids.dynbutton.add_widget(up)
 			widget.ids.dynbutton.add_widget(un)
-			widget.ids.dynbutton.add_widget(tryme)
+			#widget.ids.dynbutton.add_widget(tryme)
 		else:
 			widget.ids.dynbutton.add_widget(i)
 			i.bind(on_press=install_callback)
@@ -1159,7 +1159,7 @@ class BluetoothWifiPage(Screen):
 		up = Button(id='up', text='Update', size_hint=(.15, .07), pos_hint={'x': .45, 'y': .075}, background_color=[0, 0, 1, .65])
 		un = Button(id='un', text='Uninstall', size_hint=(.15, .07), pos_hint={'x': .60, 'y': .075},	background_color=[0, 0, 1, .75])
 		i = Button(id='i', text='Install', size_hint=(.20, .075), pos_hint={'x': .4, 'y': .075})
-		tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
+		#tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
 		if v in installed_tools:
 			widget.ids[v].background_color = [1,1,1,.65]
 			o.bind(on_press=open_callback)
@@ -1169,7 +1169,7 @@ class BluetoothWifiPage(Screen):
 			widget.ids.dynbutton.add_widget(o)
 			widget.ids.dynbutton.add_widget(up)
 			widget.ids.dynbutton.add_widget(un)
-			widget.ids.dynbutton.add_widget(tryme)
+			#widget.ids.dynbutton.add_widget(tryme)
 		else:
 			widget.ids.dynbutton.add_widget(i)
 			i.bind(on_press=install_callback)
@@ -1267,7 +1267,7 @@ class SDRPage(Screen):
 		up = Button(id='up', text='Update', size_hint=(.15, .07), pos_hint={'x': .45, 'y': .075}, background_color=[0, 0, 1, .65])
 		un = Button(id='un', text='Uninstall', size_hint=(.15, .07), pos_hint={'x': .60, 'y': .075},	background_color=[0, 0, 1, .75])
 		i = Button(id='i', text='Install', size_hint=(.20, .075), pos_hint={'x': .4, 'y': .075})
-		tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
+		#tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
 		if v in installed_tools:
 			widget.ids[v].background_color = [1,1,1,.65]
 			o.bind(on_press=open_callback)
@@ -1277,7 +1277,7 @@ class SDRPage(Screen):
 			widget.ids.dynbutton.add_widget(o)
 			widget.ids.dynbutton.add_widget(up)
 			widget.ids.dynbutton.add_widget(un)
-			widget.ids.dynbutton.add_widget(tryme)
+			#widget.ids.dynbutton.add_widget(tryme)
 		else:
 			widget.ids.dynbutton.add_widget(i)
 			i.bind(on_press=install_callback)
@@ -1368,7 +1368,7 @@ class MiscellaneousPage(Screen):
 		up = Button(id='up', text='Update', size_hint=(.15, .07), pos_hint={'x': .45, 'y': .075}, background_color=[0, 0, 1, .65])
 		un = Button(id='un', text='Uninstall', size_hint=(.15, .07), pos_hint={'x': .60, 'y': .075},	background_color=[0, 0, 1, .75])
 		i = Button(id='i', text='Install', size_hint=(.20, .075), pos_hint={'x': .4, 'y': .075})
-		tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
+		#tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
 		if v in installed_tools:
 			widget.ids[v].background_color = [1,1,1,.65]
 			o.bind(on_press=open_callback)
@@ -1378,7 +1378,7 @@ class MiscellaneousPage(Screen):
 			widget.ids.dynbutton.add_widget(o)
 			widget.ids.dynbutton.add_widget(up)
 			widget.ids.dynbutton.add_widget(un)
-			widget.ids.dynbutton.add_widget(tryme)
+			#widget.ids.dynbutton.add_widget(tryme)
 		else:
 			widget.ids.dynbutton.add_widget(i)
 			i.bind(on_press=install_callback)

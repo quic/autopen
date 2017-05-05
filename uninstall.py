@@ -85,21 +85,21 @@ def uninstall(toolname):
 			pass
 
 	elif toolname == 'bluez':
-		rm_rc = subprocess.run(['sudo', pack_man, 'purge', 'bluez']).returncode
+		rm_rc = subprocess.run(['sudo', pack_man, 'purge', '-y', 'bluez']).returncode
 	elif toolname == 'btscanner':
-		rm_rc = subprocess.run(['sudo', pack_man, 'purge', 'btscanner']).returncode
+		rm_rc = subprocess.run(['sudo', pack_man, 'purge', '-y','btscanner']).returncode
 	elif toolname == 'gnuradio':
-		rm_rc = subprocess.run(['sudo', pack_man, 'purge', 'gnuradio']).returncode
+		rm_rc = subprocess.run(['sudo', pack_man, 'purge','-y', 'gnuradio']).returncode
 	elif toolname == 'aircrack-ng':
-		rm_rc = subprocess.run(['sudo', pack_man, 'purge', 'aircrack-ng']).returncode
+		rm_rc = subprocess.run(['sudo', pack_man, 'purge','-y', 'aircrack-ng']).returncode
 	elif toolname == 'gqrx':
-		rm_rc = subprocess.run(['sudo', pack_man, 'purge', 'gqrx']).returncode
+		rm_rc = subprocess.run(['sudo', pack_man, 'purge', '-y','gqrx']).returncode
 	elif toolname == 'can-utils':
-		rm_rc = subprocess.run(['sudo', pack_man, 'purge', 'can-utils']).returncode
+		rm_rc = subprocess.run(['sudo', pack_man, 'purge','-y', 'can-utils']).returncode
 	elif toolname == 'wireshark':
-		rm_rc = subprocess.run(['sudo', pack_man, 'purge', 'wireshark']).returncode
+		rm_rc = subprocess.run(['sudo', pack_man, 'purge','-y', 'wireshark']).returncode
 	elif toolname == 'tshark':
-		rm_rc = subprocess.run(['sudo', pack_man, 'purge', 'tshark']).returncode
+		rm_rc = subprocess.run(['sudo', pack_man, 'purge','-y', 'tshark']).returncode
 
 	if rm_rc == 0:
 		#remove the tool from the text file
