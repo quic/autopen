@@ -74,6 +74,8 @@ def open_(toolname):
 	else:
 		print ('STARTUP SUCCESSFUL: Successfully opened', toolname)
 
+	return op_rc
+
 def test(tool):
 	return 0
 

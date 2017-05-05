@@ -2,6 +2,7 @@ import general_use
 import dependencies
 import tools
 import subprocess
+import os
 
 def uninstall(toolname):
 	repo_canbus_utils = 'https://github.com/digitalbond/canbus-utils.git'
@@ -98,6 +99,9 @@ def uninstall(toolname):
 		rm_rc = subprocess.run(['sudo', pack_man, 'purge', 'wireshark']).returncode
 	elif toolname == 'tshark':
 		rm_rc = subprocess.run(['sudo', pack_man, 'purge', 'tshark']).returncode
+
+
+	return rm_rc
 
 def test(name):
 	return 0
