@@ -350,6 +350,7 @@ def github_tools(pack_man, toolname, repo):
 	general_use.move_up_directory()
 	if f_rc == 0:
 		it.write(toolname)
+		it.write('\n')
 	it.close()
 	return f_rc
 
@@ -455,6 +456,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 
 	if f_rc == 0:
 		it.write(toolname)
+		it.write('\n')
 	it.close()
 	return f_rc
 
@@ -529,6 +531,7 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 	#don't necessarily need to not include in list of installed tools, just might want to list that the libraries were not installed. (log.txt file)
 	if install_rc == 0: 
 		it.write(toolname)
+		it.write('\n')
 	it.close()
 	return install_rc
 
