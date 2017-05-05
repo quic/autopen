@@ -27,49 +27,49 @@ def install(toolname):
 	pack_man = general_use.package_tool(d)
 
 	if toolname == 'canbus-utils':
-		tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)
+		return tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)
 	elif toolname == 'kayak':
-		tools.github_tools(pack_man, 'Kayak', repo_kayak)
+		return tools.github_tools(pack_man, 'Kayak', repo_kayak)
 	elif toolname == 'caringcaribou':
-		tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)	#CANT TEST THIS UNLESS A DEVICE IS ATTACHED AND SET UP
+		return tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)	#CANT TEST THIS UNLESS A DEVICE IS ATTACHED AND SET UP
 	elif toolname == 'c0f':
-		tools.github_tools(pack_man, 'c0f', repo_c0f)
+		return tools.github_tools(pack_man, 'c0f', repo_c0f)
 	elif toolname == 'udsim':
-		tools.github_tools(pack_man, 'udsim', repo_udsim)
+		return tools.github_tools(pack_man, 'udsim', repo_udsim)
 	elif toolname == 'katoolin':
-		tools.github_tools(pack_man, 'katoolin', repo_katoolin)
+		return tools.github_tools(pack_man, 'katoolin', repo_katoolin)
 	elif toolname == 'bluelog':
-		tools.github_tools(pack_man, 'Bluelog', repo_bluelog)
+		return tools.github_tools(pack_man, 'Bluelog', repo_bluelog)
 	elif toolname == 'bluemaho':
-		tools.github_tools(pack_man, 'bluemaho', repo_bluemaho)
+		return tools.github_tools(pack_man, 'bluemaho', repo_bluemaho)
 	elif toolname == 'j1939':
-		tools.github_tools(pack_man, 'j1939', repo_j1939)
+		return tools.github_tools(pack_man, 'j1939', repo_j1939)
 	elif toolname == 'canbadger-hw':
-		tools.github_tools(pack_man, 'canbadger-hw', repo_canbadger)
+		return tools.github_tools(pack_man, 'canbadger-hw', repo_canbadger)
 	elif toolname == 'canbadger-sw':
-		tools.github_tools(pack_man, 'canbadger-sw', repo_canbadger_server)
+		return tools.github_tools(pack_man, 'canbadger-sw', repo_canbadger_server)
 
 	elif toolname == 'pyobd':
-		tools.downloaded_tools(pack_man, 'pyobd', link_pyobd)
+		return tools.downloaded_tools(pack_man, 'pyobd', link_pyobd)
 	elif toolname == 'o2oo':
-		tools.downloaded_tools(pack_man, 'o2oo', link_o2oo)
+		return tools.downloaded_tools(pack_man, 'o2oo', link_o2oo)
 
 	elif toolname == 'bluez':
-		tools.installed_tools(pack_man, 'bluez')
+		return tools.installed_tools(pack_man, 'bluez')
 	elif toolname == 'btscanner':
-		tools.installed_tools(pack_man, 'btscanner')
+		return tools.installed_tools(pack_man, 'btscanner')
 	elif toolname == 'gnuradio':
-		tools.installed_tools(pack_man, 'gnuradio')
+		return tools.installed_tools(pack_man, 'gnuradio')
 	elif toolname == 'aircrack-ng':
-		tools.installed_tools(pack_man, 'aircrack-ng')
+		return tools.installed_tools(pack_man, 'aircrack-ng')
 	elif toolname == 'gqrx':
-		tools.installed_tools(pack_man, 'gqrx')
+		return tools.installed_tools(pack_man, 'gqrx')
 	elif toolname == 'can-utils':
-		tools.installed_tools(pack_man, 'can-utils')
+		return tools.installed_tools(pack_man, 'can-utils')
 	elif toolname == 'wireshark':
-		tools.installed_tools(pack_man, 'wireshark')
+		return tools.installed_tools(pack_man, 'wireshark')
 	elif toolname == 'tshark':
-		tools.installed_tools(pack_man, 'tshark')
+		return sstools.installed_tools(pack_man, 'tshark')
 
 def test(name):
 	return 0
