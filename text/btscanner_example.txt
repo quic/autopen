@@ -1,14 +1,11 @@
-Usage
+BTscanner is an open source tool used for the sniffing and injection of bluetooth packets.
 
-Syntax
-bt scanner [options]
+Btscanner  is much better tool what is like kismet for bluetooth devices. BT scanner search devices and show them on the screen and if you want to see more info about devices you can just hit enter and it shows devices mac address, which bt devices has found it, when it’s found and manufacturer of that found devices (based on first six digits of devices mac address). BT Scanner is a tool designed specifically to extract as much information as possible from a Bluetooth device without the requirement to pair. A detailed information screen extracts HCI and SDP information, and maintains an open connection to monitor the RSSI and link quality.
 
-Options
 
-	--help	        Display help
-	--cfg=<file>	Use <file> as the config file
-	--no-reset	Do not reset the Bluetooth adapter before scanning
+Steps to use:
 
-Example
-
-user@hostname:~$ sudo btscanner
+1. Start bluetooth process: service bluetooth satrt
+2. Open btScanner: btscanner
+3. Press i to start scanning.
+4. Once scanning, you can look at all the bluetooth modules which are currently talking to the one on your machine, and look at all the bluetooth packets being sent and received, as long as they are in range.
