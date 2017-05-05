@@ -919,6 +919,7 @@ class CanPage(Screen):
 				widget.ids.dynbutton.add_widget(o)
 				widget.ids.dynbutton.add_widget(up)
 				widget.ids.dynbutton.add_widget(un)
+				installed_tools.append(v)
 			elif rc_i != 0:
 				i.background_color = [1,0,0,.65]
 				i.text = 'Failed to Install'
@@ -938,9 +939,11 @@ class CanPage(Screen):
 			widget.ids.dynbutton.add_widget(up)
 			widget.ids.dynbutton.add_widget(un)
 			widget.ids.dynbutton.add_widget(tryme)
+			print ("installed")
 		else:
 			widget.ids.dynbutton.add_widget(i)
 			i.bind(on_press=install_callback)
+			print ("install pls")
 			#widget.ids.scroll2.remove_widget(widget.ids.label2)
 
 	pass
@@ -1067,6 +1070,7 @@ class BluetoothWifiPage(Screen):
 				widget.ids.dynbutton.add_widget(o)
 				widget.ids.dynbutton.add_widget(up)
 				widget.ids.dynbutton.add_widget(un)
+				installed_tools.append(v)
 			elif rc_i != 0:
 				i.background_color = [1,0,0,.65]
 				i.text = 'Failed to Install'
@@ -1174,6 +1178,7 @@ class SDRPage(Screen):
 				widget.ids.dynbutton.add_widget(o)
 				widget.ids.dynbutton.add_widget(up)
 				widget.ids.dynbutton.add_widget(un)
+				installed_tools.append(v)
 			elif rc_i != 0:
 				i.background_color = [1,0,0,.65]
 				i.text = 'Failed to Install'
@@ -1274,6 +1279,7 @@ class MiscellaneousPage(Screen):
 				widget.ids.dynbutton.add_widget(o)
 				widget.ids.dynbutton.add_widget(up)
 				widget.ids.dynbutton.add_widget(un)
+				installed_tools.append(v)
 			elif rc_i != 0:
 				i.background_color = [1,0,0,.65]
 				i.text = 'Failed to Install'
