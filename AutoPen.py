@@ -19,7 +19,7 @@ from kivy.uix.checkbox import CheckBox
 from kivy.uix.widget import Widget
 from kivy.properties import OptionProperty
 
-#import install_basics
+import install_basics
 import install
 import open_
 import uninstall
@@ -842,8 +842,6 @@ class CanPage(Screen):
 
 		v = value
 
-		print (installed_tools)
-
 		for i in installed_tools:	#if we cant get this to work , add a "see what tools are installed" button
 			if i in can:
 				widget.ids[i].background_color = [1,1,1,.65]
@@ -941,7 +939,7 @@ class CanPage(Screen):
 
 		#opens the tool on enter with the appropriate arguments
 		def open_callback(self):
-			rc_o = open_.test(v)
+			rc_o = open_.open_(v)
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
@@ -949,7 +947,7 @@ class CanPage(Screen):
 
 		def update_callback(self):
 			layout = FloatLayout()
-			rc_up = update.test(v)
+			rc_up = update.update(v)
 
 			if rc_up != 0:
 				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center'), size_hint=(None,None), size=(300,200))
@@ -959,7 +957,7 @@ class CanPage(Screen):
 			popup.open()
 
 		def uninstall_callback(self):
-			rc_u = uninstall.test(v)
+			rc_u = uninstall.uninstall(v)
 
 			if rc_u != 0:
 				un.background_color = [1,0,0,.65]
@@ -986,7 +984,7 @@ class CanPage(Screen):
 		i = Button(id='i', text='Install', size_hint=(.20, .075), pos_hint={'x': .4, 'y': .075})
 		
 		def install_callback(self): 
-			rc_i = install.test(v)
+			rc_i = install.install(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
@@ -1021,11 +1019,9 @@ class CanPage(Screen):
 			widget.ids.dynbutton.add_widget(up)
 			widget.ids.dynbutton.add_widget(un)
 			widget.ids.dynbutton.add_widget(tryme)
-			print ("installed")
 		else:
 			widget.ids.dynbutton.add_widget(i)
 			i.bind(on_press=install_callback)
-			print ("install pls")
 			#widget.ids.scroll2.remove_widget(widget.ids.label2)
 
 	pass
@@ -1100,7 +1096,7 @@ class BluetoothWifiPage(Screen):
 		#opens the tool on enter with the appropriate arguments
 		def open_callback(self):
 
-			rc_o = open_.test(v)
+			rc_o = open_.open_(v)
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
@@ -1108,7 +1104,7 @@ class BluetoothWifiPage(Screen):
 
 		def update_callback(self):
 			layout = FloatLayout()
-			rc_up = update.test(v)
+			rc_up = update.update(v)
 
 			if rc_up != 0:
 				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center'), size_hint=(None,None), size=(300,200))
@@ -1118,7 +1114,7 @@ class BluetoothWifiPage(Screen):
 			popup.open()
 
 		def uninstall_callback(self):
-			rc_u = uninstall.test(v)
+			rc_u = uninstall.uninstall(v)
 
 			if rc_u != 0:
 				un.background_color = [1,0,0,.65]
@@ -1137,7 +1133,7 @@ class BluetoothWifiPage(Screen):
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 
-			rc_i = install.test(v)
+			rc_i = install.install(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
@@ -1208,7 +1204,7 @@ class SDRPage(Screen):
 
 		def open_callback(self):	#this functionality will be a little different
 
-			rc_o = open_.test(v)
+			rc_o = open_.open_(v)
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
@@ -1216,7 +1212,7 @@ class SDRPage(Screen):
 
 		def update_callback(self):
 			layout = FloatLayout()
-			rc_up = update.test(v)
+			rc_up = update.update(v)
 
 			if rc_up != 0:
 				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center'), size_hint=(None,None), size=(300,200))
@@ -1245,7 +1241,7 @@ class SDRPage(Screen):
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 
-			rc_i = install.test(v)
+			rc_i = install.install(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
@@ -1309,7 +1305,7 @@ class MiscellaneousPage(Screen):
 
 		def open_callback(self):	#this functionality will be a little different
 
-			rc_o = open_.test(v)
+			rc_o = open_.open_(v)
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
@@ -1317,7 +1313,7 @@ class MiscellaneousPage(Screen):
 
 		def update_callback(self):
 			layout = FloatLayout()
-			rc_up = update.test(v)
+			rc_up = update.update(v)
 
 			if rc_up != 0:
 				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center'), size_hint=(None,None), size=(300,200))
@@ -1327,7 +1323,7 @@ class MiscellaneousPage(Screen):
 			popup.open()
 
 		def uninstall_callback(self):
-			rc_u = uninstall.test(v)
+			rc_u = uninstall.uninstall(v)
 
 			if rc_u != 0:
 				un.background_color = [1,0,0,.65]
@@ -1346,7 +1342,7 @@ class MiscellaneousPage(Screen):
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 
-			rc_i = install.test(v)
+			rc_i = install.install(v)
 
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
