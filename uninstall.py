@@ -110,7 +110,9 @@ def uninstall(toolname):
 			if i != toolname:
 				f.write(i)
 		f.truncate()
-		f.close()
+
+		print ('UNINSTALL SUCCESSFUL: Successfully uninstalled', toolname)
+	#	f.close()
 
 
 	return rm_rc

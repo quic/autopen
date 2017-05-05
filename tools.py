@@ -199,7 +199,7 @@ def github_tools(pack_man, toolname, repo):
 					else:
 						print ('INSTALLATION SUCCESSFUL: Successfully installed sqlite3')
 						print ('Installing c0f...')
-						f_rc = subprocess.run(['gem', 'install', 'c0f']).returncode
+						f_rc = subprocess.run(['sudo', 'gem', 'install', 'c0f']).returncode
 						if f_rc != 0:
 							print ('INSTALLATION FAILED: Failed to install c0f.')
 							print ('ERROR CODE:', f_rc)

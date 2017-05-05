@@ -21,7 +21,7 @@ def open_(toolname):
 		path = current + '/' + toolname
 		os.chdir(path)
 
-	if toolname == 'Kayak':
+	if toolname == 'kayak':
 		kayak_run_path = '/application/target/kayak/bin'
 		print ('Changing directory to', kayak_run_path, '...')
 		current_dir = os.getcwd()
@@ -49,7 +49,7 @@ def open_(toolname):
 		path = current + '/pyobd-0.9.3'
 		os.chdir(path)
 		op_rc = subprocess.run(['./pyobd']).returncode
-	elif toolname == 'O2OO':	#isn't going to work unless 
+	elif toolname == 'o2oo':	#isn't going to work unless 
 		#o = './' + option	#make sure that when this is called it passes O2OO- before the name and not the button name
 		current = os.getcwd()
 		path = current + '/O2OO-0.9'
@@ -67,6 +67,8 @@ def open_(toolname):
 		op_rc = subprocess.run(['gqrx']).returncode
 	elif toolname == 'wireshark':
 		op_rc = subprocess.run(['wireshark']).returncode
+	elif toolname == 'aircrack-ng':
+		op_rc = subprocess.run(['gnome-terminal']).returncode
 
 	if op_rc != 0:
 		print ('STARTUP FAILED: Failed to open', toolname)

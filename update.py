@@ -58,31 +58,31 @@ def update(toolname):
 			p = os.getcwd() + '/Kayak'
 			os.chdir(p)
 		elif toolname == 'caringcaribou':
-			p = os.getcwd() + 'caringcaribou'
+			p = os.getcwd() + '/caringcaribou'
 			os.chdir(p)
 		elif toolname == 'c0f':
-			p = os.getcwd() + 'c0f'
+			p = os.getcwd() + '/c0f'
 			os.chdir(p)
 		elif toolname == 'udsim':
-			p = os.getcwd() + 'UDSim'
+			p = os.getcwd() + '/UDSim'
 			os.chdir(p)
 		elif toolname == 'j1939':
-			p = os.getcwd() + 'can-utils-j1939'
+			p = os.getcwd() + '/can-utils-j1939'
 			os.chdir(p)
 		elif toolname == 'canbadger-hw':
-			p = os.getcwd() + 'CANBadger'
+			p = os.getcwd() + '/CANBadger'
 			os.chdir(p)
 		elif toolname == 'canbadger-sw':
-			p = os.getcwd() + 'CANBadger-Server'
+			p = os.getcwd() + '/CANBadger-Server'
 			os.chdir(p)
 		elif toolname == 'katoolin':
-			p = os.getcwd() + 'katoolin'
+			p = os.getcwd() + '/katoolin'
 			os.chdir(p)
 		elif toolname == 'bluelog':
-			p = os.getcwd() + 'Bluelog'
+			p = os.getcwd() + '/Bluelog'
 			os.chdir(p)
 		elif toolname == 'bluemaho':
-			p = os.getcwd() + 'bluemaho'
+			p = os.getcwd() + '/bluemaho'
 			os.chdir(p)
 
 		master = subprocess.run(['git', 'rev-parse', 'master'], stdout=subprocess.PIPE).stdout
