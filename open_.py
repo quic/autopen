@@ -29,9 +29,9 @@ def open_(toolname):
 		os.chdir(path)
 		op_rc = subprocess.run(['./kayak']).returncode
 	elif toolname == 'can-utils':
-		op_rc = subprocess.run(['/bin/bash']).returncode
+		op_rc = subprocess.run(['gnome-terminal']).returncode
 	elif toolname == 'canbus-utils':
-		op_rc = subprocess.run(['/bin/bash']).returncode
+		op_rc = subprocess.run(['gnome-terminal']).returncode
 	elif toolname == 'caringcaribou':
 		current_dir = os.getcwd()
 		path = current_dir + '/tool'
@@ -55,7 +55,7 @@ def open_(toolname):
 		path = current + '/O2OO-0.9'
 		os.chdir(path)
 		#op_rc = subprocess.run([o]).returncode
-		op_rc = subprocess.run(['/bin/bash']).returncode
+		op_rc = subprocess.run(['gnome-terminal']).returncode
 	elif toolname == 'btscanner':
 		#mention that this command will just show a list of the devices that are available; else can run btscanner (path to file name) and then potentially have a reset button
 		op_rc = subprocess.run(['btscanner']).returncode
