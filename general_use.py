@@ -3,7 +3,6 @@
 	This script has functions that can be used across all scripts
 
 '''
-
 import platform
 import subprocess
 import os
