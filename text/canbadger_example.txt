@@ -1,3 +1,9 @@
+CAN Badger, a tool designed to ease the way a vehicle is reversed. It is a hardware tool, not just an interface connected to a PC. 
+
+Like its predecessor, the ECU Tool, the CAN Badger is able to handle the Security in ECUs in an easy way, as well as provide verbose information on what's going on in the buses. Want to learn how to approach vehicle electronics security in a practical way? Come and visit us at Arsenal!
+
+
+
 The repository consists of python modules that can be used to create a python file utilizing the tool. An example python program is shown below
 
 import socket
