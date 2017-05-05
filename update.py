@@ -90,6 +90,7 @@ def update(toolname):
 				return 0
 		else:
 			print (toolname, 'is already up to date')
+			return 0
 
 	elif toolname in commandline_tools:
 		print ('Updating', toolname, '...')
