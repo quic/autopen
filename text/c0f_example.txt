@@ -1,3 +1,28 @@
+c0f - CAN Bus passivel Make/Model fingerprint system
+
+CAN of Fingers (c0f) is lovingly based off of the passive network OS detection tool p0f. c0f is designed to analyze CAN bus traffic and fingerprint the Make and Model. This tool is still very experimental and alpha and is currently being used as a proof of concept.
+
+Signal IDs
+
+Signal Intervals
+
+DLC Size
+
+Padding values
+
+Author
+
+Author
+
+Craig Smith (craig@theialabs.com) for Open Garages
+
+Copyright
+
+Copyright © 2015 Craig Smith
+
+
+
+
 [b]== Using c0f[/b]
 
 First you will want to use candump from can-utils (on linux) to record some CAN traffic from
