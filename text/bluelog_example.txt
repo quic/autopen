@@ -1,12 +1,16 @@
-bluelog -h
-Basic Options:
+Bluelog is a Linux Bluetooth scanner with optional daemon mode and web front-end, designed for site surveys and traffic monitoring. It’s intended to be run for long periods of time in a static location to determine how many discoverable Bluetooth devices there are in the area.
+
+The following is a brief description of the commands used in BlueLog. These attributes, when using BlueLog, will allow you to have greater granularity of control over the functionality of the tool.
+
+
+
     -i <interface>     Sets scanning device, default is "hci0"
     -o <filename>      Sets output filename, default is "devices.log"
     -v                 Verbose, prints discovered devices to the terminal
     -q                 Quiet, turns off nonessential terminal outout
     -d                 Enables daemon mode, Bluelog will run in background
-    -k                 Kill an already running Bluelog process
-    -l                 Start "Bluelog Live", default is disabled
+    -k                 Kill an already running Blue log process
+    -l                 Start "Blue log Live", default is disabled
 
 Logging Options:
     -n                 Write device names to log, default is disabled
@@ -20,6 +24,21 @@ Logging Options:
 
 Advanced Options:
     -r <retries>       Name resolution retries, default is 3
-    -a <minutes>       Amnesia, Bluelog will forget device after given time
+    -a <minutes>       Amnesia, Blue log will forget device after given time
     -w <seconds>       Scanning window in seconds, see README
     -s                 Syslog only mode, no log file. Default is disabled
+    
+    
+    The following is a brief example of how BlueLog might be used. The machine on which it is being used must have a bluetooth module, and it must be enabled.
+    
+    autopen@autopen:~$ sudo bluelog -v -o bluelog.log
+Bluelog (v1.1.0) by MS3FGX
+---------------------------
+Autodetecting device...OK
+Opening output file: blue log.log...OK
+Writing PID file: /tmp/blue log.pid...OK
+Scan started at [11/18/15 11:55:20] on 11:11:11:11:11:11.
+Hit Ctrl+C to end scan.
+[11/18/15 11:55:24] D8:3C:69:76:31:6E,IGNORED,0x5a020c
+
+Closing files and freeing memory...Done!
