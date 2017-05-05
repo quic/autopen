@@ -60,7 +60,7 @@ def uninstall(toolname):
 		rm_rc = subprocess.run(['rm', '-rf', 'can-utils-j1939']).returncode
 	elif toolname == 'canbadger-hw':
 		rm_rc = subprocess.run(['rm', '-rf', 'CANBadger']).returncode
-		
+
 		#https://github.com/Gutenshit/CANBadger/wiki/Getting-the-board-ready
 	elif toolname == 'canbadger-sw':
 		rm_rc = subprocess.run(['rm', '-rf', 'CANBadger-Server']).returncode
@@ -100,6 +100,17 @@ def uninstall(toolname):
 		rm_rc = subprocess.run(['sudo', pack_man, 'purge', 'wireshark']).returncode
 	elif toolname == 'tshark':
 		rm_rc = subprocess.run(['sudo', pack_man, 'purge', 'tshark']).returncode
+
+	if rm_rc == 0:
+		#remove the tool from the text file
+		f = open("installed.txt","r+")
+		d = f.readlines()
+		f.seek(0)
+		for i in d:
+			if i != toolname:
+				f.write(i)
+		f.truncate()
+		f.close()
 
 
 	return rm_rc
