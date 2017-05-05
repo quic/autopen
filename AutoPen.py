@@ -968,6 +968,7 @@ class CanPage(Screen):
 				widget.ids.dynbutton.remove_widget(up)
 				widget.ids.dynbutton.remove_widget(un)
 				widget.ids.dynbutton.add_widget(i)
+				installed_tools.remove(v)
 
 		#fixes the problem for when buttons were being recreated and never removed when clicked
 		# for child in widget.children:
@@ -1125,6 +1126,7 @@ class BluetoothWifiPage(Screen):
 				widget.ids.dynbutton.remove_widget(up)
 				widget.ids.dynbutton.remove_widget(un)
 				widget.ids.dynbutton.add_widget(i)
+				installed_tools.remove(v)
 
 		# for child in widget.children:
 		# 	if isinstance(child,Button):
@@ -1233,6 +1235,7 @@ class SDRPage(Screen):
 				widget.ids.dynbutton.remove_widget(up)
 				widget.ids.dynbutton.remove_widget(un)
 				widget.ids.dynbutton.add_widget(i)
+				installed_tools.remove(v)
 
 		# for child in widget.children:
 		# 	if isinstance(child,Button):
@@ -1334,6 +1337,7 @@ class MiscellaneousPage(Screen):
 				widget.ids.dynbutton.remove_widget(up)
 				widget.ids.dynbutton.remove_widget(un)
 				widget.ids.dynbutton.add_widget(i)
+				installed_tools.remove(v)
 
 		# for child in widget.children:
 		# 	if isinstance(child,Button):
