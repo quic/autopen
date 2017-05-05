@@ -320,11 +320,13 @@ def github_tools(pack_man, toolname, repo):
 				print ('ERROR CODE:', f_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed can-utils-j1939')
-		elif toolname == 'canbadger':
+
+		elif toolname == 'canbadger-hw':
 			f_rc = 0
 			print ('REPOSITORY AVAILABLE: The CANBadger repository has been cloned to your machine')
 			print ('If you need help, refer to the tutorial on the right side of the tool page to build the hardware')
-		elif toolname == 'canbadger-server':
+
+		elif toolname == 'canbadger-sw':
 			libs = ['python-qt4', 'pyqt4-dev-tools', 'qtcreator']
 			rcs = [dependencies.commandline_install(pack_man, i) for i in libs]
 
