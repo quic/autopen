@@ -72,6 +72,9 @@ def install(toolname):
 		return sstools.installed_tools(pack_man, 'tshark')
 
 def test(name):
+	it = open('installed.txt', 'a')
+	it.write(name)
+	it.write('\n')
 	return 0
 
 
