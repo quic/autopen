@@ -66,7 +66,7 @@ def open_(toolname):
 	elif toolname == 'gqrx':
 		op_rc = subprocess.run(['gqrx']).returncode
 	elif toolname == 'wireshark':
-		op_rc = subprocess.run(['wireshark']).returncode
+		op_rc = subprocess.run(['gnome-terminal', '-e','wireshark']).returncode
 	elif toolname == 'aircrack-ng':
 		op_rc = subprocess.run(['gnome-terminal']).returncode
 

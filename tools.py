@@ -241,60 +241,52 @@ def github_tools(pack_man, toolname, repo):
 				it.write('bluelog')
 		elif toolname == 'bluemaho':
 			print ('Beginning bluemaho installation...')
-			print ('Installing bluez...')
-			blue_rc = dependencies.install_bluez(pack_man)
-			if blue_rc != 0:
-				print ('INSTALLATION FAILED: Failed to install bluez dependency')
-				print ('WITH ERROR CODE:', blue_rc)
-			else:
-				print ('INSTALLATION SUCCESSFUL: Successfully installed bluez dependency')
-				
-				print ('Installing bluemaho dependencies...')
-				wxpython = dependencies.commandline_install(pack_man, 'python-wxgtk3.0')
-				bluez = dependencies.install_bluez(pack_man)
-				config = dependencies.download_install(link_package)
-				#lightblue = dependencies.install_lightblue(pack_man) ---> issue installing this one so need to figure this out
+			print ('Installing bluemaho dependencies...')
+			wxpython = dependencies.commandline_install(pack_man, 'python-wxgtk3.0')
+			bluez = dependencies.commandline_install(pack_man, 'bluez')
+			config = dependencies.download_install(link_package)
+			#lightblue = dependencies.install_lightblue(pack_man) ---> issue installing this one so need to figure this out
 
-				depend = ['libopenobex2-dev', 'libxml2', 'libxml2-dev', 'libusb-dev']
-				returncodes = [dependencies.commandline_install(pack_man, i) for i in depend]
-				#depend.append('lightblue')
-				depend.append('wxpython') #appends the name of the dependencies and returncodes to appropriate lists to have one list of 
-				depend.append('bluez')
-				depend.append('config')
-				#returncodes.append(lightblue)
-				returncodes.append(wxpython)
-				returncodes.append(bluez)
-				returncodes.append(config)
+			depend = ['libopenobex2-dev', 'libxml2', 'libxml2-dev', 'libusb-dev']
+			returncodes = [dependencies.commandline_install(pack_man, i) for i in depend]
+			#depend.append('lightblue')
+			depend.append('wxpython') #appends the name of the dependencies and returncodes to appropriate lists to have one list of 
+			depend.append('bluez')
+			depend.append('config')
+			#returncodes.append(lightblue)
+			returncodes.append(wxpython)
+			returncodes.append(bluez)
+			returncodes.append(config)
 
-				essential = 0
+			essential = 0
 
-				for i,j in enumerate(returncodes): #FIX THIS CODE BELOW
-					if j != 0:
-						if i < 7:
-							#maybe we'll be nice and include which library is associate with what attack 
-							print ('INSTALLATION FAILED: Failed to install dependency', depend[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
-							print ('ERROR CODE:', j)
-							essential = j
-						else:
-							print ('INSTALLATION FAILED: Failed to install dependency', depend[i])
-							essential = -1
-
-				if essential != 0:
-					print ('INSTALLATION FAILED: Failed to install Bluemaho dependencies')
-				else:
-					print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for Bluemaho')
-					print ('Building Bluemaho...')
-					c_dir = os.getcwd()
-					#last_slash = c_dir.rfind('/')
-					path = c_dir + '/config'
-					os.chdir(path)
-					f_rc = subprocess.run(['./build.sh']).returncode
-					if f_rc != 0:
-						print ('BUILD FAILED: Failed to build and complete installation of Bluemaho')
-						print ('ERROR CODE:', f_rc)
+			for i,j in enumerate(returncodes): #FIX THIS CODE BELOW
+				if j != 0:
+					if i < 7:
+						#maybe we'll be nice and include which library is associate with what attack 
+						print ('INSTALLATION FAILED: Failed to install dependency', depend[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
+						print ('ERROR CODE:', j)
+						essential = j
 					else:
-						print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
-						general_use.move_up_directory()
+						print ('INSTALLATION FAILED: Failed to install dependency', depend[i])
+						essential = -1
+
+			if essential != 0:
+				print ('INSTALLATION FAILED: Failed to install Bluemaho dependencies')
+			else:
+				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for Bluemaho')
+				print ('Building Bluemaho...')
+				c_dir = os.getcwd()
+				#last_slash = c_dir.rfind('/')
+				path = c_dir + '/config'
+				os.chdir(path)
+				f_rc = subprocess.run(['./build.sh']).returncode
+				if f_rc != 0:
+					print ('BUILD FAILED: Failed to build and complete installation of Bluemaho')
+					print ('ERROR CODE:', f_rc)
+				else:
+					print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
+					general_use.move_up_directory()
 			elif toolname == 'katoolin':
 				cp_rc = subprocess.run(['sudo', 'cp', 'katoolin.py', '/usr/bin/katoolin']).returncode
 				if cp_rc != 0:
@@ -477,10 +469,10 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 	it = open('installed.txt', 'a')
 
 
-	if toolname == 'bluez': #this installs hciconfig, l2ping, hcitool, etc. 
-		print ('Beginning bluez installation...')
-		install_rc = dependencies.commandline_install(pack_man, 'bluetooth')
-	elif toolname == 'btscanner':
+	# if toolname == 'bluez': #this installs hciconfig, l2ping, hcitool, etc. 
+	# 	print ('Beginning bluez installation...')
+	# 	install_rc = dependencies.commandline_install(pack_man, 'bluetooth')
+	if toolname == 'btscanner':
 		print ('Beginning btscanner installation...')
 		install_rc = dependencies.commandline_install(pack_man, 'btscanner')
 	elif toolname == 'gnuradio':
@@ -497,7 +489,7 @@ def installed_tools(pack_man, toolname): #this function is for tools that are ap
 		install_rc = dependencies.commandline_install(pack_man, 'can-utils')
 	elif toolname == 'tshark':
 		print ('Beginning tshark installation...')
-		installed_rc = dependencies.commandline_install(pack_man, 'tshark')
+		install_rc = dependencies.commandline_install(pack_man, 'tshark')
 	elif toolname == 'gqrx':
 		print ('Beginning gqrx installation...')
 		install_rc = dependencies.commandline_install(pack_man, 'gqrx-sdr')

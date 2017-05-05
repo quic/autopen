@@ -84,8 +84,8 @@ def uninstall(toolname):
 		except:
 			pass
 
-	elif toolname == 'bluez':
-		rm_rc = subprocess.run(['sudo', pack_man, 'purge', '-y', 'bluez']).returncode
+	# elif toolname == 'bluez':
+	# 	rm_rc = subprocess.run(['sudo', pack_man, 'purge', '-y', 'bluez']).returncode
 	elif toolname == 'btscanner':
 		rm_rc = subprocess.run(['sudo', pack_man, 'purge', '-y','btscanner']).returncode
 	elif toolname == 'gnuradio':

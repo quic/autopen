@@ -54,8 +54,6 @@ def install(toolname):
 	elif toolname == 'o2oo':
 		return tools.downloaded_tools(pack_man, 'o2oo', link_o2oo)
 
-	elif toolname == 'bluez':
-		return tools.installed_tools(pack_man, 'bluez')
 	elif toolname == 'btscanner':
 		return tools.installed_tools(pack_man, 'btscanner')
 	elif toolname == 'gnuradio':

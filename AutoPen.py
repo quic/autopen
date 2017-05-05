@@ -428,11 +428,6 @@ Builder.load_string("""
 				size_hint: .25, .1
 				on_press: root.bw('btscanner')
 			Button:
-				id: bluez
-				text: 'bluez Package'
-				size_hint: .25, .1
-				on_press: root.bw('bluez')
-			Button:
 				id: tshark
 				text: 'tshark'
 				size_hint: .25, .1
@@ -648,11 +643,6 @@ Builder.load_string("""
 				text: 'Bluemaho'
 				size_hint: .30, .1
 				on_press: root.to_install('bluemaho')
-			ToggleButton:
-				id: bluez
-				text: 'bluez Package'
-				size_hint: .30, .1
-				on_press: root.to_install('bluez')
 			ToggleButton:
 				id: btscanner
 				text: 'BTscanner'
