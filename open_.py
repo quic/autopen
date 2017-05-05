@@ -39,7 +39,7 @@ def open_(toolname):
 		o = '/modules/'
 		op_rc = subprocess.run(['./cc.py', o]).returncode #option here will be the module
 	elif toolname == 'katoolin':
-		op_rc = subprocess.run(['katoolin']).returncode
+		op_rc = subprocess.run(['gnome-terminal', '-e', 'katoolin']).returncode
 	elif toolname == 'bluelog':
 		op_rc = subprocess.run(['./bluelog']).returncode	#works if you have a bluetooth device up
 	elif toolname == 'bluemaho':
@@ -58,7 +58,7 @@ def open_(toolname):
 		op_rc = subprocess.run(['gnome-terminal']).returncode
 	elif toolname == 'btscanner':
 		#mention that this command will just show a list of the devices that are available; else can run btscanner (path to file name) and then potentially have a reset button
-		op_rc = subprocess.run(['btscanner']).returncode
+		op_rc = subprocess.run(['gnome-terminal', '-e', 'btscanner']).returncode
 	elif toolname == 'gnuradio':
 		op_rc = subprocess.run(['gnuradio-companion']).returncode
 	elif toolname == 'can-utils-x':	#i think i have to change this to cd into the directory but will have to change this to cd into directory ? 
