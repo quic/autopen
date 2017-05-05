@@ -97,9 +97,9 @@ def update(toolname):
 	elif toolname in commandline_tools:
 		print ('Updating', toolname, '...')
 		update_rc = subprocess.run(['sudo', 'apt-get', '--only-upgrade', '-y', 'install', toolname])
-		if pull_rc != 0:
+		if update_rc != 0:
 			print ('UPDATE FAILED: Failed to update', toolname)
-			print ('ERROR CODE:', pull_rc)
+			print ('ERROR CODE:', update_rc)
 		else:
 			print ('UPDATE SUCCESSFUL: Successfully updated', toolname)
 			return 0
