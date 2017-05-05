@@ -1,5 +1,6 @@
 import general_use
 import dependencies
+import os
 
 #this script is written such that it is not meant for the user to update 
 #if the user wants to update then we need to find out which one is ahead of the other
