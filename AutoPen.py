@@ -87,6 +87,10 @@ Builder.load_string("""
 				source: 'images/background_side.jpg'
 				pos: self.pos
 				size: self.size
+		Label:
+			pos_hint:{'center_x': 0.5, 'top': 0.96}
+			text: "How To"
+			font_size: 32
 		ScrollableLabel:
 			pos_hint:{'center_x': 0.5, 'top': 0.9}
 			size_hint:(0.8,0.8)
@@ -340,30 +344,37 @@ Builder.load_string("""
 				font_size: '20sp'
 				size_hint: .25, .1
 			Button:
+				id: aircrack-ng
 				text: 'aircrack-ng'
 				size_hint: .25, .1
 				on_press: root.bw('aircrack-ng')
 			Button:
+				id: bluelog
 				text: 'Bluelog'
 				size_hint: .25, .1
 				on_press: root.bw('bluelog')
 			Button:
+				id: bluemaho
 				text: 'Bluemaho'
 				size_hint: .25, .1
 				on_press: root.bw('bluemaho')
 			Button:
+				id: btscanner
 				text: 'BTscanner'
 				size_hint: .25, .1
 				on_press: root.bw('btscanner')
 			Button:
+				id: bluez
 				text: 'bluez Package'
 				size_hint: .25, .1
 				on_press: root.bw('bluez')
 			Button:
+				id: tshark
 				text: 'tshark'
 				size_hint: .25, .1
 				on_press: root.bw('tshark')
 			Button:
+				id: wireshark
 				text: 'Wireshark'
 				size_hint: .25, .1
 				on_press: root.bw('wireshark')
@@ -428,10 +439,12 @@ Builder.load_string("""
 				font_size: '25sp'
 				size_hint: .25, .1
 			Button:
+				id: gnuradio
 				text: 'GNU Radio'
 				size_hint: .25, .1
 				on_press: root.sdr('gnuradio')
 			Button:
+				id: gqrx
 				text: 'gqrx'
 				size_hint: .25, .1
 				on_press: root.sdr('gqrx')
@@ -498,6 +511,7 @@ Builder.load_string("""
 				font_size: '25sp'
 				size_hint: .25, .1
 			Button:
+				id: katoolin
 				text: 'Katoolin'
 				size_hint: .25, .1
 				on_press: root.mis('katoolin')
