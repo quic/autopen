@@ -724,12 +724,16 @@ class ToolsPage(Screen):
 
 		if t in can:
 			screen_manager.current = 'can'
+			self.can(t)
 		elif t in b_w:
 			screen_manager.current = 'bw'
+			self.b_w(t)
 		elif t in sdr:
 			screen_manager.current = 'sdr'
+			self.sdr(t)
 		elif t in mis:
 			screen_manager.current = 'miscellaneous'
+			self.mis(t)
 	
 		#make it pop up suggestions?		
 	pass
@@ -839,30 +843,7 @@ class CanPage(Screen):
 
 		#opens the tool on enter with the appropriate arguments
 		def open_callback(self):
-			if v == 'can-utils-x':
-				rc_o = open_.open_('can-utils-x')
-			elif v == 'canbadger':
-				rc_o = open_.open_('canbadger-hw')
-			elif v == 'canbadger-sw':
-				rc_o = open_.open_('canbadger-sw')
-			elif v == 'kayak':
-				rc_o = open_.open_('kayak')
-			elif v == 'udsim':
-				rc_o = open_.open_('udsim')
-			elif v == 'pyobd':
-				rc_o = open_.open_('pyobd')
-			elif v == 'o2oo':
-				rc_o = open_.open_('o2oo')
-			elif v == 'c0f':
-				rc_o = open_.open_('c0f')
-			elif v == 'can-utils':
-				rc_o = open_.open_('can-utils')
-			elif v == 'canbus-utils':
-				rc_o = open_.open_('canbus-utils')
-			elif v == 'caringcaribou':
-				rc_o = open_.open_('caringcaribou')
-			elif v == 'j1939':
-				rc_o = open_.open_('j1939')
+			rc_o = open_.open_(v)
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
@@ -1005,18 +986,7 @@ class BluetoothWifiPage(Screen):
 		#opens the tool on enter with the appropriate arguments
 		def open_callback(self):
 
-			if v == 'aircrack-ng':
-				rc_o = open_.open_('aircrack-ng')
-			elif v == 'bluelog':
-				rc_o = open_.open_('bluelog')
-			elif v == 'btscanner':
-				rc_o = open_.open_('btscanner')
-			elif v == 'bluez':
-				rc_o = open_.open_('bluez')
-			elif v == 'tshark':
-				rc_o = open_.open_('tshark')
-			elif v == 'wireshark':
-				rc_o = open_.open_('wireshark')
+			rc_o = open_.open_(v)
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
@@ -1110,10 +1080,7 @@ class SDRPage(Screen):
 
 		def open_callback(self):	#this functionality will be a little different
 
-			if v == 'gnuradio':
-				rc_o = open_.open_('gnuradio')
-			elif v == 'gqrx':
-				rc_o = open_.open_('gqrx')
+			rc_o = open_.open_(v)
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
@@ -1208,10 +1175,7 @@ class MiscellaneousPage(Screen):
 
 		def open_callback(self):	#this functionality will be a little different
 
-			if v == 'katoolin':
-				rc_o = open_.open_('katoolin')
-			elif v == 'tio':
-				rc_o = open_.open_('tio')
+			rc_o = open_.open_(v)
 
 			if rc_o != 0:
 				o.background_color = [1,0,0,.65]
@@ -1331,7 +1295,7 @@ screen_manager.add_widget(CanPage(name='can'))
 screen_manager.add_widget(SDRPage(name='sdr'))
 screen_manager.add_widget(MiscellaneousPage(name='miscellaneous'))
 screen_manager.add_widget(SeeAllPage(name='seeall'))
-class potentApp(App):
+class AutoPenApp(App):
 
 	def build(self):
 
@@ -1340,4 +1304,4 @@ class potentApp(App):
 		return screen_manager
 
 if __name__ == "__main__":
-	potentApp().run()
+	AutoPenApp().run()
