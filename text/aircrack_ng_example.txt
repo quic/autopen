@@ -11,7 +11,7 @@ To look out for networks:
 airodump-ng rausb0
 
 BSSID = The MAC address of the AP
-PWR	Signal = strength. Some drivers don't report it
+PWR = Signal strength. Some drivers don't report it
 Beacons = Number of beacon frames received. If you don't have a signal strength you can estimate it by the number of beacons: the more beacons, the better the signal quality
 Data = Number of data frames received
 CH = Channel the AP is operating on
