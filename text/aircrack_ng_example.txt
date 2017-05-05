@@ -10,16 +10,16 @@ airmon-ng start rausb0
 To look out for networks:
 airodump-ng rausb0
 
-BSSID	The MAC address of the AP
-PWR	Signal strength. Some drivers don't report it
-Beacons	Number of beacon frames received. If you don't have a signal strength you can estimate it by the number of beacons: the more beacons, the better the signal quality
-Data	Number of data frames received
-CH	Channel the AP is operating on
-MB	Speed or AP Mode. 11 is pure 802.11b, 54 pure 802.11g. Values between are a mixture
-ENC	Encryption: OPN: no encryption, WEP: WEP encryption, WPA: WPA or WPA2 encryption, WEP?: WEP or WPA (don't know yet)
-ESSID	The network name. Sometimes hidden
-Packets	Number of data frames received
-Probes	Network names (ESSIDs) this client has probed
+BSSID = The MAC address of the AP
+PWR	Signal = strength. Some drivers don't report it
+Beacons = Number of beacon frames received. If you don't have a signal strength you can estimate it by the number of beacons: the more beacons, the better the signal quality
+Data = Number of data frames received
+CH = Channel the AP is operating on
+MB = Speed or AP Mode. 11 is pure 802.11b, 54 pure 802.11g. Values between are a mixture
+ENC = Encryption: OPN: no encryption, WEP: WEP encryption, WPA: WPA or WPA2 encryption, WEP?: WEP or WPA (don't know yet)
+ESSID = The network name. Sometimes hidden
+Packets = Number of data frames received
+Probes = Network names (ESSIDs) this client has probed
 
 To sniff a specific channel (-c) at a specific bssid (--bssid) and write to a file (-w):
 airodump-ng -c 11 --bssid 00:01:02:03:04:05 -w dump rausb0
