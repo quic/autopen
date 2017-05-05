@@ -89,8 +89,10 @@ Builder.load_string("""
 				size: self.size
 		Label:
 			pos_hint:{'center_x': 0.5, 'top': 0.96}
-			text: "How To"
+			size_hint: (0.5,0.05)
+			text: "[b][color=3388dd]How To[/color][/b]"
 			font_size: 32
+			markup: True
 		ScrollableLabel:
 			pos_hint:{'center_x': 0.5, 'top': 0.9}
 			size_hint:(0.8,0.8)
@@ -100,13 +102,85 @@ Builder.load_string("""
 				height: label1.texture_size[1]
 				text_size: label1.width, None
 				text: root.alter_text()
-				font_size: 24
+				font_size: 18
 				markup: True
 				valign:'middle'
 		Button:
 			text: 'Back'
 			size_hint: .1, .05
 			pos_hint: {'x':0, 'y': 0} 
+			on_press:
+				root.manager.transition.direction = "right"
+				root.manager.transition.duration = .5
+				root.manager.current = "welcome"
+
+<Terms>:
+	id: terms
+	FloatLayout:
+		id: terms_float
+		canvas.before:
+			Rectangle:
+				source: 'images/background_side.jpg'
+				pos: self.pos
+				size: self.size
+		Label:
+			pos_hint:{'center_x': 0.5, 'top': 0.96}
+			size_hint: (0.5,0.05)
+			text: "[b][color=3388dd]Terms and Conditions[/color][/b]"
+			font_size: 32
+			markup: True
+		ScrollableLabel:
+			pos_hint:{'center_x': 0.5, 'top': 0.9}
+			size_hint:(0.8,0.8)
+			Label:
+				id: label1
+				size_hint_y: None
+				height: label1.texture_size[1]
+				text_size: label1.width, None
+				text: root.alter_text()
+				font_size: 18
+				markup: True
+				valign:'middle'
+		Button:
+			text: 'Back'
+			size_hint: .1, .05
+			pos_hint: {'x':0, 'y': 0}
+			on_press:
+				root.manager.transition.direction = "right"
+				root.manager.transition.duration = .5
+				root.manager.current = "welcome"
+
+<About>:
+	id: about
+	FloatLayout:
+		id: about_float
+		canvas.before:
+			Rectangle:
+				source: 'images/background_side.jpg'
+				pos: self.pos
+				size: self.size
+		Label:
+			pos_hint:{'center_x': 0.5, 'top': 0.96}
+			size_hint: (0.5,0.05)
+			text: "[b][color=3388dd]About AutoPen[/color][/b]"
+			font_size: 32
+			markup: True
+		ScrollableLabel:
+			pos_hint:{'center_x': 0.5, 'top': 0.9}
+			size_hint:(0.8,0.8)
+			Label:
+				id: label1
+				size_hint_y: None
+				height: label1.texture_size[1]
+				text_size: label1.width, None
+				text: root.alter_text()
+				font_size: 18
+				markup: True
+				valign:'middle'
+		Button:
+			text: 'Back'
+			size_hint: .1, .05
+			pos_hint: {'x':0, 'y': 0}
 			on_press:
 				root.manager.transition.direction = "right"
 				root.manager.transition.duration = .5
@@ -722,15 +796,23 @@ class WelcomePage(Screen):
 
 class HowTo(Screen):
 	def alter_text(self):
-		with open("text/canutilsx.txt", "r") as stream:
+		with open("info/howto.txt", "r") as stream:
 			labeltext1 = stream.read()
-		return  labeltext1
+		return labeltext1
 	pass
 
 class About(Screen):
+	def alter_text(self):
+		with open("info/about.txt", "r") as stream:
+			labeltext1 = stream.read()
+		return labeltext1
 	pass
 
 class Terms(Screen):
+	def alter_text(self):
+		with open("info/TandC.txt", "r") as stream:
+			labeltext1 = stream.read()
+		return labeltext1
 	pass
 
 class ToolsPage(Screen):
