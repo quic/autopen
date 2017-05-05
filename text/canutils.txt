@@ -1,1 +1,8 @@
-Canutils contains some userspace utilities for Linux SocketCAN subsystem: asc2log, bcmserver, canbusload, can-calc-bit-timing, candump, canfdtest, cangen, cangw, canlogserver, canplayer, cansend, cansniffer, isotpdump, isotprecv, isotpperf, isotpsend, isotpserver, isotpsniffer, isotptun, log2asc, log2long, slcan_attach, slcand and slcanpty.
+[size=24][b]Can-utils[/b][/size]
+by [i]ZombieCraig[/i]
+
+SocketCAN userspace utilities and tools
+
+CAN is a message-based network protocol designed for vehicles originally initially created by Robert Bosch GmbH. SocketCAN is a set of open source CAN drivers and a networking stack contributed by Volkswagen Research to the Linux kernel.
+
+This package contains some userspace utilities for Linux SocketCAN subsystem: asc2log, bcmserver, canbusload, can-calc-bit-timing, candump, canfdtest, cangen, cangw, canlogserver, canplayer, cansend, cansniffer, isotpdump, isotprecv, isotpperf, isotpsend, isotpserver, isotpsniffer, isotptun, log2asc, log2long, slcan_attach, slcand and slcanpty.
