@@ -28,6 +28,8 @@ BlueMaho Homepage | Kali BlueMaho Repo
 Author: The Hacker’s Choice
 License: GPLv2
 
+To run, simply execute bluemaho.py
+
 
 
 Because it is a graphical tool, the amount of overhead needed to use it is minimal. Once you have monitored and collected the data you want, it is fairly simple. The packets can be stored, and examined.
