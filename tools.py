@@ -287,64 +287,64 @@ def github_tools(pack_man, toolname, repo):
 				else:
 					print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
 					general_use.move_up_directory()
-			elif toolname == 'katoolin':
-				cp_rc = subprocess.run(['sudo', 'cp', 'katoolin.py', '/usr/bin/katoolin']).returncode
-				if cp_rc != 0:
-					print ('COPY FAILED: Could not copy katoolin.py to /usr/bin/katoolin')
-					print ('ERROR CODE:', cp_rc)
+		elif toolname == 'katoolin':
+			cp_rc = subprocess.run(['sudo', 'cp', 'katoolin.py', '/usr/bin/katoolin']).returncode
+			if cp_rc != 0:
+				print ('COPY FAILED: Could not copy katoolin.py to /usr/bin/katoolin')
+				print ('ERROR CODE:', cp_rc)
+			else:
+				print ('COPY SUCCESSFUL: Successfully copied katoolin.py to /usr/bin/katoolin')
+				print ("Setting /usr/bin/katoolin to executable...")
+				f_rc = subprocess.run(["sudo", "chmod", "+x", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
+				if f_rc != 0:
+					print ("CONVERSION FAILED: Could not make /usr/bin/katoolin executable")
+					print ("ERROR CODE:", f_rc)
 				else:
-					print ('COPY SUCCESSFUL: Successfully copied katoolin.py to /usr/bin/katoolin')
-					print ("Setting /usr/bin/katoolin to executable...")
-					f_rc = subprocess.run(["sudo", "chmod", "+x", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
-					if f_rc != 0:
-						print ("CONVERSION FAILED: Could not make /usr/bin/katoolin executable")
-						print ("ERROR CODE:", f_rc)
+					print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
+					print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
+
+		elif toolname == 'can-utils-x':
+			mat_rc = dependencies.commandline_install(pack_man, 'python-matplotlib')
+			if mat_rc != 0:
+				print ('INSTALLATION FAILED: Failed to install matplotlib from python. This is needed to run do')
+				print ('ERROR CODE:'. mat_rc)
+			else:
+				print ('INSTALLATION SUCCESSFUL: Successfully installed matplotlib from python')
+				socket = github_tools(pack_man, 'can-utils', repo) #this repo is can-utils repo [check if can-utils has already been installed - will be handled by exception handler]
+
+				#not done
+		elif toolname == 'j1939':
+			f_rc = subprocess.run(['make']).returncode #figure out whether this is make or make install
+			if f_rc != 0:
+				print ('INSTALLATION FAILED: Failed to install can-utils-j1939. Could not run create executables running make')
+				print ('ERROR CODE:', f_rc)
+			else:
+				print ('INSTALLATION SUCCESSFUL: Successfully installed can-utils-j1939')
+
+		elif toolname == 'canbadger-hw':
+			f_rc = 0
+			print ('REPOSITORY AVAILABLE: The CANBadger repository has been cloned to your machine')
+			print ('If you need help, refer to the tutorial on the right side of the tool page to build the hardware')
+
+		elif toolname == 'canbadger-sw':
+			libs = ['python-qt4', 'pyqt4-dev-tools', 'qtcreator']
+			rcs = [dependencies.commandline_install(pack_man, i) for i in libs]
+
+			for i,j in enumerate(rcs): #FIX THIS CODE BELOW
+				if j != 0:
+					if i < 3:
+						print ('INSTALLATION FAILED: Failed to install dependency', libs[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
+						print ('ERROR CODE:', j)
+						f_rc = j
 					else:
-						print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
-						print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
+						print ('INSTALLATION FAILED: Failed to install dependency', libs[i])
+						f_rc = -1
 
-			elif toolname == 'can-utils-x':
-				mat_rc = dependencies.commandline_install(pack_man, 'python-matplotlib')
-				if mat_rc != 0:
-					print ('INSTALLATION FAILED: Failed to install matplotlib from python. This is needed to run do')
-					print ('ERROR CODE:'. mat_rc)
-				else:
-					print ('INSTALLATION SUCCESSFUL: Successfully installed matplotlib from python')
-					socket = github_tools(pack_man, 'can-utils', repo) #this repo is can-utils repo [check if can-utils has already been installed - will be handled by exception handler]
-
-					#not done
-			elif toolname == 'j1939':
-				f_rc = subprocess.run(['make']).returncode #figure out whether this is make or make install
-				if f_rc != 0:
-					print ('INSTALLATION FAILED: Failed to install can-utils-j1939. Could not run create executables running make')
-					print ('ERROR CODE:', f_rc)
-				else:
-					print ('INSTALLATION SUCCESSFUL: Successfully installed can-utils-j1939')
-
-			elif toolname == 'canbadger-hw':
-				f_rc = 0
-				print ('REPOSITORY AVAILABLE: The CANBadger repository has been cloned to your machine')
-				print ('If you need help, refer to the tutorial on the right side of the tool page to build the hardware')
-
-			elif toolname == 'canbadger-sw':
-				libs = ['python-qt4', 'pyqt4-dev-tools', 'qtcreator']
-				rcs = [dependencies.commandline_install(pack_man, i) for i in libs]
-
-				for i,j in enumerate(rcs): #FIX THIS CODE BELOW
-					if j != 0:
-						if i < 3:
-							print ('INSTALLATION FAILED: Failed to install dependency', libs[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
-							print ('ERROR CODE:', j)
-							f_rc = j
-						else:
-							print ('INSTALLATION FAILED: Failed to install dependency', libs[i])
-							f_rc = -1
-
-				if f_rc != 0:
-					print ('INSTALLATION FAILED: Failed to install canbadger-server dependencies')
-					print ('ERROR CODE:', f_rc)
-				else:
-					print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for canbadger-server')
+			if f_rc != 0:
+				print ('INSTALLATION FAILED: Failed to install canbadger-server dependencies')
+				print ('ERROR CODE:', f_rc)
+			else:
+				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for canbadger-server')
 
 
 
