@@ -60,6 +60,7 @@ def uninstall(toolname):
 		rm_rc = subprocess.run(['rm', '-rf', 'can-utils-j1939']).returncode
 	elif toolname == 'canbadger-hw':
 		rm_rc = subprocess.run(['rm', '-rf', 'CANBadger']).returncode
+		
 		#https://github.com/Gutenshit/CANBadger/wiki/Getting-the-board-ready
 	elif toolname == 'canbadger-sw':
 		rm_rc = subprocess.run(['rm', '-rf', 'CANBadger-Server']).returncode
