@@ -178,11 +178,6 @@ Builder.load_string("""
 				root.manager.transition.direction = "right"
 				root.manager.transition.duration = .5
 				root.manager.current = "welcome"
-		Button:
-			id: help
-			text: 'Help'
-			size_hint: .1, .05
-			pos_hint: {'x':.9, 'y':0}
 		TextInput:
 			id: search
 			multiline: False
@@ -291,11 +286,6 @@ Builder.load_string("""
 				root.manager.transition.direction = "right"
 				root.manager.transition.duration = .5
 				root.manager.current = "tools"
-		Button:
-			id: help
-			text: 'Help'
-			size_hint: .1, .05
-			pos_hint: {'x':.9, 'y':0}
 		ScrollableLabel:
 			pos_hint:{'x': 0.28, 'top': 0.9}
 			size_hint: (0.35, 0.7)
@@ -387,11 +377,6 @@ Builder.load_string("""
 				root.manager.transition.direction = "right"
 				root.manager.transition.duration = .5
 				root.manager.current = "tools"
-		Button:
-			id: help
-			text: 'Help'
-			size_hint: .1, .05
-			pos_hint: {'x':.9, 'y':0}
 		ScrollableLabel:
 			pos_hint:{'x': 0.28, 'top': 0.9}
 			size_hint:0.35, 0.7
@@ -459,11 +444,6 @@ Builder.load_string("""
 				root.manager.transition.direction = "right"
 				root.manager.transition.duration = .5
 				root.manager.current = "tools"
-		Button:
-			id: help
-			text: 'Help'
-			size_hint: .1, .05
-			pos_hint: {'x':.9, 'y':0}
 		ScrollableLabel:
 			pos_hint:{'x': 0.28, 'top': 0.9}
 			size_hint:0.35, 0.7
@@ -526,11 +506,6 @@ Builder.load_string("""
 				root.manager.transition.direction = "right"
 				root.manager.transition.duration = .5
 				root.manager.current = "tools"
-		Button:
-			id: help
-			text: 'Help'
-			size_hint: .1, .05
-			pos_hint: {'x':.9, 'y':0}
 		ScrollableLabel:
 			pos_hint:{'x': 0.28, 'top': 0.9}
 			size_hint:0.35, 0.7
@@ -718,12 +693,6 @@ Builder.load_string("""
 				root.manager.transition.direction = "right"
 				root.manager.transition.duration = .5
 				root.manager.current = "tools"
-		Button:
-			id: help
-			text: 'Help'
-			size_hint: .1, .05
-			pos_hint: {'x':.9, 'y':0}
-
 """)
 
 installed_tools = []
