@@ -104,7 +104,8 @@ def update(toolname):
 
 
 
-
+def test(name):
+	return 0
 
 
 
