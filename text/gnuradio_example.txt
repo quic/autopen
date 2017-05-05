@@ -1,3 +1,7 @@
+Best tutorial can be found at this link: https://wiki.gnuradio.org/index.php/Guided_Tutorial_GRC
+The following is a guide for using GNU radio in python. https://wiki.gnuradio.org/index.php/Guided_Tutorial_GNU_Radio_in_Python
+
+
 uhd_fft --help                                                                                                 
 linux; GNU C++ version 4.5.2; Boost_104200; UHD_003.003.000-d5d448e
 
