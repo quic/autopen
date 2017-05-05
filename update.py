@@ -52,27 +52,38 @@ def update(toolname):
 	
 	if toolname in github_tools:
 		if toolname == 'canbus-utils':
-			os.chdir(os.getcwd() + '/canbus-utils')
+			p = os.getcwd() + '/canbus-utils'
+			os.chdir(p)
 		elif toolname == 'kayak':
-			os.chdir(os.getcwd() + '/Kayak')
+			p = os.getcwd() + '/Kayak'
+			os.chdir(p)
 		elif toolname == 'caringcaribou':
-			os.chdir(os.getcwd() + 'caringcaribou')
+			p = os.getcwd() + 'caringcaribou'
+			os.chdir(p)
 		elif toolname == 'c0f':
-			os.chdir(os.getcwd() + 'c0f')
+			p = os.getcwd() + 'c0f'
+			os.chdir(p)
 		elif toolname == 'udsim':
-			os.chdir(os.getcwd() + 'UDSim')
+			p = os.getcwd() + 'UDSim'
+			os.chdir(p)
 		elif toolname == 'j1939':
-			os.chdir(os.getcwd() + 'can-utils-j1939')
+			p = os.getcwd() + 'can-utils-j1939'
+			os.chdir(p)
 		elif toolname == 'canbadger-hw':
-			os.chdir(os.getcwd() + 'CANBadger')
+			p = os.getcwd() + 'CANBadger'
+			os.chdir(p)
 		elif toolname == 'canbadger-sw':
-			os.chdir(os.getcwd() + 'CANBadger-Server')
+			p = os.getcwd() + 'CANBadger-Server'
+			os.chdir(p)
 		elif toolname == 'katoolin':
-			os.chdir(os.getcwd() + 'katoolin')
+			p = os.getcwd() + 'katoolin'
+			os.chdir(p)
 		elif toolname == 'bluelog':
-			os.chdir(os.getcwd() + 'Bluelog')
+			p = os.getcwd() + 'Bluelog'
+			os.chdir(p)
 		elif toolname == 'bluemaho':
-			os.chdir(os.getcwd() + 'bluemaho')
+			p = os.getcwd() + 'bluemaho'
+			os.chdir(p)
 
 		master = subprocess.run(['git', 'rev-parse', 'master'], stdout=subprocess.PIPE).stdout
 		origin_master = subprocess.run(['git', 'rev-parse', 'master'], stdout=subprocess.PIPE).stdout
@@ -96,7 +107,7 @@ def update(toolname):
 
 	elif toolname in commandline_tools:
 		print ('Updating', toolname, '...')
-		update_rc = subprocess.run(['sudo', 'apt-get', '--only-upgrade', '-y', 'install', toolname])
+		update_rc = subprocess.run(['sudo', 'apt-get', '--only-upgrade', '-y', 'install', toolname]).returncode
 		if update_rc != 0:
 			print ('UPDATE FAILED: Failed to update', toolname)
 			print ('ERROR CODE:', update_rc)
