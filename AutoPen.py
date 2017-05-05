@@ -724,16 +724,16 @@ class ToolsPage(Screen):
 
 		if t in can:
 			screen_manager.current = 'can'
-			self.can(t)
+			screen_manager.current_screen.can(t)
 		elif t in b_w:
 			screen_manager.current = 'bw'
-			self.b_w(t)
+			screen_manager.current_screen.bw(t)
 		elif t in sdr:
 			screen_manager.current = 'sdr'
-			self.sdr(t)
+			screen_manager.current_screen.sdr(t)
 		elif t in mis:
 			screen_manager.current = 'miscellaneous'
-			self.mis(t)
+			screen_manager.current_screen.mis(t)
 	
 		#make it pop up suggestions?		
 	pass
