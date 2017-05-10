@@ -20,7 +20,9 @@ python3 vm_install.py
 
 ### Installing on bootable Linux
 
-To run Autopen, having Python 3 and pip3 installed, the following dependencies must be installed. 
+To run Autopen, having Python 3 and pip3 installed, the repository needs to be added and the following dependencies must be installed. 
+
+sudo add-apt-repository ppa:kivy-team/kivy
 
 pip3 install python3-kivy
 
