@@ -27,7 +27,7 @@ def open_(toolname):
 		current_dir = os.getcwd()
 		path = current_dir + kayak_run_path
 		os.chdir(path)
-		op_rc = subprocess.run(['./kayak']).returncode
+		op_rc = subprocess.run(['./kayak']).returncode			#THIS IS STILL FAILING TO OPEN, ALSO NEED TO REMOVE INSTALL_BASICS TWICE
 	elif toolname == 'can-utils':
 		op_rc = subprocess.run(['gnome-terminal']).returncode
 	elif toolname == 'canbus-utils':
@@ -44,7 +44,7 @@ def open_(toolname):
 		op_rc = subprocess.run(['./bluelog']).returncode	#works if you have a bluetooth device up
 	elif toolname == 'bluemaho':
 		op_rc = subprocess.run(['./bluemaho.py']).returncode
-	elif toolname == 'pyobd':
+	elif toolname == 'pyobd': 	#BUGGY
 		current = os.getcwd()
 		path = current + '/pyobd-0.9.3'
 		os.chdir(path)
@@ -58,9 +58,9 @@ def open_(toolname):
 		op_rc = subprocess.run(['gnome-terminal']).returncode
 	elif toolname == 'btscanner':
 		#mention that this command will just show a list of the devices that are available; else can run btscanner (path to file name) and then potentially have a reset button
-		op_rc = subprocess.run(['gnome-terminal', '-e', 'btscanner']).returncode
+		op_rc = subprocess.run(['gnome-terminal']).returncode
 	elif toolname == 'gnuradio':
-		op_rc = subprocess.run(['gnuradio-companion']).returncode
+		op_rc = subprocess.run(['gnome-terminal', '-e', 'gnuradio-companion']).returncode
 	elif toolname == 'can-utils-x':	#i think i have to change this to cd into the directory but will have to change this to cd into directory ? 
 		op_rc = subprocess.run(['python', 'main.py']).returncode
 	elif toolname == 'gqrx':
@@ -69,12 +69,30 @@ def open_(toolname):
 		op_rc = subprocess.run(['gnome-terminal', '-e','wireshark']).returncode
 	elif toolname == 'aircrack-ng':
 		op_rc = subprocess.run(['gnome-terminal']).returncode
+	elif toolname == 'j1939':
+		op_rc = subprocess.run(['gnome-terminal']).returncode
+	elif toolname == 'c0f':
+		op_rc = subprocess.run(['gnome-terminal']).returncode
+	elif toolname == 'udsim':
+		op_rc = subprocess.run(['gnome-terminal', '-e', 'udsim', 'can0']).returncode
 
 	if op_rc != 0:
 		print ('STARTUP FAILED: Failed to open', toolname)
 		print ('ERROR CODE:', op_rc)
 	else:
 		print ('STARTUP SUCCESSFUL: Successfully opened', toolname)
+
+
+	#check path to make sure it's in the autopen directory
+	curr = os.getcwd()
+	back_index = curr.rfind('/')
+	ap_index = curr.find('autopen')
+	if curr[back_index:] != '/autopen':
+		path = curr[:ap_index+7]
+	else:
+		path = curr
+
+	os.chdir(path)
 
 	return op_rc
 
