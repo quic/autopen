@@ -67,7 +67,7 @@ def install(toolname):
 	elif toolname == 'wireshark':
 		return tools.installed_tools(pack_man, 'wireshark')
 	elif toolname == 'tshark':
-		return sstools.installed_tools(pack_man, 'tshark')
+		return tools.installed_tools(pack_man, 'tshark')
 
 def test(name):
 	it = open('installed.txt', 'a')
