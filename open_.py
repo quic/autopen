@@ -75,6 +75,8 @@ def open_(toolname):
 		op_rc = subprocess.run(['gnome-terminal']).returncode
 	elif toolname == 'udsim':
 		op_rc = subprocess.run(['gnome-terminal', '-e', 'udsim', 'can0']).returncode
+	elif toolname == 'can-utils-x':
+		op_rc = subprocess.run(['python2', 'main.py']).returncode
 
 	if op_rc != 0:
 		print ('STARTUP FAILED: Failed to open', toolname)

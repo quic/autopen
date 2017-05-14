@@ -90,12 +90,16 @@ def github_tools(pack_man, toolname, repo):
 	it = open('installed.txt', 'a')
 
 	print ("Cloning repository...")	#might install 
-	git_rc = dependencies.clone_git_repo(repo)
-	if git_rc != 0:
-		print ('CLONING FAILED: Failed to clone repository at', repo)
-		print ('ERROR CODE:', git_rc)
-	else:
-		print ('CLONING SUCCESSFUL: Successfully cloned repository at', repo)
+	try:
+		git_rc = dependencies.clone_git_repo(repo)
+		if git_rc != 0:
+			print ('CLONING FAILED: Failed to clone repository at', repo)
+			print ('ERROR CODE:', git_rc)
+		else:
+			print ('CLONING SUCCESSFUL: Successfully cloned repository at', repo)
+	except:
+		pass
+	
 		back_index = repo.rfind('/')
 		dot_index = repo.rfind('.')
 		folder_name = repo[back_index:dot_index]
@@ -302,15 +306,6 @@ def github_tools(pack_man, toolname, repo):
 				else:
 					print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
 					print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
-
-		elif toolname == 'can-utils-x':
-			mat_rc = dependencies.commandline_install(pack_man, 'python-matplotlib')
-			if mat_rc != 0:
-				print ('INSTALLATION FAILED: Failed to install matplotlib from python. This is needed to run do')
-				print ('ERROR CODE:'. mat_rc)
-			else:
-				print ('INSTALLATION SUCCESSFUL: Successfully installed matplotlib from python')
-				socket = github_tools(pack_man, 'can-utils', repo) #this repo is can-utils repo [check if can-utils has already been installed - will be handled by exception handler]
 
 				#not done
 		elif toolname == 'j1939':

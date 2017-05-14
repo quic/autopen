@@ -48,6 +48,8 @@ def install(toolname):
 		return tools.github_tools(pack_man, 'canbadger-hw', repo_canbadger)
 	elif toolname == 'canbadger-sw':
 		return tools.github_tools(pack_man, 'canbadger-sw', repo_canbadger_server)
+	elif toolname == 'can-utils-x':
+		return dependencies.can_utils_x(pack_man)
 
 	elif toolname == 'pyobd':
 		return tools.downloaded_tools(pack_man, 'pyobd', link_pyobd)

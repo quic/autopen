@@ -230,6 +230,17 @@ def install_lightblue(pack_man):
 					print ('INSTALLATION SUCCESSFUL: Successfully installed lightblue')
 					return 0
 
+def can_utils_x(pack_man):
+	mat_rc = dependencies.commandline_install(pack_man, 'python-matplotlib')
+	if mat_rc != 0:
+		print ('INSTALLATION FAILED: Failed to install matplotlib from python. This is needed to run do')
+		print ('ERROR CODE:'. mat_rc)
+	else:
+		print ('INSTALLATION SUCCESSFUL: Successfully installed matplotlib from python')
+		socket = github_tools(pack_man, 'can-utils', repo) #this repo is can-utils repo [check if can-utils has already been installed - will be handled by exception handler]
+	return mat_rc
+
+
 
 
 
