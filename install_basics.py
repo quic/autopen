@@ -46,7 +46,7 @@ def update_git(pack_man):
 
 def install_curl(pack_man):
 	'''
-		This function installs curl depending
+		This function installs curl
 	'''
 
 	print ('Installing curl...')
@@ -58,19 +58,18 @@ def install_curl(pack_man):
 		print ('INSTALLATION SUCCESSFUL: curl successfully installed')
 
 def install_pip(pack_man):
+	'''
+		This function installs pip3
+	'''
 
-	pip_rc = dependencies.commandline_install(pack_man, 'python3-pip') #might move this to dependency we'll see.
+
+	pip_rc = dependencies.commandline_install(pack_man, 'python3-pip') 
 	if pip_rc != 0:
 		print ('INSTALLATION FAILED: Failed to install pip. This is needed to install some dependencies for tools')
 		print ('ERROR CODE:', pip_rc)
 	else:
-		print ('INSTALLATION COMPLETE: Successfully installed pip')		#pip upgrade isn't working for some reason
-	#	upgrade_rc = subprocess.run(['pip3', 'install', '--upgrade', 'pip3']).returncode
-	#	if upgrade_rc != 0:
-	#		print ('UPGRADE FAILED: Failed to upgrade pip. This may cause trouble when installing libraries')
-	#		print ('ERROR CODE:', upgrade_rc)
-	#	else:
-	#		print ('UPGRADE SUCCESSFUL: Successfully upgraded pip to newest version')
+		print ('INSTALLATION COMPLETE: Successfully installed pip')	
+
 
 install_python(pack_man)
 update_git(pack_man)
