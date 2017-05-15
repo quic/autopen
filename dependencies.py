@@ -255,8 +255,8 @@ def can_utils_x(pack_man):
 	'''
 		This function installs the matplot-lib library which is needed for can-utils-x to run
 	'''
-	
-	mat_rc = dependencies.commandline_install(pack_man, 'python-matplotlib')
+
+	mat_rc = commandline_install(pack_man, 'python-matplotlib')
 	if mat_rc != 0:
 		print ('INSTALLATION FAILED: Failed to install matplotlib from python. This is needed to run do')
 		print ('ERROR CODE:'. mat_rc)
