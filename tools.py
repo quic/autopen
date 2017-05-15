@@ -67,7 +67,7 @@ def github_tools(pack_man, toolname, repo):
 	f_rc = -1 
 	it = open('installed.txt', 'a')
 
-	print ("Cloning repository...")	#might install 
+	print ("Cloning repository...")
 	try:
 		git_rc = dependencies.clone_git_repo(repo)
 		if git_rc != 0:
@@ -84,9 +84,9 @@ def github_tools(pack_man, toolname, repo):
 		print ('Changing directory to', folder_name[1:], '...')
 		os.chdir(os.getcwd() + folder_name)
 
-		if toolname == 'canbus-utils':	#find out if socketCAN needs to be installed to be able to use it
+		if toolname == 'canbus-utils':	
 			print ('Beginning canbus-utils installation...')
-			npm_check_rc = dependencies.check_NPM(pack_man) #needed for the following step
+			npm_check_rc = dependencies.check_NPM(pack_man)
 			if npm_check_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install canbus-utils dependencies. Check node.js and npm status')
 				print ('ERROR CODE:', npm_check_rc)
@@ -121,23 +121,23 @@ def github_tools(pack_man, toolname, repo):
 						print ('INSTALLATION SUCCESSFUL: Successfully installed kayak')
 
 		elif toolname == 'caringcaribou':
-			#---------->have a button that pops up that says that the user will have to set up there device, and have some steps on doing that (front end)
 			print ('Beginning caringcaribou installation...')
 			print ('Setting up usb-to-can connection...')
-			load_rc = subprocess.run(['sudo', 'modprobe', 'can']).returncode #might have to install modprobe?
+			load_rc = subprocess.run(['sudo', 'modprobe', 'can']).returncode 
 			if load_rc != 0:
 				print ('LOAD FAILED: Failed to load CAN module. Cannot complete caringcaribou installation')
 				print ('ERROR CODE:', load_rc)
 			else:
 				print ('LOAD SUCCESSFUL: Successfully loaded CAN module')
 
-				#--------->when they click install, have them input the bitrate and the can bus they're on and store these values
-				#user needs to input the CAN bus they are on (can we fingerprint how many canbuses are on?)
-				#user needs to know the bitrate that the bus runs with
-				bitrate = 500000 #HARDCODED FOR NOW
+				#user needs to know the CAN bus they are on (change can_bus)
+				#user needs to know the bitrate that the bus runs with (change bitrate)
+				#add front-end functionality later so that the user can input it from there vs. modifying the code
+
+				can_bus = 'can0'
+				bitrate = 500000 
 				print ('Setting up CAN device...')
-				setup_can_rc = subprocess.run(['sudo', 'ip', 'link', 'set', 'can0', 'up', 'type', 'can', 'bitrate', str(bitrate)]).returncode
-				# -----------> handle the error that ip is not a command, 
+				setup_can_rc = subprocess.run(['sudo', 'ip', 'link', 'set', can_bus, 'up', 'type', 'can', 'bitrate', str(bitrate)]).returncode
 				if setup_can_rc != 0:
 					print ('SETUP FAILED: Failed to set-up can device.')
 					print ('ERROR CODE:', setup_can_rc)
@@ -156,7 +156,6 @@ def github_tools(pack_man, toolname, repo):
 						else:
 							print ('INSTALLATION SUCCESSFUL: Successfully installed python-can. Caringcaribou installation complete')
 
-							# NEED TO HANDLE THE CONFIGURATION FILE, ARE WE GOING TO TRY TO DO THIS OR IS THE USER GOING TO DO THIS
 
 		elif toolname == 'c0f':
 			print ('Beginning c0f installation')
@@ -188,11 +187,10 @@ def github_tools(pack_man, toolname, repo):
 						else:
 							print ('INSTALLATION SUCCESSFUL: Successfully installed c0f')
 
-		elif toolname == 'udsim': #know later that when user starts the program they have to run make in the file that they are in. Or maybe we can run make
+		elif toolname == 'udsim': 
 			print ('Beginning udsim installation...')
 			f_rc = 0
 
-			#lambda these map to function
 			ttf_dev = dependencies.commandline_install(pack_man, 'libsdl2-ttf-dev')
 			image = dependencies.commandline_install(pack_man, 'libsdl2-image-2.0.0')
 			returncode_list = [ttf_dev, image]
@@ -210,7 +208,6 @@ def github_tools(pack_man, toolname, repo):
 			else:
 				print ('INSTALLATION COMPLETE: Successfully installed the libraries needed to compile UDSIM.')
 	
-			#bluez below
 
 		elif toolname == 'Bluelog': #has an optional web mode so when running want to add that functionality.  (just run make to run)
 			print ('Installing bluelog...')
@@ -242,10 +239,9 @@ def github_tools(pack_man, toolname, repo):
 
 			essential = 0
 
-			for i,j in enumerate(returncodes): #FIX THIS CODE BELOW
+			for i,j in enumerate(returncodes):
 				if j != 0:
 					if i < 7:
-						#maybe we'll be nice and include which library is associate with what attack 
 						print ('INSTALLATION FAILED: Failed to install dependency', depend[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
 						print ('ERROR CODE:', j)
 						essential = j
@@ -259,7 +255,6 @@ def github_tools(pack_man, toolname, repo):
 				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for Bluemaho')
 				print ('Building Bluemaho...')
 				c_dir = os.getcwd()
-				#last_slash = c_dir.rfind('/')
 				path = c_dir + '/config'
 				os.chdir(path)
 				f_rc = subprocess.run(['./build.sh']).returncode
@@ -286,9 +281,8 @@ def github_tools(pack_man, toolname, repo):
 					print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
 					print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
 
-				#not done
 		elif toolname == 'j1939':
-			f_rc = subprocess.run(['make']).returncode #figure out whether this is make or make install
+			f_rc = subprocess.run(['make']).returncode 
 			if f_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install can-utils-j1939. Could not run create executables running make')
 				print ('ERROR CODE:', f_rc)
@@ -304,7 +298,7 @@ def github_tools(pack_man, toolname, repo):
 			libs = ['python-qt4', 'pyqt4-dev-tools', 'qtcreator']
 			rcs = [dependencies.commandline_install(pack_man, i) for i in libs]
 
-			for i,j in enumerate(rcs): #FIX THIS CODE BELOW
+			for i,j in enumerate(rcs): 
 				if j != 0:
 					if i < 3:
 						print ('INSTALLATION FAILED: Failed to install dependency', libs[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
@@ -322,7 +316,7 @@ def github_tools(pack_man, toolname, repo):
 
 
 
-	#changes back to /tools --> writes to installed.txt if the tool has been installed successfully
+	#changes back to /autopen --> writes to installed.txt if the tool has been installed successfully
 	general_use.move_up_directory()
 	if f_rc == 0:
 		it.write(toolname)
@@ -331,12 +325,16 @@ def github_tools(pack_man, toolname, repo):
 	return f_rc
 
 def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
+	'''
+		This function installs tools that are found on the internet by using the curl command 
+	'''
+
 	general_use.update(pack_man)
 	d = general_use.check_distribution()
 	f_rc = -1
 	it = open('installed.txt', 'a')
 
-	#NOTE: If pyOBD link doesn't work tell them the install.html is available
+	#NOTE: If pyOBD link doesn't work, the install.html is available
 	down_rc = dependencies.download_install(link)
 	if down_rc != 0:
 		print ('DOWNLOAD FAILED: Failed to download file for', toolname, 'using download link:', link)
