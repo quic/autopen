@@ -269,6 +269,7 @@ def github_tools(pack_man, toolname, repo):
 				else:
 					print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
 					general_use.move_up_directory()
+
 		elif toolname == 'katoolin':
 			cp_rc = subprocess.run(['sudo', 'cp', 'katoolin.py', '/usr/bin/katoolin']).returncode
 			if cp_rc != 0:
@@ -343,12 +344,12 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	else:
 		print ('DOWNLOAD SUCCESSFUL: Successfully downloaded file for', toolname)
 
-		if toolname == 'pyobd': #not 100% sure this is going to work (pyserial = 2.0, wxpython = 2.4, doesnt work with 2.5??)
+		if toolname == 'pyobd': #not 100% sure this is going to work (pyserial = 2.0, wxpython = 2.4, doesnt work with 2.5)
 			print ('Beginning pyobd installation...')
 			if d == 'debian':
 				deb_rc = dependencies.download_install(link_pyobd_debian)
 				if deb_rc != 0:
-					print ('Download Failed: Failed to download debian specific file') #need to figure out what this is for
+					print ('Download Failed: Failed to download debian specific file')
 			print ('Installing pyserial...')
 			pyserial_rc = subprocess.run(['python3', '-m', 'pip', 'install', 'pyserial']).returncode
 			if pyserial_rc != 0:
@@ -356,6 +357,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 				print ('ERROR CODE:', pyserial_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed pyserial')
+				print ('Installing WxPython version 3.0...')
 				wx_rc = dependencies.commandline_install(pack_man, 'python-wxgtk3.0')
 				if wx_rc != 0:
 					print ('INSTALLATION FAILED: Failed to install python-wxgtk3.0. Cannot complete pyobd installation')
