@@ -295,23 +295,30 @@ def github_tools(pack_man, toolname, repo):
 			print ('If you need help, refer to the tutorial on the right side of the tool page to build the hardware')
 
 		elif toolname == 'canbadger-sw':
+			print ('here1')
 			libs = ['python-qt4', 'pyqt4-dev-tools', 'qtcreator']
 			rcs = [dependencies.commandline_install(pack_man, i) for i in libs]
 
+			print ('here2')
 			for i,j in enumerate(rcs): 
 				if j != 0:
+					print ('here3')
 					if i < 3:
-						print ('INSTALLATION FAILED: Failed to install dependency', libs[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
+						print ('here4')
+						print ('INSTALLATION SUCCESSFUL: Failed to install dependency', libs[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
 						print ('ERROR CODE:', j)
 						f_rc = j
 					else:
+						print ('here5')
 						print ('INSTALLATION FAILED: Failed to install dependency', libs[i])
 						f_rc = -1
 
 			if f_rc != 0:
+				print ('here6')
 				print ('INSTALLATION FAILED: Failed to install canbadger-server dependencies')
 				print ('ERROR CODE:', f_rc)
 			else:
+				print ('here7')
 				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for canbadger-server')
 
 
