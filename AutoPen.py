@@ -1265,7 +1265,6 @@ class SDRPage(Screen):
 		up = Button(id='up', text='Update', size_hint=(.15, .07), pos_hint={'x': .45, 'y': .075}, background_color=[0, 0, 1, .65])
 		un = Button(id='un', text='Uninstall', size_hint=(.15, .07), pos_hint={'x': .60, 'y': .075},	background_color=[0, 0, 1, .75])
 		i = Button(id='i', text='Install', size_hint=(.20, .075), pos_hint={'x': .4, 'y': .075})
-		#tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
 		if v in installed_tools:
 			widget.ids[v].background_color = [1,1,1,.65]
 			o.bind(on_press=open_callback)
@@ -1275,11 +1274,9 @@ class SDRPage(Screen):
 			widget.ids.dynbutton.add_widget(o)
 			widget.ids.dynbutton.add_widget(up)
 			widget.ids.dynbutton.add_widget(un)
-			#widget.ids.dynbutton.add_widget(tryme)
 		else:
 			widget.ids.dynbutton.add_widget(i)
 			i.bind(on_press=install_callback)
-			#widget.ids.scroll2.remove_widget(widget.ids.label2)
 
 	pass
 
@@ -1289,7 +1286,7 @@ class MiscellaneousPage(Screen):
 
 		v = value
 
-		for i in installed_tools:	#if we cant get this to work , add a "see what tools are installed" button
+		for i in installed_tools:	
 			if i in mis:
 				widget.ids[i].background_color = [1,1,1,.65]
 
@@ -1301,7 +1298,7 @@ class MiscellaneousPage(Screen):
 				labeltext2 = stream.read()
 			widget.ids["label2"].text = labeltext2
 
-		def open_callback(self):	#this functionality will be a little different
+		def open_callback(self):	
 
 			rc_o = open_.open_(v)
 
@@ -1335,10 +1332,6 @@ class MiscellaneousPage(Screen):
 				installed_tools.remove(v)
 				i.bind(on_press=install_callback)
 
-		# for child in widget.children:
-		# 	if isinstance(child,Button):
-		# 		widget.ids.dynbutton.remove_widget(child)
-
 		#this if the function that executes when install in pressed
 		def install_callback(self): 
 
@@ -1347,7 +1340,7 @@ class MiscellaneousPage(Screen):
 			#this needs to be wrapped around an exception incase for some reason the correct name isn't passed
 			if rc_i == 0:
 				widget.ids.dynbutton.remove_widget(i)
-				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])#this should be green
+				o = Button(text='Open', size_hint= (.15, .07), pos_hint= {'x':.3, 'y':.075}, background_color=[0,1,0,.65])
 				o.bind(on_press=open_callback)
 				up = Button(text= 'Update', size_hint= (.15,.07), pos_hint= {'x':.45, 'y':.075}, background_color=[0,0,1,.65])
 				up.bind(on_press=update_callback)
@@ -1364,11 +1357,10 @@ class MiscellaneousPage(Screen):
 
 		widget.ids.dynbutton.clear_widgets()
 
-		o = Button(id='o', text='Open', size_hint=(.15, .07), pos_hint={'x': .3, 'y': .075}, background_color=[0, 1, 0, .65])  # this should be green
+		o = Button(id='o', text='Open', size_hint=(.15, .07), pos_hint={'x': .3, 'y': .075}, background_color=[0, 1, 0, .65])  
 		up = Button(id='up', text='Update', size_hint=(.15, .07), pos_hint={'x': .45, 'y': .075}, background_color=[0, 0, 1, .65])
 		un = Button(id='un', text='Uninstall', size_hint=(.15, .07), pos_hint={'x': .60, 'y': .075},	background_color=[0, 0, 1, .75])
 		i = Button(id='i', text='Install', size_hint=(.20, .075), pos_hint={'x': .4, 'y': .075})
-		#tryme = Button(pos_hint={'x': 0.65, 'top': 0.3}, size_hint=(0.3,0.1), text= 'Try Me!')
 		if v in installed_tools:
 			widget.ids[v].background_color = [1,1,1,.65]
 			o.bind(on_press=open_callback)
@@ -1378,19 +1370,12 @@ class MiscellaneousPage(Screen):
 			widget.ids.dynbutton.add_widget(o)
 			widget.ids.dynbutton.add_widget(up)
 			widget.ids.dynbutton.add_widget(un)
-			#widget.ids.dynbutton.add_widget(tryme)
 		else:
 			widget.ids.dynbutton.add_widget(i)
 			i.bind(on_press=install_callback)
-			#widget.ids.scroll2.remove_widget(widget.ids.label2)
 	pass
 
 class SeeAllPage(Screen):
-#mention that they need to navigate to the page in order to open the tool
-
-	# for i in installed_tools:	#if we cant get this to work , add a "see what tools are installed" button
-	# 	if i in all_tools:
-	# 		widget.ids[i].background_color = [1,1,1,.65]
 
 	def to_install(widget, name):
 		print (widget.ids[name].state)
@@ -1411,7 +1396,7 @@ class SeeAllPage(Screen):
 		print (tools_to_install)
 		for i in tools_to_install:
 			print (i)
-			rc_i = install.test(i)
+			rc_i = install.install(i)
 			if rc_i != 0:
 				broken.append(i)
 			if rc_i == 0:
@@ -1422,7 +1407,8 @@ class SeeAllPage(Screen):
 			#just for this tool, need to change the name to be consistent with the backend. In the list it is can-utils-j1939 because it is used for the search functionality
 			if i is 'can-utils-j1939':
 				i = 'j1939'
-			rc_i = install.test(i)
+
+			rc_i = install.install(i)
 			if rc_i != 0:
 				broken.append(i)
 			if rc_i == 0:

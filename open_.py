@@ -27,23 +27,27 @@ def open_(toolname):
 		current_dir = os.getcwd()
 		path = current_dir + kayak_run_path
 		os.chdir(path)
-		op_rc = subprocess.run(['./kayak']).returncode			#THIS IS STILL FAILING TO OPEN, ALSO NEED TO REMOVE INSTALL_BASICS TWICE
+		op_rc = subprocess.run(['./kayak']).returncode	
 	elif toolname == 'can-utils':
 		op_rc = subprocess.run(['gnome-terminal']).returncode
 	elif toolname == 'canbus-utils':
 		op_rc = subprocess.run(['gnome-terminal']).returncode
-	elif toolname == 'caringcaribou':
-		current_dir = os.getcwd()
-		path = current_dir + '/tool'
-		os.chdir(path)
-		o = '/modules/'
-		op_rc = subprocess.run(['./cc.py', o]).returncode #option here will be the module	
+	elif toolname == 'caringcaribou': 	#will not be able to open
+		#recommend adding the functionality to be able to open a specific module but for now it just opens a terminal
+
+		# current_dir = os.getcwd()
+		# path = current_dir + '/tool'
+		# os.chdir(path)
+		# o = '/modules/'
+		# op_rc = subprocess.run(['./cc.py', o]).returncode 
+
+		#
 	elif toolname == 'pyobd': 	#BUGGY
 		current = os.getcwd()
 		path = current + '/pyobd-0.9.3'
 		os.chdir(path)
 		op_rc = subprocess.run(['./pyobd']).returncode
-	elif toolname == 'o2oo':	#isn't going to work unless 
+	elif toolname == 'o2oo':
 		current = os.getcwd()
 		path = current + '/O2OO-0.9'
 		os.chdir(path)

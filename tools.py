@@ -82,7 +82,6 @@ def github_tools(pack_man, toolname, repo):
 	else:
 		print ('CLONING SUCCESSFUL: Successfully cloned repository at', repo)
 
-
 	back_index = repo.rfind('/')
 	dot_index = repo.rfind('.')
 	folder_name = repo[back_index:dot_index]
@@ -447,16 +446,16 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	it.close()
 	return f_rc
 
-def installed_tools(pack_man, toolname): #this function is for tools that are apt-getable / yumable
+def installed_tools(pack_man, toolname): 
+	'''
+		This function installs tools that are apt-getable / yumable
+	'''
+
 	general_use.update(pack_man)
 
 	install_rc = -1
 	it = open('installed.txt', 'a')
 
-
-	# if toolname == 'bluez': #this installs hciconfig, l2ping, hcitool, etc. 
-	# 	print ('Beginning bluez installation...')
-	# 	install_rc = dependencies.commandline_install(pack_man, 'bluetooth')
 	if toolname == 'btscanner':
 		print ('Beginning btscanner installation...')
 		install_rc = dependencies.commandline_install(pack_man, 'btscanner')

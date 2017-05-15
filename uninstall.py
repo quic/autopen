@@ -38,9 +38,6 @@ def uninstall(toolname):
 
 	os.chdir(path)
 
-	#wrap in exception so that if path isn't correct it doesn't crash program
-	#catch will be a print statement that prints out the directory that the user is in and tells them to go to that directory
-
 	try: 
 		if toolname == 'canbus-utils':
 			rm_rc = subprocess.run(['rm', '-rf', 'canbus-utils']).returncode
@@ -118,8 +115,6 @@ def uninstall(toolname):
 		f.truncate()
 
 		print ('UNINSTALL SUCCESSFUL: Successfully uninstalled', toolname)
-	#	f.close()
-
 
 	return rm_rc
 

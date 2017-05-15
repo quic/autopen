@@ -3,13 +3,6 @@ import dependencies
 import subprocess
 import os
 
-#this script is written such that it is not meant for the user to update 
-#if the user wants to update then we need to find out which one is ahead of the other
-#if any changes were made they need to store those commits before pulling from master the most updated
-
-
-#tell the user he needs to have commited his most recent changes , except they can't 
-
 def update(toolname):
 
 	#github tools
@@ -34,7 +27,6 @@ def update(toolname):
 
 	#add exception to check if the tool is installed, in case they accidentally click this. Possibly add a pop-up that says "need to install first"
 
-
 	#check path to make sure it's in the autopen directory
 	curr = os.getcwd()
 	back_index = curr.rfind('/')
@@ -49,71 +41,77 @@ def update(toolname):
 	downloaded_tools = ['pyobd', 'o2oo', 'romraider']
 	commandline_tools = ['bluez', 'btscanner', 'gnuradio', 'aircrack-ng', 'wireshark', 'can-utils', 'tshark', 'gqrx']
 
-	
-	if toolname in github_tools:
-		if toolname == 'canbus-utils':
-			p = os.getcwd() + '/canbus-utils'
-			os.chdir(p)
-		elif toolname == 'Kayak':
-			p = os.getcwd() + '/Kayak'
-			os.chdir(p)
-		elif toolname == 'caringcaribou':
-			p = os.getcwd() + '/caringcaribou'
-			os.chdir(p)
-		elif toolname == 'c0f':
-			p = os.getcwd() + '/c0f'
-			os.chdir(p)
-		elif toolname == 'udsim':
-			p = os.getcwd() + '/UDSim'
-			os.chdir(p)
-		elif toolname == 'j1939':
-			p = os.getcwd() + '/can-utils-j1939'
-			os.chdir(p)
-		elif toolname == 'canbadger-hw':
-			p = os.getcwd() + '/CANBadger'
-			os.chdir(p)
-		elif toolname == 'canbadger-sw':
-			p = os.getcwd() + '/CANBadger-Server'
-			os.chdir(p)
-		elif toolname == 'katoolin':
-			p = os.getcwd() + '/katoolin'
-			os.chdir(p)
-		elif toolname == 'bluelog':
-			p = os.getcwd() + '/Bluelog'
-			os.chdir(p)
-		elif toolname == 'bluemaho':
-			p = os.getcwd() + '/bluemaho'
-			os.chdir(p)
 
-		master = subprocess.run(['git', 'rev-parse', 'master'], stdout=subprocess.PIPE).stdout
-		origin_master = subprocess.run(['git', 'rev-parse', 'master'], stdout=subprocess.PIPE).stdout
+	try:	
+		if toolname in github_tools:
+			if toolname == 'canbus-utils':
+				p = os.getcwd() + '/canbus-utils'
+				os.chdir(p)
+			elif toolname == 'Kayak':
+				p = os.getcwd() + '/Kayak'
+				os.chdir(p)
+			elif toolname == 'caringcaribou':
+				p = os.getcwd() + '/caringcaribou'
+				os.chdir(p)
+			elif toolname == 'c0f':
+				p = os.getcwd() + '/c0f'
+				os.chdir(p)
+			elif toolname == 'udsim':
+				p = os.getcwd() + '/UDSim'
+				os.chdir(p)
+			elif toolname == 'j1939':
+				p = os.getcwd() + '/can-utils-j1939'
+				os.chdir(p)
+			elif toolname == 'canbadger-hw':
+				p = os.getcwd() + '/CANBadger'
+				os.chdir(p)
+			elif toolname == 'canbadger-sw':
+				p = os.getcwd() + '/CANBadger-Server'
+				os.chdir(p)
+			elif toolname == 'katoolin':
+				p = os.getcwd() + '/katoolin'
+				os.chdir(p)
+			elif toolname == 'bluelog':
+				p = os.getcwd() + '/Bluelog'
+				os.chdir(p)
+			elif toolname == 'bluemaho':
+				p = os.getcwd() + '/bluemaho'
+				os.chdir(p)
 
-		master_id = master.decode('utf-8')
-		origin_master_id = origin_master.decode('utf-8')
+			# github tools are updated based on whether local commit is the same version as the master commit	
 
-		#users repo is behind master
-		if master_id != origin_master_id:
+			master = subprocess.run(['git', 'rev-parse', 'master'], stdout=subprocess.PIPE).stdout
+			origin_master = subprocess.run(['git', 'rev-parse', 'master'], stdout=subprocess.PIPE).stdout
+
+			master_id = master.decode('utf-8')
+			origin_master_id = origin_master.decode('utf-8')
+
+			#users repo is behind master
+			if master_id != origin_master_id:
+				print ('Updating', toolname, '...')
+				pull_rc = subprocess.run(['git', 'pull', 'origin', 'master']).returncode
+				if pull_rc != 0:
+					print ('UPDATE FAILED: Failed to update', toolname)
+					print ('ERROR CODE:', pull_rc)
+				else:
+					print ('UPDATE SUCCESSFUL: Successfully updated', toolname)
+					return 0
+			else:
+				print (toolname, 'is already up to date')
+				return 0
+
+		elif toolname in commandline_tools:
 			print ('Updating', toolname, '...')
-			pull_rc = subprocess.run(['git', 'pull', 'origin', 'master']).returncode
-			if pull_rc != 0:
+			update_rc = subprocess.run(['sudo', 'apt-get', '--only-upgrade', '-y', 'install', toolname]).returncode
+			if update_rc != 0:
 				print ('UPDATE FAILED: Failed to update', toolname)
-				print ('ERROR CODE:', pull_rc)
+				print ('ERROR CODE:', update_rc)
 			else:
 				print ('UPDATE SUCCESSFUL: Successfully updated', toolname)
 				return 0
-		else:
-			print (toolname, 'is already up to date')
-			return 0
-
-	elif toolname in commandline_tools:
-		print ('Updating', toolname, '...')
-		update_rc = subprocess.run(['sudo', 'apt-get', '--only-upgrade', '-y', 'install', toolname]).returncode
-		if update_rc != 0:
-			print ('UPDATE FAILED: Failed to update', toolname)
-			print ('ERROR CODE:', update_rc)
-		else:
-			print ('UPDATE SUCCESSFUL: Successfully updated', toolname)
-			return 0
+	except:
+		print ('Make sure tool is installed. Tool needs to be installed before updating')
+		return 0
 
 
 
