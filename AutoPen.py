@@ -54,16 +54,6 @@ Builder.load_string("""
 				root.manager.transition.duration = .5
 				root.manager.current = 'tools'
 
-
-		Button:
-			text: 'go to class name page'
-			size_hint: .25, .1
-			pos_hint: {'x':.55, 'y':.5}
-			on_press:
-				root.manager.transition.direction = 'left'
-				root.manager.transition.duration = .5
-				root.manager.current = 'shortened_classname'	
-
 		Button:
 			text: 'How-To'
 			size_hint: .25, .1
@@ -768,12 +758,6 @@ Builder.load_string("""
 				root.manager.transition.direction = "right"
 				root.manager.transition.duration = .5
 				root.manager.current = "tools"
-
-
-<ClassName>
-	id: shortened_classname
-	someLayout:
-		etc. 
 
 """)
 
