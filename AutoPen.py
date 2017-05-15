@@ -19,7 +19,7 @@ from kivy.uix.checkbox import CheckBox
 from kivy.uix.widget import Widget
 from kivy.properties import OptionProperty
 
-import install_basics
+#import install_basics
 import install
 import open_
 import uninstall
@@ -942,9 +942,9 @@ class CanPage(Screen):
 			rc_up = update.update(v)
 
 			if rc_up != 0:
-				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center'), size_hint=(None,None), size=(300,200))
+				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center', size_hint=(None,None), size=(300,200)), size_hint=(0.4,0.5))
 			else:
-				popup = Popup(title=v, content=Label(text='Successfully updated!', size_hint=(None,None), size=(300,200)))
+				popup = Popup(title=v, content=Label(text='Successfully updated!', size_hint=(None,None), size=(300,200)), size_hint=(0.4,0.5))
 
 			popup.open()
 
@@ -1101,9 +1101,9 @@ class BluetoothWifiPage(Screen):
 			rc_up = update.update(v)
 
 			if rc_up != 0:
-				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center'), size_hint=(None,None), size=(300,200))
+				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center', size_hint=(None,None), size=(300,200)), size_hint=(0.4,0.5))
 			else:
-				popup = Popup(title=v, content=Label(text='Successfully updated!', size_hint=(None,None), size=(300,200)))
+				popup = Popup(title=v, content=Label(text='Successfully updated!', size_hint=(None,None), size=(300,200)), size_hint=(0.4,0.5))
 
 			popup.open()
 
@@ -1212,9 +1212,9 @@ class SDRPage(Screen):
 			rc_up = update.update(v)
 
 			if rc_up != 0:
-				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center'), size_hint=(None,None), size=(300,200))
+				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center', size_hint=(None,None), size=(300,200)), size_hint=(0.4,0.5))
 			else:
-				popup = Popup(title=v, content=Label(text='Successfully updated!', size_hint=(None,None), size=(300,200)))
+				popup = Popup(title=v, content=Label(text='Successfully updated!', size_hint=(None,None), size=(300,200)), size_hint=(0.4,0.5))
 
 			popup.open()
 
@@ -1314,9 +1314,9 @@ class MiscellaneousPage(Screen):
 			rc_up = update.update(v)
 
 			if rc_up != 0:
-				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center'), size_hint=(None,None), size=(300,200))
+				popup = Popup(title=v, content=Label(text='Failed to update. Please refer to log.txt for additional information on error!', text_size=(280,None), halign='center', size_hint=(None,None), size=(300,200)), size_hint=(0.4,0.5))
 			else:
-				popup = Popup(title=v, content=Label(text='Successfully updated!', size_hint=(None,None), size=(300,200)))
+				popup = Popup(title=v, content=Label(text='Successfully updated!', size_hint=(None,None), size=(300,200)), size_hint=(0.4,0.5))
 
 			popup.open()
 
