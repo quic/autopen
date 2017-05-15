@@ -36,8 +36,6 @@ Once installed, you can run AutoPen using the following command. The second part
 
 python3 AutoPen.py | tee log.txt
 
-*README is still being updated*
-
 ## Quick Notes
 
 In order to automate things, autopen uses the [subprocess](https://docs.python.org/3/library/subprocess.html#subprocess.check_output) module.
