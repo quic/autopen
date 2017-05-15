@@ -8,23 +8,29 @@ import subprocess
 import os
 
 def check_distribution():
+	'''
+	This function checks which distribution the user is running and returns that distribution type
+	'''
 
 	distro = ''
-	system = platform.system() #could use this to check whether it's a linux system or not
 	distribution = (platform.linux_distribution())[0]
 
-	if 'Kali' == distribution or 'kali' == distribution: #maybe make this to do general debian based tools
+	if 'Kali' == distribution or 'kali' == distribution:
 		distro = 'kali'
 	elif 'Debian' == distribution or 'debian' == distribution:
 		distro = 'debian'
 	elif 'Ubuntu' == distribution or 'ubuntu' == distribution:
 		distro = 'ubuntu'
-	elif 'Red Hat' == distribution or 'red hat' == distribution: #make this so that it checks fedora 
+	elif 'Red Hat' == distribution or 'red hat' == distribution:
 		distro = 'red hat'
 
 	return distro
 
 def package_tool(d):
+	'''
+	This function returns which package manager the system uses to install scripts based on the distribution
+	'''
+
 	pt = ''
 
 	if d == 'kali' or d == 'debian' or d == 'ubuntu':
@@ -47,6 +53,12 @@ def update(pack_man):
 		print ('UPDATE_ SUCCESSFUL: Successfully updated system')
 
 def move_up_directory():
+	'''
+	This function moves up one directory from where the program is currently running. 
+	To successfully install/open tools, different files need to be used that could be in other directories.
+	This is used to make sure that at the end of the process for that tool, the program ends in the main autopen directory. 
+	'''
+
 	c = os.getcwd()
 	s = c.rfind('/')
 	os.chdir(c[:s])

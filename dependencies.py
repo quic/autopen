@@ -10,8 +10,6 @@ import os
 repo_bluez = 'https://github.com/khvzak/bluez-tools.git'
 link_lightblue = 'http://prdownloads.sourceforge.net/lightblue/lightblue-0.4.tar.gz?download'
 
-#change redirecting file name later, hardcoding for now for testing
-
 def commandline_install(pack_man, i):
 	general_use.update(pack_man)
 	return subprocess.run(['sudo', pack_man, '-y', 'install', i]).returncode
@@ -23,7 +21,8 @@ def clone_git_repo(repo):
 	return subprocess.run(["git", "clone", repo]).returncode
 
 def install_pyserial(link):
-	d_rc = download_install(link) #FYI MIGHT BE ABLE TO RUN PIP INSTALL PYSERIAL 
+	#This function installs pyserial. This library is needed to run pyobd, specifically 2.0 because this is the version needed.
+	d_rc = download_install(link) #FYI MIGHT BE ABLE TO RUN PIP INSTALL PYSERIAL. But this will installs the latest version
 	if d_rc != 0:
 		print ('DOWNLOAD FAILED: Failed to download pyserial')
 		print ('ERROR CODE:', d_rc)
@@ -51,6 +50,7 @@ def install_pyserial(link):
 
 
 def install_NPM(pack_man):
+	#This function installs NPM. This is a dependency needed to run canbus-utils
 
 	print ('Installing npm...')
 	npm_rc = commandline_install(pack_man, 'npm')
@@ -63,7 +63,7 @@ def install_NPM(pack_man):
 		return 0
 
 def check_symlink(source_file, symlink):
-	
+	#This function checks whether there is a symbolic link between source_file and symlink. If it does not exists, it creates one
 	check_rc = subprocess.run(['test', '-h', symlink]).returncode
 	if check_rc!= 0:
 		print ('Creating symbolic link between', source_file, 'and', symlink, '...')
@@ -77,7 +77,8 @@ def check_symlink(source_file, symlink):
 		print ('Symbolic link already created between', source_file, 'and', symlink)
 		return 0
 
-def check_NPM(pack_man): #cant decide if should do this / count this as basics, like install ruby and gcc and homebrew so that later can just run brew install node? 
+def check_NPM(pack_man):
+	#This function checks if NPM is installed. If it is not, it installs it. This is a dependency needed to run canbus-utils
 
 	try:
 		print ('Checking nodejs existence...')
@@ -135,6 +136,10 @@ def check_NPM(pack_man): #cant decide if should do this / count this as basics, 
 					return npm_check_rc
 
 def install_bluez(pack_man):
+	#This function installs the bluez dependency. This is also available via sudo apt-get and comes installed in most VM's so we have removed it as a tool and no longer use this function
+	#However, we kept this code here just incase bluez is not included in your VM and sudo apt-get bluez does not work
+	#To use this script, follow the instructions in the user manual on how to add a tool (in this case bluez)
+	#In the install.py, call this function. 
 	print ('Installing Bluez...')
 	print ('Cloning Bluez repository...')
 	clone_rc = clone_git_repo(repo_bluez)
@@ -197,6 +202,7 @@ def install_bluez(pack_man):
 								general_use.move_up_directory()
 
 def install_lightblue(pack_man):
+	#This function installs the lightblue library/dependency
 	print ('Installing pybluez...')
 	pyb_rc = subprocess.run(['sudo', '-H', 'pip', 'install', 'pybluez']).returncode
 	if pyb_rc != 0:
@@ -231,13 +237,14 @@ def install_lightblue(pack_man):
 					return 0
 
 def can_utils_x(pack_man):
+	#This function installs the matplot-lib library which is needed for can-utils-x to run
 	mat_rc = dependencies.commandline_install(pack_man, 'python-matplotlib')
 	if mat_rc != 0:
 		print ('INSTALLATION FAILED: Failed to install matplotlib from python. This is needed to run do')
 		print ('ERROR CODE:'. mat_rc)
 	else:
 		print ('INSTALLATION SUCCESSFUL: Successfully installed matplotlib from python')
-		socket = github_tools(pack_man, 'can-utils', repo) #this repo is can-utils repo [check if can-utils has already been installed - will be handled by exception handler]
+		socket = github_tools(pack_man, 'can-utils', repo) #this clones and installs the can-utils repository which is also needed for can-utils to run
 	return mat_rc
 
 
