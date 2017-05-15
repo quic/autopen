@@ -9,10 +9,9 @@ import subprocess
 
 def open_(toolname):
 	'''
-	This function opens the specified tool
+	This function opens the specified tool (toolname)
 	'''
 
-	#tools not with 'open' button : can-utils, canbus-utils, c0f, 'UDSim', bluez (provide a list with the commands it allows), aircrack-ng
 	op_rc = -1
 
 	t = ['Kayak', 'caringcaribou', 'Bluelog', 'bluemaho', 'canbus-utils']
@@ -45,13 +44,11 @@ def open_(toolname):
 		os.chdir(path)
 		op_rc = subprocess.run(['./pyobd']).returncode
 	elif toolname == 'o2oo':	#isn't going to work unless 
-		#o = './' + option	#make sure that when this is called it passes O2OO- before the name and not the button name
 		current = os.getcwd()
 		path = current + '/O2OO-0.9'
 		os.chdir(path)
-		#op_rc = subprocess.run([o]).returncode
 		op_rc = subprocess.run(['gnome-terminal']).returncode
-	elif toolname == 'can-utils-x':	#i think i have to change this to cd into the directory but will have to change this to cd into directory ? 
+	elif toolname == 'can-utils-x':
 		op_rc = subprocess.run(['python', 'main.py']).returncode
 	elif toolname == 'j1939':
 		op_rc = subprocess.run(['gnome-terminal']).returncode
@@ -85,6 +82,10 @@ def open_(toolname):
 	#MISCELLANEOUS TOOLS
 	elif toolname == 'katoolin':
 		op_rc = subprocess.run(['gnome-terminal', '-e', 'katoolin']).returncode
+
+	#For hardware tools that do not open anything (canbadger-hw for example)
+	else:	
+		return 0 
 
 
 	if op_rc != 0:

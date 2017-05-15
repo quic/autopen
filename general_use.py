@@ -9,7 +9,7 @@ import os
 
 def check_distribution():
 	'''
-	This function checks which distribution the user is running and returns that distribution type
+		This function checks which distribution the user is running and returns that distribution type
 	'''
 
 	distro = ''
@@ -28,7 +28,7 @@ def check_distribution():
 
 def package_tool(d):
 	'''
-	This function returns which package manager the system uses to install scripts based on the distribution
+		This function returns which package manager the system uses to install scripts based on the distribution
 	'''
 
 	pt = ''
@@ -54,9 +54,9 @@ def update(pack_man):
 
 def move_up_directory():
 	'''
-	This function moves up one directory from where the program is currently running. 
-	To successfully install/open tools, different files need to be used that could be in other directories.
-	This is used to make sure that at the end of the process for that tool, the program ends in the main autopen directory. 
+		This function moves up one directory from where the program is currently running. 
+		To successfully install/open tools, different files need to be used that could be in other directories.
+		This is used to make sure that at the end of the process for that tool, the program ends in the main autopen directory. 
 	'''
 
 	c = os.getcwd()

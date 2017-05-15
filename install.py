@@ -1,10 +1,14 @@
 import general_use
-#import install_basics
+import install_basics
 import dependencies
 import tools
 import subprocess
 
 def install(toolname):
+	'''
+		This function calls the appropriate installation function (github, download or command line) to install the tool provided (toolname)
+	'''
+
 	repo_canbus_utils = 'https://github.com/digitalbond/canbus-utils.git'
 	repo_kayak = 'https://github.com/dschanoeh/Kayak.git'
 	repo_caringcaribou = 'https://github.com/CaringCaribou/caringcaribou.git' #want to check this to make sure it works, instructions a bit unclear
@@ -26,6 +30,8 @@ def install(toolname):
 	d = general_use.check_distribution()
 	pack_man = general_use.package_tool(d)
 
+
+
 	if toolname == 'canbus-utils':
 		return tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)
 	elif toolname == 'Kayak':
@@ -45,10 +51,10 @@ def install(toolname):
 	elif toolname == 'j1939':
 		return tools.github_tools(pack_man, 'j1939', repo_j1939)
 	elif toolname == 'canbadger-hw':
-		return tools.github_tools(pack_man, 'canbadger-hw', repo_canbadger)
+		return tools.github_tools(pack_man, 'canbadger-hw', repo_canbadger)		#CANT TEST THIS UNLESS A DEVICE IS ATTACHED AND SET UP
 	elif toolname == 'canbadger-sw':
 		return tools.github_tools(pack_man, 'canbadger-sw', repo_canbadger_server)
-	elif toolname == 'can-utils-x':
+	elif toolname == 'can-utils-x':	
 		return dependencies.can_utils_x(pack_man)
 
 	elif toolname == 'pyobd':
