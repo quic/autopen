@@ -52,6 +52,7 @@ import general_use
 import dependencies
 import subprocess
 import os
+import uninstall
 
 link_pyobd_debian = 'http://www.obdtester.com/download/pyobd_0.9.3_all.deb'
 link_pyserial = 'https://sourceforge.net/projects/pyserial/files/pyserial/2.0/pyserial-2.0.zip/download'
@@ -68,258 +69,262 @@ def github_tools(pack_man, toolname, repo):
 	it = open('installed.txt', 'a')
 
 	print ("Cloning repository...")
+
 	try:
-		git_rc = dependencies.clone_git_repo(repo)
-		if git_rc != 0:
-			print ('CLONING FAILED: Failed to clone repository at', repo)
-			print ('ERROR CODE:', git_rc)
-		else:
-			print ('CLONING SUCCESSFUL: Successfully cloned repository at', repo)
+		remove = uninstall.uninstall(toolname)
 	except:
 		pass
-	
-		back_index = repo.rfind('/')
-		dot_index = repo.rfind('.')
-		folder_name = repo[back_index:dot_index]
-		print ('Changing directory to', folder_name[1:], '...')
-		os.chdir(os.getcwd() + folder_name)
 
-		if toolname == 'canbus-utils':	
-			print ('Beginning canbus-utils installation...')
-			npm_check_rc = dependencies.check_NPM(pack_man)
-			if npm_check_rc != 0:
-				print ('INSTALLATION FAILED: Failed to install canbus-utils dependencies. Check node.js and npm status')
-				print ('ERROR CODE:', npm_check_rc)
+	git_rc = dependencies.clone_git_repo(repo)
+	if git_rc != 0:
+		print ('CLONING FAILED: Failed to clone repository at', repo)
+		print ('ERROR CODE:', git_rc)
+	else:
+		print ('CLONING SUCCESSFUL: Successfully cloned repository at', repo)
+
+
+	back_index = repo.rfind('/')
+	dot_index = repo.rfind('.')
+	folder_name = repo[back_index:dot_index]
+	print ('Changing directory to', folder_name[1:], '...')
+	os.chdir(os.getcwd() + folder_name)
+
+	if toolname == 'canbus-utils':	
+		print ('Beginning canbus-utils installation...')
+		npm_check_rc = dependencies.check_NPM(pack_man)
+		if npm_check_rc != 0:
+			print ('INSTALLATION FAILED: Failed to install canbus-utils dependencies. Check node.js and npm status')
+			print ('ERROR CODE:', npm_check_rc)
+		else:
+			print ('INSTALLATION SUCCESSFUL: Successfully installed node.js and npm')
+			print ('Installing canbus-utils...')
+			f_rc = subprocess.run(['npm', 'install']).returncode
+			if f_rc != 0:
+				print ('INSTALLATION FAILED: Failed to run "npm install". Cannot complete canbus-utils installation')
+				print ('ERROR CODE:', f_rc)
 			else:
-				print ('INSTALLATION SUCCESSFUL: Successfully installed node.js and npm')
-				print ('Installing canbus-utils...')
-				f_rc = subprocess.run(['npm', 'install']).returncode
+				print ('INSTALLATION SUCCESSFUL: Successfully installed canbus-utils')
+
+	elif toolname == 'Kayak':
+		print ('Beginning kayak installation...')
+		check_maven_rc = dependencies.commandline_install(pack_man, 'maven')
+		if check_maven_rc != 0:
+			print ('INSTALLATION FAILED: Failed to install maven. Cannot complete kayak installation')
+			print ('ERROR CODE:', check_maven_rc)
+		else:
+			print ('Installing jdk...')
+			jdk_rc = dependencies.commandline_install(pack_man, 'default-jdk')
+			if jdk_rc != 0:
+				print ('INSTALLATION FAILED: Failed to install jdk. This compiler is needed to run mvn clean. Cannot complete kayak installation')
+			else:
+				('Installing kayak...')
+				f_rc = (subprocess.run(['mvn', 'clean', 'package'])).returncode
 				if f_rc != 0:
-					print ('INSTALLATION FAILED: Failed to run "npm install". Cannot complete canbus-utils installation')
+					print ('INSTALLATION FAILED: Failed to run "mvn clean package". Cannot complete kayak installation')
 					print ('ERROR CODE:', f_rc)
 				else:
-					print ('INSTALLATION SUCCESSFUL: Successfully installed canbus-utils')
+					print ('INSTALLATION SUCCESSFUL: Successfully installed kayak')
 
-		elif toolname == 'Kayak':
-			print ('Beginning kayak installation...')
-			check_maven_rc = dependencies.commandline_install(pack_man, 'maven')
-			if check_maven_rc != 0:
-				print ('INSTALLATION FAILED: Failed to install maven. Cannot complete kayak installation')
-				print ('ERROR CODE:', check_maven_rc)
+	elif toolname == 'caringcaribou':
+		print ('Beginning caringcaribou installation...')
+		print ('Setting up usb-to-can connection...')
+		load_rc = subprocess.run(['sudo', 'modprobe', 'can']).returncode 
+		if load_rc != 0:
+			print ('LOAD FAILED: Failed to load CAN module. Cannot complete caringcaribou installation')
+			print ('ERROR CODE:', load_rc)
+		else:
+			print ('LOAD SUCCESSFUL: Successfully loaded CAN module')
+
+			#user needs to know the CAN bus they are on (change can_bus)
+			#user needs to know the bitrate that the bus runs with (change bitrate)
+			#add front-end functionality later so that the user can input it from there vs. modifying the code
+
+			can_bus = 'can0'
+			bitrate = 500000 
+			print ('Setting up CAN device...')
+			setup_can_rc = subprocess.run(['sudo', 'ip', 'link', 'set', can_bus, 'up', 'type', 'can', 'bitrate', str(bitrate)]).returncode
+			if setup_can_rc != 0:
+				print ('SETUP FAILED: Failed to set-up can device.')
+				print ('ERROR CODE:', setup_can_rc)
 			else:
-				print ('Installing jdk...')
-				jdk_rc = dependencies.commandline_install(pack_man, 'default-jdk')
-				if jdk_rc != 0:
-					print ('INSTALLATION FAILED: Failed to install jdk. This compiler is needed to run mvn clean. Cannot complete kayak installation')
+				print ('SETUP SUCCESSFUL: Successfully set-up can device. This will now display as a normal network interface as can0')
+				pcan_rc = dependencies.download_install(link_pythoncan)
+				if pcan_rc != 0:
+					print ('DOWNLOAD FAILED: Failed to download pythoncan from', link_pythoncan, 'Cannot complete caringcaribou installation')
+					print ('ERROR CODE:', pcan_rc)
 				else:
-					('Installing kayak...')
-					f_rc = (subprocess.run(['mvn', 'clean', 'package'])).returncode
+					print ('DOWNLOAD SUCCESSFUL: Successfully downloaded pythoncan from', link_pythoncan)
+					f_rc = subprocess.run(['sudo', 'python', 'setup.py', 'install']).returncode
 					if f_rc != 0:
-						print ('INSTALLATION FAILED: Failed to run "mvn clean package". Cannot complete kayak installation')
+						print ('DOWNLOAD SUCCESSFUL: Failed to install python-can. Cannot complete caringcaribou installation')
 						print ('ERROR CODE:', f_rc)
 					else:
-						print ('INSTALLATION SUCCESSFUL: Successfully installed kayak')
+						print ('INSTALLATION SUCCESSFUL: Successfully installed python-can. Caringcaribou installation complete')
 
-		elif toolname == 'caringcaribou':
-			print ('Beginning caringcaribou installation...')
-			print ('Setting up usb-to-can connection...')
-			load_rc = subprocess.run(['sudo', 'modprobe', 'can']).returncode 
-			if load_rc != 0:
-				print ('LOAD FAILED: Failed to load CAN module. Cannot complete caringcaribou installation')
-				print ('ERROR CODE:', load_rc)
+
+	elif toolname == 'c0f':
+		print ('Beginning c0f installation')
+		print ('Installing gem...')
+		gem_rc = dependencies.commandline_install(pack_man, 'rubygems')
+		if gem_rc != 0:
+			print ('INSTALLATION FAILED: Failed to install gem. Cannot complete c0f installation')
+			print ('ERROR CODE:', gem_rc)
+		else:
+			print ('INSTALLATION SUCCESSFUL: Successfully installed gem')
+			headers_rc = dependencies.commandline_install(pack_man, 'ruby-dev')
+			if headers_rc != 0:
+				print ('INSTALLATION FAILED: Failed to install header files for ruby. Cannot complete c0f installation')
+				print ('ERROR CODE:', headers_rc)
 			else:
-				print ('LOAD SUCCESSFUL: Successfully loaded CAN module')
-
-				#user needs to know the CAN bus they are on (change can_bus)
-				#user needs to know the bitrate that the bus runs with (change bitrate)
-				#add front-end functionality later so that the user can input it from there vs. modifying the code
-
-				can_bus = 'can0'
-				bitrate = 500000 
-				print ('Setting up CAN device...')
-				setup_can_rc = subprocess.run(['sudo', 'ip', 'link', 'set', can_bus, 'up', 'type', 'can', 'bitrate', str(bitrate)]).returncode
-				if setup_can_rc != 0:
-					print ('SETUP FAILED: Failed to set-up can device.')
-					print ('ERROR CODE:', setup_can_rc)
+				print ('INSTALLATION SUCCESSFUL: Successfully installed header files for ruby')
+				print ('Installing sqlite3 library...')
+				sql_rc = dependencies.commandline_install(pack_man, "libsqlite3-dev")
+				if sql_rc != 0:
+					print ('INSTALLATION FAILED: Failed to install sqlite3 library')
+					print ('ERROR CODE:'. sql_rc)
 				else:
-					print ('SETUP SUCCESSFUL: Successfully set-up can device. This will now display as a normal network interface as can0')
-					pcan_rc = dependencies.download_install(link_pythoncan)
-					if pcan_rc != 0:
-						print ('DOWNLOAD FAILED: Failed to download pythoncan from', link_pythoncan, 'Cannot complete caringcaribou installation')
-						print ('ERROR CODE:', pcan_rc)
+					print ('INSTALLATION SUCCESSFUL: Successfully installed sqlite3')
+					print ('Installing c0f...')
+					f_rc = subprocess.run(['sudo', 'gem', 'install', 'c0f']).returncode
+					if f_rc != 0:
+						print ('INSTALLATION FAILED: Failed to install c0f.')
+						print ('ERROR CODE:', f_rc)
 					else:
-						print ('DOWNLOAD SUCCESSFUL: Successfully downloaded pythoncan from', link_pythoncan)
-						f_rc = subprocess.run(['sudo', 'python', 'setup.py', 'install']).returncode
-						if f_rc != 0:
-							print ('DOWNLOAD SUCCESSFUL: Failed to install python-can. Cannot complete caringcaribou installation')
-							print ('ERROR CODE:', f_rc)
-						else:
-							print ('INSTALLATION SUCCESSFUL: Successfully installed python-can. Caringcaribou installation complete')
+						print ('INSTALLATION SUCCESSFUL: Successfully installed c0f')
 
+	elif toolname == 'udsim': 
+		print ('Beginning udsim installation...')
+		f_rc = 0
 
-		elif toolname == 'c0f':
-			print ('Beginning c0f installation')
-			print ('Installing gem...')
-			gem_rc = dependencies.commandline_install(pack_man, 'rubygems')
-			if gem_rc != 0:
-				print ('INSTALLATION FAILED: Failed to install gem. Cannot complete c0f installation')
-				print ('ERROR CODE:', gem_rc)
+		ttf_dev = dependencies.commandline_install(pack_man, 'libsdl2-ttf-dev')
+		image = dependencies.commandline_install(pack_man, 'libsdl2-image-2.0.0')
+		returncode_list = [ttf_dev, image]
+		lib_names = ['ttf-dev', 'image']
+		for i, j in enumerate(returncode_list):
+			if j != 0:
+				f_rc = -1
+				print ('INSTALLATION FAILED: Could not install library libsdl2-', lib_names[i])
+				print ('ERROR CODE:', j)
 			else:
-				print ('INSTALLATION SUCCESSFUL: Successfully installed gem')
-				headers_rc = dependencies.commandline_install(pack_man, 'ruby-dev')
-				if headers_rc != 0:
-					print ('INSTALLATION FAILED: Failed to install header files for ruby. Cannot complete c0f installation')
-					print ('ERROR CODE:', headers_rc)
-				else:
-					print ('INSTALLATION SUCCESSFUL: Successfully installed header files for ruby')
-					print ('Installing sqlite3 library...')
-					sql_rc = dependencies.commandline_install(pack_man, "libsqlite3-dev")
-					if sql_rc != 0:
-						print ('INSTALLATION FAILED: Failed to install sqlite3 library')
-						print ('ERROR CODE:'. sql_rc)
-					else:
-						print ('INSTALLATION SUCCESSFUL: Successfully installed sqlite3')
-						print ('Installing c0f...')
-						f_rc = subprocess.run(['sudo', 'gem', 'install', 'c0f']).returncode
-						if f_rc != 0:
-							print ('INSTALLATION FAILED: Failed to install c0f.')
-							print ('ERROR CODE:', f_rc)
-						else:
-							print ('INSTALLATION SUCCESSFUL: Successfully installed c0f')
+				print ('INSTALLATION SUCCESSFUL: Successfully installed library libsdl2-', i)
+		if f_rc != 0:
+			print ('INSTALLATION FAILED: Failed to install libraries needed to compile UDSIM. Cannot complete udsim installation')
+			print ('ERROR CODE:', f_rc)
+		else:
+			print ('INSTALLATION COMPLETE: Successfully installed the libraries needed to compile UDSIM.')
 
-		elif toolname == 'udsim': 
-			print ('Beginning udsim installation...')
-			f_rc = 0
 
-			ttf_dev = dependencies.commandline_install(pack_man, 'libsdl2-ttf-dev')
-			image = dependencies.commandline_install(pack_man, 'libsdl2-image-2.0.0')
-			returncode_list = [ttf_dev, image]
-			lib_names = ['ttf-dev', 'image']
-			for i, j in enumerate(returncode_list):
-				if j != 0:
-					f_rc = -1
-					print ('INSTALLATION FAILED: Could not install library libsdl2-', lib_names[i])
+	elif toolname == 'Bluelog': #has an optional web mode so when running want to add that functionality.  (just run make to run)
+		print ('Installing bluelog...')
+		f_rc = subprocess.run(['sudo', 'make', 'install']).returncode
+		if f_rc != 0:
+			print ('INSTALLATION FAILED: Failed to install bluelog')
+			print ('ERROR CODE:', f_rc)
+		else:
+			print ('INSTALLATION SUCCESSFUL: Successfully installed bluelog')
+			it.write('bluelog')
+	elif toolname == 'bluemaho':
+		print ('Beginning bluemaho installation...')
+		print ('Installing bluemaho dependencies...')
+		wxpython = dependencies.commandline_install(pack_man, 'python-wxgtk3.0')
+		bluez = dependencies.commandline_install(pack_man, 'bluez')
+		config = dependencies.download_install(link_package)
+		#lightblue = dependencies.install_lightblue(pack_man) ---> issue installing this one so need to figure this out
+
+		depend = ['libopenobex2-dev', 'libxml2', 'libxml2-dev', 'libusb-dev']
+		returncodes = [dependencies.commandline_install(pack_man, i) for i in depend]
+		#depend.append('lightblue')
+		depend.append('wxpython') #appends the name of the dependencies and returncodes to appropriate lists to have one list of 
+		depend.append('bluez')
+		depend.append('config')
+		#returncodes.append(lightblue)
+		returncodes.append(wxpython)
+		returncodes.append(bluez)
+		returncodes.append(config)
+
+		essential = 0
+
+		for i,j in enumerate(returncodes):
+			if j != 0:
+				if i < 7:
+					print ('INSTALLATION FAILED: Failed to install dependency', depend[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
 					print ('ERROR CODE:', j)
+					essential = j
 				else:
-					print ('INSTALLATION SUCCESSFUL: Successfully installed library libsdl2-', i)
+					print ('INSTALLATION FAILED: Failed to install dependency', depend[i])
+					essential = -1
+
+		if essential != 0:
+			print ('INSTALLATION FAILED: Failed to install all Bluemaho dependencies')
+		else:
+			print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for Bluemaho')
+			print ('Building Bluemaho...')
+			c_dir = os.getcwd()
+			path = c_dir + '/config'
+			os.chdir(path)
+			f_rc = subprocess.run(['./build.sh']).returncode
 			if f_rc != 0:
-				print ('INSTALLATION FAILED: Failed to install libraries needed to compile UDSIM. Cannot complete udsim installation')
+				print ('BUILD FAILED: Failed to build and complete installation of Bluemaho')
 				print ('ERROR CODE:', f_rc)
 			else:
-				print ('INSTALLATION COMPLETE: Successfully installed the libraries needed to compile UDSIM.')
-	
+				print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
+				general_use.move_up_directory()
 
-		elif toolname == 'Bluelog': #has an optional web mode so when running want to add that functionality.  (just run make to run)
-			print ('Installing bluelog...')
-			f_rc = subprocess.run(['sudo', 'make', 'install']).returncode
+	elif toolname == 'katoolin':
+		cp_rc = subprocess.run(['sudo', 'cp', 'katoolin.py', '/usr/bin/katoolin']).returncode
+		if cp_rc != 0:
+			print ('COPY FAILED: Could not copy katoolin.py to /usr/bin/katoolin')
+			print ('ERROR CODE:', cp_rc)
+		else:
+			print ('COPY SUCCESSFUL: Successfully copied katoolin.py to /usr/bin/katoolin')
+			print ("Setting /usr/bin/katoolin to executable...")
+			f_rc = subprocess.run(["sudo", "chmod", "+x", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
 			if f_rc != 0:
-				print ('INSTALLATION FAILED: Failed to install bluelog')
-				print ('ERROR CODE:', f_rc)
+				print ("CONVERSION FAILED: Could not make /usr/bin/katoolin executable")
+				print ("ERROR CODE:", f_rc)
 			else:
-				print ('INSTALLATION SUCCESSFUL: Successfully installed bluelog')
-				it.write('bluelog')
-		elif toolname == 'bluemaho':
-			print ('Beginning bluemaho installation...')
-			print ('Installing bluemaho dependencies...')
-			wxpython = dependencies.commandline_install(pack_man, 'python-wxgtk3.0')
-			bluez = dependencies.commandline_install(pack_man, 'bluez')
-			config = dependencies.download_install(link_package)
-			#lightblue = dependencies.install_lightblue(pack_man) ---> issue installing this one so need to figure this out
+				print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
+				print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
 
-			depend = ['libopenobex2-dev', 'libxml2', 'libxml2-dev', 'libusb-dev']
-			returncodes = [dependencies.commandline_install(pack_man, i) for i in depend]
-			#depend.append('lightblue')
-			depend.append('wxpython') #appends the name of the dependencies and returncodes to appropriate lists to have one list of 
-			depend.append('bluez')
-			depend.append('config')
-			#returncodes.append(lightblue)
-			returncodes.append(wxpython)
-			returncodes.append(bluez)
-			returncodes.append(config)
+	elif toolname == 'j1939':
+		f_rc = subprocess.run(['make']).returncode 
+		if f_rc != 0:
+			print ('INSTALLATION FAILED: Failed to install can-utils-j1939. Could not run create executables running make')
+			print ('ERROR CODE:', f_rc)
+		else:
+			print ('INSTALLATION SUCCESSFUL: Successfully installed can-utils-j1939')
 
-			essential = 0
+	elif toolname == 'canbadger-hw':
+		f_rc = 0
+		print ('REPOSITORY AVAILABLE: The CANBadger repository has been cloned to your machine')
+		print ('If you need help, refer to the tutorial on the right side of the tool page to build the hardware')
 
-			for i,j in enumerate(returncodes):
-				if j != 0:
-					if i < 7:
-						print ('INSTALLATION FAILED: Failed to install dependency', depend[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
-						print ('ERROR CODE:', j)
-						essential = j
-					else:
-						print ('INSTALLATION FAILED: Failed to install dependency', depend[i])
-						essential = -1
+	elif toolname == 'canbadger-sw':
+		print ('here1')
+		libs = ['python-qt4', 'pyqt4-dev-tools', 'qtcreator']
+		rcs = [dependencies.commandline_install(pack_man, i) for i in libs]
 
-			if essential != 0:
-				print ('INSTALLATION FAILED: Failed to install all Bluemaho dependencies')
-			else:
-				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for Bluemaho')
-				print ('Building Bluemaho...')
-				c_dir = os.getcwd()
-				path = c_dir + '/config'
-				os.chdir(path)
-				f_rc = subprocess.run(['./build.sh']).returncode
-				if f_rc != 0:
-					print ('BUILD FAILED: Failed to build and complete installation of Bluemaho')
-					print ('ERROR CODE:', f_rc)
+		print ('here2')
+		for i,j in enumerate(rcs): 
+			if j != 0:
+				print ('here3')
+				if i < 3:
+					print ('here4')
+					print ('INSTALLATION SUCCESSFUL: Failed to install dependency', libs[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
+					print ('ERROR CODE:', j)
+					f_rc = j
 				else:
-					print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
-					general_use.move_up_directory()
+					print ('here5')
+					print ('INSTALLATION FAILED: Failed to install dependency', libs[i])
+					f_rc = -1
 
-		elif toolname == 'katoolin':
-			cp_rc = subprocess.run(['sudo', 'cp', 'katoolin.py', '/usr/bin/katoolin']).returncode
-			if cp_rc != 0:
-				print ('COPY FAILED: Could not copy katoolin.py to /usr/bin/katoolin')
-				print ('ERROR CODE:', cp_rc)
-			else:
-				print ('COPY SUCCESSFUL: Successfully copied katoolin.py to /usr/bin/katoolin')
-				print ("Setting /usr/bin/katoolin to executable...")
-				f_rc = subprocess.run(["sudo", "chmod", "+x", "/usr/bin/katoolin"]).returncode #executable script for both you and your group but not for the world. 
-				if f_rc != 0:
-					print ("CONVERSION FAILED: Could not make /usr/bin/katoolin executable")
-					print ("ERROR CODE:", f_rc)
-				else:
-					print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
-					print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
-
-		elif toolname == 'j1939':
-			f_rc = subprocess.run(['make']).returncode 
-			if f_rc != 0:
-				print ('INSTALLATION FAILED: Failed to install can-utils-j1939. Could not run create executables running make')
-				print ('ERROR CODE:', f_rc)
-			else:
-				print ('INSTALLATION SUCCESSFUL: Successfully installed can-utils-j1939')
-
-		elif toolname == 'canbadger-hw':
-			f_rc = 0
-			print ('REPOSITORY AVAILABLE: The CANBadger repository has been cloned to your machine')
-			print ('If you need help, refer to the tutorial on the right side of the tool page to build the hardware')
-
-		elif toolname == 'canbadger-sw':
-			print ('here1')
-			libs = ['python-qt4', 'pyqt4-dev-tools', 'qtcreator']
-			rcs = [dependencies.commandline_install(pack_man, i) for i in libs]
-
-			print ('here2')
-			for i,j in enumerate(rcs): 
-				if j != 0:
-					print ('here3')
-					if i < 3:
-						print ('here4')
-						print ('INSTALLATION SUCCESSFUL: Failed to install dependency', libs[i], '. This may remove the ability to run a specific attack using Bluemaho. Please refer to the github repo')
-						print ('ERROR CODE:', j)
-						f_rc = j
-					else:
-						print ('here5')
-						print ('INSTALLATION FAILED: Failed to install dependency', libs[i])
-						f_rc = -1
-
-			if f_rc != 0:
-				print ('here6')
-				print ('INSTALLATION FAILED: Failed to install canbadger-server dependencies')
-				print ('ERROR CODE:', f_rc)
-			else:
-				print ('here7')
-				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for canbadger-server')
+		if f_rc != 0:
+			print ('here6')
+			print ('INSTALLATION FAILED: Failed to install canbadger-server dependencies')
+			print ('ERROR CODE:', f_rc)
+		else:
+			print ('here7')
+			print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for canbadger-server')
 
 
 
