@@ -18,6 +18,8 @@ Running the software on a VM is different then running it on a dedicated install
 
 python3 vm_install.py
 
+When prompted to keep dash as the default shell, select No. 
+
 ### Installing on bootable Linux
 
 To run Autopen, having Python 3 and pip3 installed, the repository needs to be added and the following dependencies must be installed. 
@@ -30,6 +32,12 @@ pip3 install cython==0.23
 
 ## Running the Program
 
-python3 AutoPen.py 
+Once installed, you can run AutoPen using the following command. The second part of the command (*tee log.txt*) will create a log.txt file. (To append to an existing log.txt file, change this command to be (*tee -a log.txt*) In this file, all of the output from the program will be stored making it much easier to trace back an error. Please refer to this file if the program crashes or something does not install properly. 
+
+python3 AutoPen.py | tee log.txt
 
 *README is still being updated*
+
+## Quick Notes
+
+In order to automate things, autopen uses the [subprocess](https://docs.python.org/3/library/subprocess.html#subprocess.check_output) module.
