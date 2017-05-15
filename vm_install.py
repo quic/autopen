@@ -57,9 +57,11 @@ else:
 			print ('VIRTUALENV FAILED: Failed to setup kivy isolated environment')
 			print ('WITH ERROR CODE:', x_rc)
 		else:
+			print ('Changing from dash to bash, hit "no" on the next prompt')
+			subprocess.run(['sudo', 'dpkg-reconfigure', 'dash'])
 			print ('VIRTUALENV SUCCESSFUL: Successfully setup kivy isolated environment')
 			print ('Entering the virtualenv environment...')
-			enter_rc = subprocess.run(['. ', 'kivyinstall/bin/activate']).returncode
+			enter_rc = subprocess.run(['source ./kivyinstall/bin/activate'],shell=True).returncode
 			if enter_rc != 0:
 				print ('VIRTUALENV FAILED: Failed to enter the kivy python environment set-up')
 				print ('WITH ERROR CODE:', enter_rc)
@@ -74,10 +76,10 @@ else:
 					print ('INSTALLATION SUCCESSFUL: Successfully installed Cython version 0.23')
 					print ('Installing kivy...')
 					kivy_rc = subprocess.run(['pip3', 'install', 'kivy']).returncode
-					if kivy_rc != 0
+					if kivy_rc != 0:
 						print ('INSTALLATION FAILED: Failed to install kivy')
 						print ('WITH ERROR CODE:', kivy_rc)
 					else:
-						print ('INSTALLATION SUCCESSFUL: Should now be able to run Auopen.py')
+						print ('INSTALLATION SUCCESSFUL: Should now be able to run AutoPen.py')
 
 
