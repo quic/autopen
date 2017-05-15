@@ -53,6 +53,17 @@ Builder.load_string("""
 				root.manager.transition.direction = 'left'
 				root.manager.transition.duration = .5
 				root.manager.current = 'tools'
+
+
+		Button:
+			text: 'go to class name page'
+			size_hint: .25, .1
+			pos_hint: {'x':.55, 'y':.5}
+			on_press:
+				root.manager.transition.direction = 'left'
+				root.manager.transition.duration = .5
+				root.manager.current = 'shortened_classname'	
+
 		Button:
 			text: 'How-To'
 			size_hint: .25, .1
@@ -757,6 +768,13 @@ Builder.load_string("""
 				root.manager.transition.direction = "right"
 				root.manager.transition.duration = .5
 				root.manager.current = "tools"
+
+
+<ClassName>
+	id: shortened_classname
+	someLayout:
+		etc. 
+
 """)
 
 installed_tools = []
@@ -770,7 +788,7 @@ except FileNotFoundError:
 	pass
 
 can = ['o2oo', 'c0f', 'canbadger-hw', 'canbadger-sw', 'canbus-utils', 'can-utils', 'can-utils-j1939', 'can-utils-x', 'caringcaribou', 'pyobd', 'kayak', 'udsim']
-b_w = ['aircrack-ng', 'bluelog', 'bluemaho', 'bluez', 'btscanner', 'tshark', 'wireshark']
+b_w = ['aircrack-ng', 'bluelog', 'bluemaho', 'btscanner', 'tshark', 'wireshark']
 sdr = ['gnu radio', 'gqrx']
 mis = ['katoolin']
 all_tools = can + b_w + sdr + mis
@@ -1417,13 +1435,15 @@ class SeeAllPage(Screen):
 
 	def install_all(widget):
 		for i in all_tools:
+			#just for this tool, need to change the name to be consistent with the backend. In the list it is can-utils-j1939 because it is used for the search functionality
+			if i is 'can-utils-j1939':
+				i = 'j1939'
 			rc_i = install.test(i)
 			if rc_i != 0:
 				broken.append(i)
 			if rc_i == 0:
 				installed_tools.append(i)
 	pass
-
 
 
 screen_manager = ScreenManager()
@@ -1437,6 +1457,11 @@ screen_manager.add_widget(CanPage(name='can'))
 screen_manager.add_widget(SDRPage(name='sdr'))
 screen_manager.add_widget(MiscellaneousPage(name='miscellaneous'))
 screen_manager.add_widget(SeeAllPage(name='seeall'))
+
+
+
+
+
 class AutoPenApp(App):
 
 	def build(self):

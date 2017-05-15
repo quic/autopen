@@ -45,7 +45,7 @@ def update(toolname):
 		path = curr
 	os.chdir(path)
 
-	github_tools = ['canbus-utils', 'kayak', 'caringcaribou', 'c0f', 'udsim', 'j1939', 'canbadger-hw', 'canbadger-sw', 'katoolin', 'bluelog', 'bluemaho']
+	github_tools = ['canbus-utils', 'Kayak', 'caringcaribou', 'c0f', 'udsim', 'j1939', 'canbadger-hw', 'canbadger-sw', 'katoolin', 'bluelog', 'bluemaho']
 	downloaded_tools = ['pyobd', 'o2oo', 'romraider']
 	commandline_tools = ['bluez', 'btscanner', 'gnuradio', 'aircrack-ng', 'wireshark', 'can-utils', 'tshark', 'gqrx']
 
@@ -54,7 +54,7 @@ def update(toolname):
 		if toolname == 'canbus-utils':
 			p = os.getcwd() + '/canbus-utils'
 			os.chdir(p)
-		elif toolname == 'kayak':
+		elif toolname == 'Kayak':
 			p = os.getcwd() + '/Kayak'
 			os.chdir(p)
 		elif toolname == 'caringcaribou':

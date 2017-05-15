@@ -1,7 +1,18 @@
 import subprocess
 import os
+import sys
 
+from contextlib import contextmanager
 
+# f = open('log.txt', 'w')
+
+# ps = subprocess.Popen(['ls', '-l'], stdout=subprocess.PIPE)
+# output = subprocess.run(['tee', '-a', 'log.txt'], stdin=ps.stdout)
+
+y = subprocess.run(['ls', '-l']).returncode
+
+print ('never ever')
+print ('test')
 
 
 
@@ -18,16 +29,16 @@ import os
 
 # f = open('output.txt', 'w')
 
-# master = subprocess.run(['git', 'rev-parse', 'master'], stdout=subprocess.PIPE)
-# print ((master.stdout).decode('utf-8'))
-# print ('UPDATE FAILED: failed to update tool')
+# # master = subprocess.run(['git', 'rev-parse', 'master'], stdout=subprocess.PIPE)
+# # print ((master.stdout).decode('utf-8'))
+# # print ('UPDATE FAILED: failed to update tool')
 
-x = subprocess.run(['sudo', 'apt-get', 'install', 'wireshark']).returncode
-if x != 0:
-	print 'did not install'
-else:
-	y = subprocess.run(['sudo', 'apt-get', '--only-upgrade', 'install', 'wireshark']).returncode
-	if y != 0:
-		print 'dk whats going on'
-	else:
-		print 'hey it worked'
+# x = subprocess.run(['sudo', 'apt-get', 'install', 'wireshark']).returncode
+# if x != 0:
+# 	print 'did not install'
+# else:
+# 	y = subprocess.run(['sudo', 'apt-get', '--only-upgrade', 'install', 'wireshark']).returncode
+# 	if y != 0:
+# 		print 'dk whats going on'
+# 	else:
+# 		print 'hey it worked'

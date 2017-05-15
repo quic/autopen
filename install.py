@@ -28,14 +28,14 @@ def install(toolname):
 
 	if toolname == 'canbus-utils':
 		return tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)
-	elif toolname == 'kayak':
+	elif toolname == 'Kayak':
 		return tools.github_tools(pack_man, 'Kayak', repo_kayak)
 	elif toolname == 'caringcaribou':
 		return tools.github_tools(pack_man, 'caringcaribou', repo_caringcaribou)	#CANT TEST THIS UNLESS A DEVICE IS ATTACHED AND SET UP
 	elif toolname == 'c0f':
 		return tools.github_tools(pack_man, 'c0f', repo_c0f)
 	elif toolname == 'udsim':
-		return tools.github_tools(pack_man, 'udsim', repo_udsim)
+		return tools.github_tools(pack_man, 'udsim', repo_udsim)	#CANT TEST THIS UNLESS A DEVICE IS ATTACHED AND SET UP
 	elif toolname == 'katoolin':
 		return tools.github_tools(pack_man, 'katoolin', repo_katoolin)
 	elif toolname == 'bluelog':
@@ -52,7 +52,7 @@ def install(toolname):
 		return dependencies.can_utils_x(pack_man)
 
 	elif toolname == 'pyobd':
-		return tools.downloaded_tools(pack_man, 'pyobd', link_pyobd)
+		return tools.downloaded_tools(pack_man, 'pyobd', link_pyobd)	#MAY NOT INSTALL, IT NEEDS OLDER LIBRARIES
 	elif toolname == 'o2oo':
 		return tools.downloaded_tools(pack_man, 'o2oo', link_o2oo)
 

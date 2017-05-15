@@ -42,7 +42,7 @@ def uninstall(toolname):
 
 	if toolname == 'canbus-utils':
 		rm_rc = subprocess.run(['rm', '-rf', 'canbus-utils']).returncode
-	elif toolname == 'kayak':
+	elif toolname == 'Kayak':
 		rm_rc = subprocess.run(['rm', '-rf', 'Kayak']).returncode
 	elif toolname == 'caringcaribou':
 		rm_rc = subprocess.run(['rm', '-rf', 'caringcaribou']).returncode

@@ -11,34 +11,16 @@ TO DO:
 		EXCEPTIONS:
 			if repo has already been cloned, want it to continue with installation script
 			if something fails to install. pass and skip the rest !! 
-		IMPLEMENTATIONS:
-			handle log.txt (send stderr to stdout: http://stackoverflow.com/questions/29580663/save-error-message-of-subprocess-command)
-				make errors red, possibly make stderr and stdout
-				log it and show to the user ( | tee -a log.txt atm ~~~~ )
-			check if an update is available and install that update
-		SCRIPTS:
-			need to write scripts to implement/replicate attacks using tool/to provide to tool
-			kali: create a separate install script / show certain tools as already installed because its in kali
 		SMALL CHANGES:
 			fix udsim code to print the correct library names
 			caringcaribou hasn't been tested/not confirmed if install works because need to test it with socketCAN
-			UDSIM not working yet, need to do some more reading on how to use / install 
-			add omar's dependencies
-			move database to frontend
 
 	FRONT-END:
 		ADD:
 			highlight the buttons that are already installed, maybe gray out and make italics
-			Loading/new welcome page for first page so that install_basics can not just sit there
-		IMPLEMENTATION:
-			can we make it that our tool will know which tools they have installed?
-				OPTION 1: have a checklist to select which tools you already have and tailor the buttons to that
-				OPTION 2: could create a text file that keeps track of what the tools were installed, their paths and we could parse it later if they want to just upload that text file
-					they could input the name of the tool and the directory path and we can create the text file for them and they can store it
 	
 	TEST:
 		test caring caribou because a device needs to be set up to use it
-		test on kali, debian, ubuntu and fedora (try to get this)
 
 	TO TELL USER:
 		Note:
@@ -63,10 +45,6 @@ TOOLS MAY BE INCLUDED:
 	METASPLOIT HARDWARE BRIDGE
 	AVRDUDESS:
 		(this one not sure if im going to install yet)
-
-TO DO (LOGISTICS):
-	1. test live demo for may 5 to make sure it will work
-	3. Documentation
 
 '''
 
@@ -236,10 +214,10 @@ def github_tools(pack_man, toolname, repo):
 
 		elif toolname == 'Bluelog': #has an optional web mode so when running want to add that functionality.  (just run make to run)
 			print ('Installing bluelog...')
-			ins_rc = subprocess.run(['sudo', 'make', 'install']).returncode
-			if ins_rc != 0:
+			f_rc = subprocess.run(['sudo', 'make', 'install']).returncode
+			if f_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install bluelog')
-				print ('ERROR CODE:', ins_rc)
+				print ('ERROR CODE:', f_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed bluelog')
 				it.write('bluelog')
@@ -276,7 +254,7 @@ def github_tools(pack_man, toolname, repo):
 						essential = -1
 
 			if essential != 0:
-				print ('INSTALLATION FAILED: Failed to install Bluemaho dependencies')
+				print ('INSTALLATION FAILED: Failed to install all Bluemaho dependencies')
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed all dependencies for Bluemaho')
 				print ('Building Bluemaho...')

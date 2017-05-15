@@ -21,7 +21,8 @@ def open_(toolname):
 		path = current + '/' + toolname
 		os.chdir(path)
 
-	if toolname == 'kayak':
+	#CAN TOOLS
+	if toolname == 'Kayak':
 		kayak_run_path = '/application/target/kayak/bin'
 		print ('Changing directory to', kayak_run_path, '...')
 		current_dir = os.getcwd()
@@ -37,13 +38,7 @@ def open_(toolname):
 		path = current_dir + '/tool'
 		os.chdir(path)
 		o = '/modules/'
-		op_rc = subprocess.run(['./cc.py', o]).returncode #option here will be the module
-	elif toolname == 'katoolin':
-		op_rc = subprocess.run(['gnome-terminal', '-e', 'katoolin']).returncode
-	elif toolname == 'bluelog':
-		op_rc = subprocess.run(['./bluelog']).returncode	#works if you have a bluetooth device up
-	elif toolname == 'bluemaho':
-		op_rc = subprocess.run(['./bluemaho.py']).returncode
+		op_rc = subprocess.run(['./cc.py', o]).returncode #option here will be the module	
 	elif toolname == 'pyobd': 	#BUGGY
 		current = os.getcwd()
 		path = current + '/pyobd-0.9.3'
@@ -56,27 +51,41 @@ def open_(toolname):
 		os.chdir(path)
 		#op_rc = subprocess.run([o]).returncode
 		op_rc = subprocess.run(['gnome-terminal']).returncode
-	elif toolname == 'btscanner':
-		#mention that this command will just show a list of the devices that are available; else can run btscanner (path to file name) and then potentially have a reset button
-		op_rc = subprocess.run(['gnome-terminal']).returncode
-	elif toolname == 'gnuradio':
-		op_rc = subprocess.run(['gnome-terminal', '-e', 'gnuradio-companion']).returncode
 	elif toolname == 'can-utils-x':	#i think i have to change this to cd into the directory but will have to change this to cd into directory ? 
 		op_rc = subprocess.run(['python', 'main.py']).returncode
-	elif toolname == 'gqrx':
-		op_rc = subprocess.run(['gqrx']).returncode
-	elif toolname == 'wireshark':
-		op_rc = subprocess.run(['gnome-terminal', '-e','wireshark']).returncode
-	elif toolname == 'aircrack-ng':
-		op_rc = subprocess.run(['gnome-terminal']).returncode
 	elif toolname == 'j1939':
 		op_rc = subprocess.run(['gnome-terminal']).returncode
 	elif toolname == 'c0f':
 		op_rc = subprocess.run(['gnome-terminal']).returncode
 	elif toolname == 'udsim':
 		op_rc = subprocess.run(['gnome-terminal', '-e', 'udsim', 'can0']).returncode
-	elif toolname == 'can-utils-x':
-		op_rc = subprocess.run(['python2', 'main.py']).returncode
+
+	#BLUETOOTH TOOLS
+	elif toolname == 'bluelog':
+		op_rc = subprocess.run(['./bluelog']).returncode	#works if you have a bluetooth device up
+	elif toolname == 'bluemaho':
+		op_rc = subprocess.run(['./bluemaho.py']).returncode
+	elif toolname == 'btscanner':
+		op_rc = subprocess.run(['gnome-terminal']).returncode
+
+	#WIFI TOOLS
+	elif toolname == 'wireshark':
+		op_rc = subprocess.run(['gnome-terminal', '-e','wireshark']).returncode
+	elif toolname == 'aircrack-ng':
+		op_rc = subprocess.run(['gnome-terminal']).returncode
+	elif toolname == 'tshark':
+		op_rc = subprocess.run(['gnome-terminal']).returncode
+
+	#SDR TOOLS
+	elif toolname == 'gnuradio':
+		op_rc = subprocess.run(['gnome-terminal', '-e', 'gnuradio-companion']).returncode
+	elif toolname == 'gqrx':
+		op_rc = subprocess.run(['gqrx']).returncode
+
+	#MISCELLANEOUS TOOLS
+	elif toolname == 'katoolin':
+		op_rc = subprocess.run(['gnome-terminal', '-e', 'katoolin']).returncode
+
 
 	if op_rc != 0:
 		print ('STARTUP FAILED: Failed to open', toolname)
