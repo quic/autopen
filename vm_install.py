@@ -57,7 +57,7 @@ else:
 			print ('VIRTUALENV FAILED: Failed to setup kivy isolated environment')
 			print ('WITH ERROR CODE:', x_rc)
 		else:
-			print ('Changing from dash to bash')
+			print ('Changing from dash to bash, hit "no" on the next prompt')
 			subprocess.run(['sudo', 'dpkg-reconfigure', 'dash'])
 			print ('VIRTUALENV SUCCESSFUL: Successfully setup kivy isolated environment')
 			print ('Entering the virtualenv environment...')
