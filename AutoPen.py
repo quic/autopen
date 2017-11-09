@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+
 import kivy
 kivy.require('1.9.0')
 
@@ -767,9 +769,8 @@ try:
 	already_installed = open('installed.txt', 'r')
 	for i in already_installed.readlines():
 		installed_tools.append(i.strip('\n'))
-except FileNotFoundError:
-	
-	pass
+except IOError, arg:
+    print "ERROR: cannot open file: installed.txt"
 
 can = ['o2oo', 'c0f', 'canbadger-hw', 'canbadger-sw', 'canbus-utils', 'can-utils', 'can-utils-j1939', 'can-utils-x', 'caringcaribou', 'pyobd', 'kayak', 'udsim']
 b_w = ['aircrack-ng', 'bluelog', 'bluemaho', 'btscanner', 'tshark', 'wireshark']
