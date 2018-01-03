@@ -4,11 +4,12 @@ import tools
 import subprocess
 
 class Tool:
-    tool_name = ''
-    tool_repo_link = ''
-    tool_repo_type = ''
+    def __init__(self):
+        self.tool_name = ''
+        self.tool_repo_link = ''
+        self.tool_repo_type = ''
 
-    def __init__(self, tool_name, tool_repo_link, tool_repo_type):
+    def init(self, tool_name, tool_repo_link, tool_repo_type):
         self.tool_name = tool_name
         self.tool_repo_link = tool_repo_link
         self.tool_repo_type = tool_repo_type
@@ -28,7 +29,7 @@ def install(toolname):
     for line in lines:
         tool_name, tool_repo_link, tool_repo_type = line.split(',')
         if tool_name is toolname:
-            tool = Tool(tool_name, tool_repo_link, tool_repo_type)
+            tool.init(tool_name, tool_repo_link, tool_repo_type)
             break
 
     distro = general_use.check_distribution()

@@ -5,45 +5,29 @@ import subprocess
 import os
 
 class Tool:
-    tool_name = ''
-    tool_path = ''
-    tool_type = ''
+    def __init__():
+        self.tool_name = ''
+        self.tool_path = ''
+        self.tool_type = ''
 
-    def __init__(self, tool_name, tool_path, tool_type):
+    def init(self, tool_name, tool_path, tool_type):
         self.tool_name = tool_name
         self.tool_path = tool_path
         self.tool_type = tool_type
 
 def uninstall(toolname):
-    repo_canbus_utils = 'https://github.com/digitalbond/canbus-utils.git'
-    repo_kayak = 'https://github.com/dschanoeh/Kayak.git'
-    repo_caringcaribou = 'https://github.com/CaringCaribou/caringcaribou.git' #want to check this to make sure it works, instructions a bit unclear
-    repo_c0f = 'https://github.com/zombieCraig/c0f.git'
-    repo_udsim = 'https://github.com/zombieCraig/UDSim.git'
-    repo_j1939 = 'https://github.com/wang701/can-utils-j1939.git'
-    repo_canbadger = 'https://github.com/Gutenshit/CANBadger.git'
-    repo_canbadger_server = 'https://github.com/Gutenshit/CANBadger-Server.git'
-
-    repo_katoolin = 'https://github.com/LionSec/katoolin.git'
-
-    repo_bluelog = 'https://github.com/MS3FGX/Bluelog.git'
-    repo_bluemaho = 'https://github.com/zenware/bluemaho.git'
-
-    link_pyobd = 'http://www.obdtester.com/download/pyobd_0.9.3.tar.gz'    #this might not work
-    link_o2oo = 'https://www.vanheusden.com/O2OO/O2OO-0.9.tgz'
-    link_romraider = 'http://assembla.com/spaces/romraider/documents/a5Ao9gHEir5P9Udmr6QqzO/download/RomRaider0.5.9RC3-linux.jar'
-
     try:
         fh = open('tool_and_repo.txt','r')
     except IOError as io_error:
         print io_error
 
     lines = fh.readlines()
+    tool = Tool()
     for line in lines:
         tool_name, tool_path, tool_type = line.split(',')
         if tool_name is toolname:
-            Tool(tool_name, tool_path, tool_type)
-
+            tool.init(tool_name, tool_path, tool_type)
+            break
 
     d = general_use.check_distribution()
     pack_man = general_use.package_tool(d)
