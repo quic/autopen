@@ -1,11 +1,11 @@
-canbus_utils,https://github.com/digitalbond/canbus-utils.git,git
+canbus-utils,https://github.com/digitalbond/canbus-utils.git,git
 kayak,https://github.com/dschanoeh/Kayak.git,git
 caringcaribou,https://github.com/CaringCaribou/caringcaribou.git,git
 c0f,https://github.com/zombieCraig/c0f.git,git
 udsim,https://github.com/zombieCraig/UDSim.git,git
 j1939,https://github.com/wang701/can-utils-j1939.git,git
 canbadger-hw,https://github.com/Gutenshit/CANBadger.git,git
-canbadger_sw,https://github.com/Gutenshit/CANBadger-Server.git,git
+canbadger-sw,https://github.com/Gutenshit/CANBadger-Server.git,git
 katoolin,https://github.com/LionSec/katoolin.git,git
 bluelog,'https://github.com/MS3FGX/Bluelog.git,git
 bluemaho,https://github.com/zenware/bluemaho.git,git
