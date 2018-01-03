@@ -5,7 +5,7 @@ import subprocess
 import os
 
 class Tool:
-    def __init__():
+    def __init__(self):
         self.tool_name = ''
         self.tool_path = ''
         self.tool_type = ''
@@ -46,64 +46,64 @@ def uninstall(toolname):
 
     try:
         if toolname == 'canbus-utils':
-            rm_rc = subprocess.run(['rm', '-rf', 'canbus-utils']).returncode
+            rm_rc = subprocess.call(['rm', '-rf', 'canbus-utils'])
         elif toolname == 'Kayak':
-            rm_rc = subprocess.run(['rm', '-rf', 'Kayak']).returncode
+            rm_rc = subprocess.call(['rm', '-rf', 'Kayak'])
         elif toolname == 'caringcaribou':
-            rm_rc = subprocess.run(['rm', '-rf', 'caringcaribou']).returncode
+            rm_rc = subprocess.call(['rm', '-rf', 'caringcaribou'])
         elif toolname == 'c0f':
-            rm_rc = subprocess.run(['rm', '-rf', 'c0f']).returncode
+            rm_rc = subprocess.call(['rm', '-rf', 'c0f'])
         elif toolname == 'udsim':
-            rm_rc = subprocess.run(['rm', '-rf', 'UDSim']).returncode
+            rm_rc = subprocess.call(['rm', '-rf', 'UDSim'])
         elif toolname == 'katoolin':
-            rm_rc = subprocess.run(['rm', '-rf', 'katoolin']).returncode
+            rm_rc = subprocess.call(['rm', '-rf', 'katoolin'])
         elif toolname == 'bluelog':
-            rm_rc = subprocess.run(['rm', '-rf', 'Bluelog']).returncode
+            rm_rc = subprocess.call(['rm', '-rf', 'Bluelog'])
         elif toolname == 'bluemaho':
-            rm_rc = subprocess.run(['rm', '-rf', 'bluemaho']).returncode
+            rm_rc = subprocess.call(['rm', '-rf', 'bluemaho'])
         elif toolname == 'j1939':
-            rm_rc = subprocess.run(['rm', '-rf', 'can-utils-j1939']).returncode
+            rm_rc = subprocess.call(['rm', '-rf', 'can-utils-j1939'])
         elif toolname == 'canbadger-hw':
-            rm_rc = subprocess.run(['rm', '-rf', 'CANBadger']).returncode
+            rm_rc = subprocess.call(['rm', '-rf', 'CANBadger'])
 
             #https://github.com/Gutenshit/CANBadger/wiki/Getting-the-board-ready
 
         elif toolname == 'canbadger-sw':
-            rm_rc = subprocess.run(['rm', '-rf', 'CANBadger-Server']).returncode
+            rm_rc = subprocess.call(['rm', '-rf', 'CANBadger-Server'])
 
         elif toolname == 'pyobd':
             try:
-                rm_rc = subprocess.run(['rm', '-rf','pyobd_0.9.3.tar.gz']).returncode
+                rm_rc = subprocess.call(['rm', '-rf','pyobd_0.9.3.tar.gz'])
             except:
                 pass
             try:
-                rm_rc = subprocess.run('rm', '-rf', 'pyobd-0.9.3').returncode
+                rm_rc = subprocess.call('rm', '-rf', 'pyobd-0.9.3')
             except:
                 pass
         elif toolname == 'o2oo':
             try:
-                rm_rc = subprocess.run(['rm', '-rf','O2OO-0.9.tgz']).returncode
+                rm_rc = subprocess.call(['rm', '-rf','O2OO-0.9.tgz'])
             except:
                 pass
             try:
-                rm_rc = subprocess.run('rm', '-rf', 'O2OO-0.9').returncode
+                rm_rc = subprocess.call('rm', '-rf', 'O2OO-0.9')
             except:
                 pass
 
         elif toolname == 'btscanner':
-            rm_rc = subprocess.run(['sudo', pack_man, 'purge', '-y','btscanner']).returncode
+            rm_rc = subprocess.call(['sudo', pack_man, 'purge', '-y','btscanner'])
         elif toolname == 'gnuradio':
-            rm_rc = subprocess.run(['sudo', pack_man, 'purge','-y', 'gnuradio']).returncode
+            rm_rc = subprocess.call(['sudo', pack_man, 'purge','-y', 'gnuradio'])
         elif toolname == 'aircrack-ng':
-            rm_rc = subprocess.run(['sudo', pack_man, 'purge','-y', 'aircrack-ng']).returncode
+            rm_rc = subprocess.call(['sudo', pack_man, 'purge','-y', 'aircrack-ng'])
         elif toolname == 'gqrx':
-            rm_rc = subprocess.run(['sudo', pack_man, 'purge', '-y','gqrx']).returncode
+            rm_rc = subprocess.call(['sudo', pack_man, 'purge', '-y','gqrx'])
         elif toolname == 'can-utils':
-            rm_rc = subprocess.run(['sudo', pack_man, 'purge','-y', 'can-utils']).returncode
+            rm_rc = subprocess.call(['sudo', pack_man, 'purge','-y', 'can-utils'])
         elif toolname == 'wireshark':
-            rm_rc = subprocess.run(['sudo', pack_man, 'purge','-y', 'wireshark']).returncode
+            rm_rc = subprocess.call(['sudo', pack_man, 'purge','-y', 'wireshark'])
         elif toolname == 'tshark':
-            rm_rc = subprocess.run(['sudo', pack_man, 'purge','-y', 'tshark']).returncode
+            rm_rc = subprocess.call(['sudo', pack_man, 'purge','-y', 'tshark'])
 
     except:
         print ('Not in correct directory')

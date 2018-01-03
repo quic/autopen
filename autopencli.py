@@ -45,7 +45,7 @@ class CanPage:
     def __init__(self):
         self.options = ('can-utils', 'canbus-utils', 'can-utils-x',
                     'j1939', 'canbadger-hw', 'canbadger-sw',
-                    'caringcaribou', 'kayak', 'c0f', 'udsim', 'pyobd',
+                    'caringcaribou', 'Kayak', 'c0f', 'udsim', 'pyobd',
                     'o2oo')
 
 class SdrPage:
@@ -80,14 +80,34 @@ class AutoPenCli:
         for serial, option in enumerate(options):
             print serial, option
 
+    def page_options(self, title, page):
+        os.system('clear')
+        print title
+        print self.underline
+        self.print_options(page.options)
+        user_input = raw_input(self.PROMPT)
+        return user_input
+
+    def page_text(self, title, page):
+        os.system('clear')
+        print title
+        print self.underline
+        print page.text
+        user_input = raw_input(self.PROMPT)
+        return user_input
+
+    def page_exec(self, title, page):
+        while(True):
+            user_input = self.page_text(title, page)
+            if user_input in self.back_labels:
+                break
+            elif user_input in self.exit_labels:
+                exit()
+
     def install_update_remove(self, tool_name):
         while(True):
-            os.system('clear')
-            print tool_name
-            print self.underline
             base_tool_page = BaseToolPage()
-            self.print_options(base_tool_page.options)
-            tool_input = raw_input(self.PROMPT)
+            tool_input = self.page_options(tool_name, base_tool_page)
             if tool_input in self.back_labels:
                 break
             elif tool_input in self.exit_labels:
@@ -95,25 +115,35 @@ class AutoPenCli:
             elif  tool_input == str(base_tool_page.options.index(
                 base_tool_page.options[0])):
                 # install tool
-                install.install(tool_name)
+                return_code = install.install(tool_name)
+                print return_code
+                if return_code != 0:
+                    print 'Error installing', tool_name
+                else:
+                    print 'Installed', tool_name
             elif tool_input == str(base_tool_page.options.index(
                 base_tool_page.options[1])):
                 # update tool
-                update.update(tool_name)
+                return_code = update.update(tool_name)
+                if return_code != 0:
+                    print 'Error updating', tool_name
+                else:
+                    print 'Updated', tool_name
             elif tool_input == str(base_tool_page.options.index(
                 base_tool_page.options[2])):
                 # uninstall tool
-                uninstall.uninstall(tool_name)
+                return_code = uninstall.uninstall(tool_name)
+                if return_code != 0:
+                    print 'Error Uninstalling', tool_name
+                else:
+                    print 'Uninstalled', tool_name
+            raw_input('Press enter to continue...')
 
     def run(self):
         while(True):
             # splash screen options
-            os.system('clear')
-            print 'AutoPen'
-            print self.underline
             splash_screen = SplashScreen()
-            self.print_options(splash_screen.options)
-            splash_option = raw_input(self.PROMPT)
+            splash_option = self.page_options('AutoPen', splash_screen)
             if splash_option in self.exit_labels:
                 exit()
             elif splash_option == str(splash_screen.options.index(
@@ -121,11 +151,8 @@ class AutoPenCli:
                 # tools page options
                 tools_page = ToolsPage()
                 while(True):
-                    os.system('clear')
-                    print splash_screen.options[0]
-                    print self.underline
-                    self.print_options(tools_page.options)
-                    tools_page_input = raw_input(self.PROMPT)
+                    tools_page_input = self.page_options(
+                            splash_screen.options[0], tools_page)
                     if tools_page_input in self.back_labels:
                         break
                     elif tools_page_input in self.exit_labels:
@@ -135,11 +162,8 @@ class AutoPenCli:
                         # CAN page options
                         can_page = CanPage()
                         while(True):
-                            os.system('clear')
-                            print tools_page.options[0]
-                            print self.underline
-                            self.print_options(can_page.options)
-                            can_page_input = raw_input(self.PROMPT)
+                            can_page_input = self.page_options(
+                                    tools_page.options[0], can_page)
                             if can_page_input in self.back_labels:
                                 break
                             elif can_page_input in self.exit_labels:
@@ -147,283 +171,58 @@ class AutoPenCli:
                             elif can_page_input == str(can_page.options.index(
                                     can_page.options[0])):
                                 # CAN utils options
-                                tool_name = can_page.options[0]
-                                self.install_update_remove(tool_name)
+                                self.install_update_remove(can_page.options[0])
                             elif can_page_input == str(can_page.options.index(
                                     can_page.options[1])):
-                                tool_name = can_page.options[1]
                                 # CAN bus utils options
-                                self.install_update_remove(tool_name)
+                                self.install_update_remove(can_page.options[1])
                             elif can_page_input == str(can_page.options.index(
                                     can_page.options[2])):
                                 # CAN utils X options
-                                while(True):
-                                    os.system('clear')
-                                    print can_page.options[2]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(can_page.options[2])
                             elif can_page_input == str(can_page.options.index(
                                     can_page.options[3])):
                                 # CAN utils j1939 options
-                                while(True):
-                                    os.system('clear')
-                                    print can_page.options[3]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(can_page.options[3])
                             elif can_page_input == str(can_page.options.index(
                                     can_page.options[4])):
                                 # CAN Badger HW options
-                                while(True):
-                                    os.system('clear')
-                                    print can_page.options[4]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(can_page.options[4])
                             elif can_page_input == str(can_page.options.index(
                                     can_page.options[5])):
                                 # CAN Badger SW options
-                                while(True):
-                                    os.system('clear')
-                                    print can_page.options[5]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(can_page.options[5])
                             elif can_page_input == str(can_page.options.index(
                                     can_page.options[6])):
                                 # Caring Caribou options
-                                while(True):
-                                    os.system('clear')
-                                    print can_page.options[6]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(can_page.options[6])
                             elif can_page_input == str(can_page.options.index(
                                     can_page.options[7])):
                                 # Kayak options
-                                while(True):
-                                    os.system('clear')
-                                    print can_page.options[7]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(can_page.options[7])
                             elif can_page_input == str(can_page.options.index(
                                     can_page.options[8])):
                                 # c0f options
-                                while(True):
-                                    os.system('clear')
-                                    print can_page.options[8]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(can_page.options[8])
                             elif can_page_input == str(can_page.options.index(
                                     can_page.options[9])):
                                 # UDSim options
-                                while(True):
-                                    os.system('clear')
-                                    print can_page.options[9]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(can_page.options[9])
                             elif can_page_input == str(can_page.options.index(
                                     can_page.options[10])):
                                 # PyOBD options
-                                while(True):
-                                    os.system('clear')
-                                    print can_page.options[10]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(can_page.options[10])
                             elif can_page_input == str(can_page.options.index(
                                     can_page.options[11])):
                                 # O2OO options
-                                while(True):
-                                    os.system('clear')
-                                    print can_page.options[11]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(can_page.options[11])
                     elif tools_page_input in str(tools_page.options.index(
                         tools_page.options[1])):
                         # SDR page options
                         sdr_page = SdrPage()
                         while(True):
-                            os.system('clear')
-                            print tools_page.options[1]
-                            print self.underline
-                            self.print_options(sdr_page.options)
-                            sdr_page_input = raw_input(self.PROMPT)
+                            sdr_page_input = self.page_options(
+                                    tools_page.options[1], sdr_page)
                             if sdr_page_input in self.back_labels:
                                 break
                             elif sdr_page_input in self.exit_labels:
@@ -431,65 +230,18 @@ class AutoPenCli:
                             elif sdr_page_input == str(sdr_page.options.index(
                                     sdr_page.options[0])):
                                 # GNU Radio options
-                                while(True):
-                                    os.system('clear')
-                                    print sdr_page.options[0]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(sdr_page.options[0])
                             elif sdr_page_input == str(sdr_page.options.index(
                                     sdr_page.options[1])):
                                 # gqrx options
-                                while(True):
-                                    os.system('clear')
-                                    print sdr_page.options[1]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(sdr_page.options[1])
                     elif tools_page_input in str(tools_page.options.index(
                         tools_page.options[2])):
                         # Miscellaneous tools page options
                         misc_page = MiscPage()
                         while(True):
-                            os.system('clear')
-                            print tools_page.options[2]
-                            print self.underline
-                            self.print_options(misc_page.options)
-                            misc_page_input = raw_input(self.PROMPT)
+                            misc_page_input = self.page_options(
+                                    tools_page.options[2], misc_page)
                             if misc_page_input in self.back_labels:
                                 break
                             elif misc_page_input in self.exit_labels:
@@ -497,39 +249,15 @@ class AutoPenCli:
                             elif misc_page_input == str(misc_page.options.index(
                                     misc_page.options[0])):
                                 # katoolin options
-                                while(True):
-                                    os.system('clear')
-                                    print misc_page.options[0]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(misc_page.options[0])
                     elif tools_page_input in str(tools_page.options.index(
                         tools_page.options[3])):
                         # bluetooth/wifi page options
                         bluetooth_wifi_page = BluetoothWifiPage()
                         while(True):
-                            os.system('clear')
-                            print tools_page.options[3]
-                            print self.underline
-                            self.print_options(bluetooth_wifi_page.options)
-                            bluetooth_wifi_page_input = raw_input(self.PROMPT)
+                            bluetooth_wifi_page_input = self.page_options(
+                                    tools_page.options[3],
+                                    bluetooth_wifi_page)
                             if bluetooth_wifi_page_input in self.back_labels:
                                 break
                             elif bluetooth_wifi_page_input in self.exit_labels:
@@ -537,239 +265,53 @@ class AutoPenCli:
                             elif bluetooth_wifi_page_input == str(bluetooth_wifi_page.options.index(
                                     bluetooth_wifi_page.options[0])):
                                 # aircrack-ng options
-                                while(True):
-                                    os.system('clear')
-                                    print bluetooth_wifi_page.options[0]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(bluetooth_wifi_page.options[0])
                             elif bluetooth_wifi_page_input == str(bluetooth_wifi_page.options.index(
                                     bluetooth_wifi_page.options[1])):
                                 # bluelog options
-                                while(True):
-                                    os.system('clear')
-                                    print bluetooth_wifi_page.options[1]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(bluetooth_wifi_page.options[1])
                             elif bluetooth_wifi_page_input == str(bluetooth_wifi_page.options.index(
                                     bluetooth_wifi_page.options[2])):
                                 # bluemaho options
-                                while(True):
-                                    os.system('clear')
-                                    print bluetooth_wifi_page.options[2]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(bluetooth_wifi_page.options[2])
                             elif bluetooth_wifi_page_input == str(bluetooth_wifi_page.options.index(
                                     bluetooth_wifi_page.options[3])):
                                 # btscanner options
-                                while(True):
-                                    os.system('clear')
-                                    print bluetooth_wifi_page.options[3]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(bluetooth_wifi_page.options[3])
                             elif bluetooth_wifi_page_input == str(bluetooth_wifi_page.options.index(
                                     bluetooth_wifi_page.options[4])):
                                 # tshark options
-                                while(True):
-                                    os.system('clear')
-                                    print bluetooth_wifi_page.options[4]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(bluetooth_wifi_page.options[4])
                             elif bluetooth_wifi_page_input == str(bluetooth_wifi_page.options.index(
                                     bluetooth_wifi_page.options[5])):
                                 # wireshark options
-                                while(True):
-                                    os.system('clear')
-                                    print bluetooth_wifi_page.options[5]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(bluetooth_wifi_page.options[5])
                     elif tools_page_input in str(tools_page.options.index(
                         tools_page.options[4])):
                         # All tools page options
                         all_tools_page = AllToolsPage()
                         while(True):
-                            os.system('clear')
-                            print tools_page.options[4]
-                            print self.underline
-                            self.print_options(all_tools_page.options)
-                            all_tools_page_input = raw_input(self.PROMPT)
+                            all_tools_page_input = self.page_options(
+                                    tools_page.options[4],
+                                    all_tools_page)
                             if all_tools_page_input in self.back_labels:
                                 break
                             elif all_tools_page_input in self.exit_labels:
                                 exit()
                             elif all_tools_input == str(all_tools_page.options.index(
-                                    all_tools_page.options[5])):
+                                    all_tools_page.options[0])):
                                 # options
-                                while(True):
-                                    os.system('clear')
-                                    print all_tools_page.options[5]
-                                    print self.underline
-                                    base_tool_page = BaseToolPage()
-                                    self.print_options(base_tool_page.options)
-                                    tool_input = raw_input(self.PROMPT)
-                                    if tool_input in self.back_labels:
-                                        break
-                                    elif tool_input in self.exit_labels:
-                                        exit()
-                                    elif  tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[0])):
-                                        # install tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[1])):
-                                        # update tool
-                                        pass
-                                    elif tool_input == str(base_tool_page.options.index(
-                                        base_tool_page.options[2])):
-                                        # uninstall tool
-                                        pass
+                                self.install_update_remove(all_tools_page.options[0])
             elif splash_option == str(splash_screen.options.index(
                     splash_screen.options[1])):
                 # how to page text
-                how_to_page = howtopage()
-                while(true):
-                    os.system('clear')
-                    print splash_screen.options[1]
-                    print self.underline
-                    print how_to_page.text
-                    how_to_input = raw_input(self.prompt)
-                    if how_to_input in self.back_labels:
-                        break
-                    elif how_to_input in self.exit_labels:
-                        exit()
+                self.page_exec(splash_screen.options[1], HowToPage())
             elif splash_option == str(splash_screen.options.index(
                     splash_screen.options[2])):
                 # about autopen page text
-                about_autopen = aboutautopenpage()
-                while(true):
-                    os.system('clear')
-                    print splash_screen.options[2]
-                    print self.underline
-                    print about_autopen.text
-                    about_autopen_input = raw_input(self.prompt)
-                    if about_autopen_input in self.back_labels:
-                        break
-                    elif about_autopen_input in self.exit_labels:
-                        exit()
+                self.page_exec(splash_screen.options[2], AboutAutoPenPage())
             elif splash_option == str(splash_screen.options.index(
                     splash_screen.options[3])):
                 # terms and conditions text
-                terms_and_conditions = termsandconditionspage()
-                while(true):
-                    os.system('clear')
-                    print splash_screen.options[3]
-                    print self.underline
-                    print terms_and_conditions.text
-                    tnc_input = raw_input(self.prompt)
-                    if tnc_input in self.back_labels:
-                        break
-                    elif tnc_input in self.exit_labels:
-                        exit()
+                self.page_exec(splash_screen.options[2], TermsAndConditionsPage())
 

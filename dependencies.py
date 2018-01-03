@@ -12,13 +12,13 @@ link_lightblue = 'http://prdownloads.sourceforge.net/lightblue/lightblue-0.4.tar
 
 def commandline_install(pack_man, i):
     general_use.update(pack_man)
-    return subprocess.run(['sudo', pack_man, '-y', 'install', i]).returncode
+    return subprocess.call(['sudo', pack_man, '-y', 'install', i])
 
 def download_install(link):
-    return subprocess.run(['curl', '-O', link]).returncode
+    return subprocess.call(['curl', '-O', link])
 
 def clone_git_repo(repo):
-    return subprocess.run(["git", "clone", repo]).returncode
+    return subprocess.call(["git", "clone", repo])
 
 def install_pyserial(link):
     '''
@@ -36,7 +36,7 @@ def install_pyserial(link):
         current_dir = os.getcwd()
         path = current_dir + '/pyserial-2.0'
         os.chdir(path)
-        build_rc = subprocess.run(['python', 'setup.py', 'build']).returncode
+        build_rc = subprocess.call(['python', 'setup.py', 'build'])
         if build_rc != 0:
             print 'BUILD FAILED: Failed to build pyserial.'
             print 'ERROR CODE:', build_rc
@@ -44,7 +44,7 @@ def install_pyserial(link):
         else:
             print 'BUILD SUCCESSFUL: Successfully completed pyserial build'
             print 'Installing pyserial...'
-            i_rc = subprocess.run(['sudo', 'python', 'setup.py', 'install']).returncode
+            i_rc = subprocess.call(['sudo', 'python', 'setup.py', 'install'])
             if i_rc != 0:
                 return i_rc
             else:
@@ -72,10 +72,10 @@ def check_symlink(source_file, symlink):
         This function checks whether there is a symbolic link between source_file and symlink. If it does not exists, it creates one
     '''
 
-    check_rc = subprocess.run(['test', '-h', symlink]).returncode
+    check_rc = subprocess.call(['test', '-h', symlink])
     if check_rc!= 0:
         print 'Creating symbolic link between', source_file, 'and', symlink, '...'
-        symlink_rc = subprocess.run(['sudo', 'ln', '-s', source_file, symlink]).returncode #this might not work
+        symlink_rc = subprocess.call(['sudo', 'ln', '-s', source_file, symlink])#this might not work
         if symlink_rc != 0:
             print 'SYMLINK CREATION FAILED: Failed to create a symbolic link between', source_file, 'and', symlink
         elif symlink_rc == 0:
@@ -93,13 +93,13 @@ def check_NPM(pack_man):
     try:
         print 'Checking nodejs existence...'
         print 'If nodejs exists, version number will be printed below:'
-        check_node_existence_rc = subprocess.run(['/usr/bin/nodejs', '--version']).returncode
+        check_node_existence_rc = subprocess.call(['/usr/bin/nodejs', '--version'])
     except FileNotFoundError:
         check_node_existence_rc = -1
     try:
         print 'Checking node existence...'
         print 'If node exists, version number will be printed below:'
-        check_npm_existence_rc = subprocess.run(['/usr/bin/node', '--version']).returncode
+        check_npm_existence_rc = subprocess.call(['/usr/bin/node', '--version'])
     except FileNotFoundError:
         check_npm_existence_rc = -1
 
@@ -130,8 +130,8 @@ def check_NPM(pack_man):
             return symlink_rc
         else:
             print 'Confirming complete installation of nodejs and npm...'  #dk if will keep this yet, we'll see
-            node_check_rc = subprocess.run(['/usr/bin/nodejs', '--version']).returncode
-            npm_check_rc = subprocess.run(['/usr/bin/node', '--version']).returncode
+            node_check_rc = subprocess.call(['/usr/bin/nodejs', '--version'])
+            npm_check_rc = subprocess.call(['/usr/bin/node', '--version'])
             if node_check_rc == 0 and npm_check_rc == 0:
                 print 'CONFIRMATION COMPLETE: Successfully confirmed installation of both node.js and npm'
                 return 0
@@ -179,7 +179,7 @@ def install_bluez(pack_man):
             else:
                 print 'INSTALLATION SUCCESSFUL: Successfully installed autoconf'
                 print 'Running autogen.sh...'
-                autogen_rc = subprocess.run(['./autogen.sh']).returncode
+                autogen_rc = subprocess.call(['./autogen.sh'])
                 if autogen_rc != 0:
                     print 'AUTOGENERATION FAILED: Failed to run autogen.sh. Cannot complete bluez installation'
                     print 'ERROR CODE:', autogen_rc
@@ -187,7 +187,7 @@ def install_bluez(pack_man):
                 else:
                     print 'AUTOGENERATION SUCCESSFUL: Successfully ran autogen.sh'
                     print 'Running configure...'
-                    config_rc = subprocess.run(['./configure']).returncode
+                    config_rc = subprocess.call(['./configure'])
                     if config_rc != 0:
                         print 'CONFIGURATION FAILED: Failed to run ./configure after cloning Bluez repo'
                         print 'ERROR CODE:', config_rc
@@ -195,7 +195,7 @@ def install_bluez(pack_man):
                     else:
                         print 'CONFIGURATION SUCCESSFUL: Successfully ran ./configure after cloning Bluez repo'
                         print 'Compiling...'
-                        make_rc = subprocess.run(['make']).returncode
+                        make_rc = subprocess.call(['make'])
                         if make_rc != 0:
                             print 'COMPILATION FAILED: Failed to compile bluez package'
                             print 'ERROR CODE:', make_rc
@@ -203,7 +203,7 @@ def install_bluez(pack_man):
                         else:
                             print 'COMPILATION SUCCESSFUL: Successfully compiled bluez package'
                             print 'Installing Bluez...'
-                            make_install_rc = subprocess.run(['sudo', 'make', 'install']).returncode
+                            make_install_rc = subprocess.call(['sudo', 'make', 'install'])
                             if make_install_rc != 0:
                                 print 'INSTALLATION FAILED: Failed to run "make install"'
                                 print 'ERROR CODE:', make_install_rc
@@ -219,7 +219,7 @@ def install_lightblue(pack_man):
     '''
 
     print 'Installing pybluez...'
-    pyb_rc = subprocess.run(['sudo', '-H', 'pip', 'install', 'pybluez']).returncode
+    pyb_rc = subprocess.call(['sudo', '-H', 'pip', 'install', 'pybluez'])
     if pyb_rc != 0:
         print 'INSTALLATION FAILED: Failed to install pybluez. Cannot complete lightblue installation'
         print 'ERROR CODE:', pyb_rc
@@ -235,14 +235,14 @@ def install_lightblue(pack_man):
         else:
             print 'DOWNLOAD SUCCESSFUL: Successfully downloaded lightblue .tar'
             print 'Extracting files...'
-            ex_rc = subprocess.run(['tar', '-xzvf', 'lightblue-0.4.tar']).returncode
+            ex_rc = subprocess.call(['tar', '-xzvf', 'lightblue-0.4.tar'])
             if ex_rc != 0:
                 print 'EXTRACTION FAILED: Failed to decompress the tar file (lightblue-0.4.tar). Cannot complete lightblue installation'
                 print 'ERROR CODE:', ex_rc
                 return ex_rc
             else:
                 print 'EXTRACTION SUCCESSFUL: Successfully decompressed lightblue-0.4.tar'
-                setup_rc = subprocess.run(['python', 'setup.py', 'install']).returncode
+                setup_rc = subprocess.call(['python', 'setup.py', 'install'])
                 if setup_rc != 0:
                     print 'INSTALLATION FAILED: Failed to install lightblue'
                     print 'ERROR CODE:', setup_rc

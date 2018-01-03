@@ -35,7 +35,7 @@ def update(pack_man):
     This needs to be included at the beginning of every major installation
     function
     '''
-    update_rc = subprocess.run(['sudo', pack_man, 'update']).returncode
+    update_rc = subprocess.call(['sudo', pack_man, 'update'])
     if update_rc != 0:
         print 'UPDATE FAILED: Failed to update system'
         print 'ERROR CODE:', update_rc

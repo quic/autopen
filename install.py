@@ -1,7 +1,6 @@
 import general_use
 import dependencies
 import tools
-import subprocess
 
 class Tool:
     def __init__(self):
@@ -28,22 +27,37 @@ def install(toolname):
     tool = Tool()
     for line in lines:
         tool_name, tool_repo_link, tool_repo_type = line.split(',')
-        if tool_name is toolname:
-            tool.init(tool_name, tool_repo_link, tool_repo_type)
+        if tool_name == toolname:
+            tool.init(str(tool_name).strip(), str(tool_repo_link).strip(), str(tool_repo_type).strip())
             break
 
     distro = general_use.check_distribution()
     pack_man = general_use.package_tool(distro)
 
-    if tool.tool_repo_type is 'git':
-        return tools.github_tools(pack_man, tool.tool_name, tool.tool_repo_link)
-    elif tool.tool_repo_type is 'downloaded':
-        return tools.downloaded_tools(pack_man, tool.tool_name, tool.tool_repo_link)
-    elif tool.tool_repo_type is 'installed':
-        return tools.installed_tools(pack_man, tool.tool_name)
-    elif tool_name is 'can-utils-x': #special case
+    print tool.tool_repo_type, tool.tool_name
+    if tool.tool_repo_type == 'git':
+        return tools.github_tools(pack_man, str(tool.tool_name), str(tool.tool_repo_link))
+    elif tool.tool_repo_type == 'downloaded':
+        return tools.downloaded_tools(pack_man, str(tool.tool_name), str(tool.tool_repo_link))
+    elif tool.tool_repo_type == 'installed':
+        print tool.tool_name, '->tool name'
+        return tools.installed_tools(pack_man, str(tool.tool_name))
+    elif tool_name == 'can-utils-x': #special case
         return dependencies.can_utils_x(pack_man)
 
+    # repo_canbus_utils = 'https://github.com/digitalbond/canbus-utils.git'
+    # repo_kayak = 'https://github.com/dschanoeh/Kayak.git'
+    # repo_caringcaribou = 'https://github.com/CaringCaribou/caringcaribou.git'
+    # repo_c0f = 'https://github.com/zombieCraig/c0f.git'
+    # repo_udsim = 'https://github.com/zombieCraig/UDSim.git'
+    # repo_j1939 = 'https://github.com/wang701/can-utils-j1939.git'
+    # repo_canbadger = 'https://github.com/Gutenshit/CANBadger.git'
+    # repo_canbadger_server = 'https://github.com/Gutenshit/CANBadger-Server.git'
+    # repo_katoolin = 'https://github.com/LionSec/katoolin.git'
+    # repo_bluelog = 'https://github.com/MS3FGX/Bluelog.git'
+    # repo_bluemaho = 'https://github.com/zenware/bluemaho.git'
+    # link_pyobd = 'http://www.obdtester.com/download/pyobd_0.9.3.tar.gz'
+    # link_o2oo = 'https://www.vanheusden.com/O2OO/O2OO-0.9.tgz'
 
     # if toolname == 'canbus-utils':
         # return tools.github_tools(pack_man, 'canbus-utils', repo_canbus_utils)
