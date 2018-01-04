@@ -4,17 +4,15 @@ import tools
 import os
 import subprocess
 
-
 #OPEN TOOLS IN THE BACKGROUND
 
 def open_(toolname):
     '''
     This function opens the specified tool (toolname)
     '''
-
     op_rc = -1
 
-    t = ['Kayak', 'caringcaribou', 'Bluelog', 'bluemaho', 'canbus-utils']
+    t = ('Kayak', 'caringcaribou', 'Bluelog', 'bluemaho', 'canbus-utils')
     if toolname in t:
         current = os.getcwd()
         path = current + '/' + toolname
@@ -23,7 +21,7 @@ def open_(toolname):
     #CAN TOOLS
     if toolname == 'Kayak':
         kayak_run_path = '/application/target/kayak/bin'
-        print ('Changing directory to', kayak_run_path, '...')
+        print 'Changing directory to', kayak_run_path, '...'
         current_dir = os.getcwd()
         path = current_dir + kayak_run_path
         os.chdir(path)
@@ -92,10 +90,10 @@ def open_(toolname):
 
 
     if op_rc != 0:
-        print ('STARTUP FAILED: Failed to open', toolname)
-        print ('ERROR CODE:', op_rc)
+        print 'STARTUP FAILED: Failed to open', toolname
+        print 'ERROR CODE:', op_rc
     else:
-        print ('STARTUP SUCCESSFUL: Successfully opened', toolname)
+        print 'STARTUP SUCCESSFUL: Successfully opened', toolname
 
 
     #check path to make sure it's in the autopen directory
