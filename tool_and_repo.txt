@@ -1,5 +1,5 @@
 canbus-utils,https://github.com/digitalbond/canbus-utils.git,git
-kayak,https://github.com/dschanoeh/Kayak.git,git
+Kayak,https://github.com/dschanoeh/Kayak.git,git
 caringcaribou,https://github.com/CaringCaribou/caringcaribou.git,git
 c0f,https://github.com/zombieCraig/c0f.git,git
 udsim,https://github.com/zombieCraig/UDSim.git,git

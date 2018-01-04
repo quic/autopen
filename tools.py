@@ -337,7 +337,6 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
     '''
     This function installs tools that are found on the internet by using the curl command
     '''
-
     general_use.update(pack_man)
     d = general_use.check_distribution()
     f_rc = -1
@@ -358,7 +357,7 @@ def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
                 if deb_rc != 0:
                     print 'Download Failed: Failed to download debian specific file'
             print 'Installing pyserial...'
-            pyserial_rc = subprocess.call(['python3', '-m', 'pip', 'install', 'pyserial'])
+            pyserial_rc = subprocess.call(['python', '-m', 'pip', 'install', 'pyserial'])
             if pyserial_rc != 0:
                 print 'INSTALLATION FAILED: Failed to install pyserial. Cannot complete pyobd installation'
                 print 'ERROR CODE:', pyserial_rc

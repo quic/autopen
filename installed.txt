@@ -1,2 +1,7 @@
 can-utils
 can-utils
+canbus-utils
+canbus-utils
+canbus-utils
+pyobd
+o2oo

@@ -34,14 +34,12 @@ def install(toolname):
     distro = general_use.check_distribution()
     pack_man = general_use.package_tool(distro)
 
-    print tool.tool_repo_type, tool.tool_name
     if tool.tool_repo_type == 'git':
-        return tools.github_tools(pack_man, str(tool.tool_name), str(tool.tool_repo_link))
+        return tools.github_tools(pack_man, tool.tool_name, tool.tool_repo_link)
     elif tool.tool_repo_type == 'downloaded':
-        return tools.downloaded_tools(pack_man, str(tool.tool_name), str(tool.tool_repo_link))
+        return tools.downloaded_tools(pack_man, tool.tool_name, tool.tool_repo_link)
     elif tool.tool_repo_type == 'installed':
-        print tool.tool_name, '->tool name'
-        return tools.installed_tools(pack_man, str(tool.tool_name))
+        return tools.installed_tools(pack_man, tool.tool_name)
     elif tool_name == 'can-utils-x': #special case
         return dependencies.can_utils_x(pack_man)
 

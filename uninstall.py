@@ -16,19 +16,6 @@ class Tool:
         self.tool_type = tool_type
 
 def uninstall(toolname):
-    try:
-        fh = open('tool_and_repo.txt','r')
-    except IOError as io_error:
-        print io_error
-
-    lines = fh.readlines()
-    tool = Tool()
-    for line in lines:
-        tool_name, tool_path, tool_type = line.split(',')
-        if tool_name is toolname:
-            tool.init(tool_name, tool_path, tool_type)
-            break
-
     d = general_use.check_distribution()
     pack_man = general_use.package_tool(d)
     rm_rc = -1

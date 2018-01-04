@@ -1,7 +1,6 @@
 '''
-    This script checks and/or installs necessary dependencies to run tools
+This script checks and/or installs necessary dependencies to run tools
 '''
-
 
 import general_use
 import subprocess
@@ -22,9 +21,9 @@ def clone_git_repo(repo):
 
 def install_pyserial(link):
     '''
-        This function installs pyserial. This library is needed to run pyobd, specifically 2.0 because this is the version needed.
+    This function installs pyserial. This library is needed to run pyobd,
+    specifically 2.0 because this is the version needed.
     '''
-
     d_rc = download_install(link) #FYI MIGHT BE ABLE TO RUN PIP INSTALL PYSERIAL. But this will installs the latest version
     if d_rc != 0:
         print 'DOWNLOAD FAILED: Failed to download pyserial'
@@ -54,9 +53,8 @@ def install_pyserial(link):
 
 def install_NPM(pack_man):
     '''
-        This function installs NPM. This is a dependency needed to run canbus-utils
+    This function installs NPM. This is a dependency needed to run canbus-utils
     '''
-
     print 'Installing npm...'
     npm_rc = commandline_install(pack_man, 'npm')
     if npm_rc != 0:
@@ -69,9 +67,9 @@ def install_NPM(pack_man):
 
 def check_symlink(source_file, symlink):
     '''
-        This function checks whether there is a symbolic link between source_file and symlink. If it does not exists, it creates one
+    This function checks whether there is a symbolic link between source_file
+    and symlink. If it does not exists, it creates one
     '''
-
     check_rc = subprocess.call(['test', '-h', symlink])
     if check_rc!= 0:
         print 'Creating symbolic link between', source_file, 'and', symlink, '...'
@@ -87,21 +85,28 @@ def check_symlink(source_file, symlink):
 
 def check_NPM(pack_man):
     '''
-        This function checks if NPM is installed. If it is not, it installs it. This is a dependency needed to run canbus-utils
+    This function checks if NPM is installed. If it is not, it installs it.
+    This is a dependency needed to run canbus-utils
     '''
-
+    check_node_existence_rc = -1
+    check_npm_existence_rc = -1
     try:
         print 'Checking nodejs existence...'
         print 'If nodejs exists, version number will be printed below:'
         check_node_existence_rc = subprocess.call(['/usr/bin/nodejs', '--version'])
-    except FileNotFoundError:
+    except IOError:
         check_node_existence_rc = -1
+    except Exception as exception:
+        print exception
+
     try:
-        print 'Checking node existence...'
-        print 'If node exists, version number will be printed below:'
-        check_npm_existence_rc = subprocess.call(['/usr/bin/node', '--version'])
-    except FileNotFoundError:
+        print 'Checking npm existence...'
+        print 'If npm exists, version number will be printed below:'
+        check_npm_existence_rc = subprocess.call(['/usr/bin/npm', '--version'])
+    except IOError:
         check_npm_existence_rc = -1
+    except Exception as exception:
+        print exception
 
     if check_node_existence_rc == 0:
         if check_npm_existence_rc == 0:
@@ -147,10 +152,13 @@ def check_NPM(pack_man):
 
 def install_bluez(pack_man):
     '''
-        This function installs the bluez dependency. This is also available via sudo apt-get and comes installed in most VM's so we have removed it as a tool and no longer use this function
-        However, we kept this code here just incase bluez is not included in your VM and sudo apt-get bluez does not work
-        To use this script, follow the instructions in the user manual on how to add a tool (in this case bluez)
-        In the install.py, call this function.
+    This function installs the bluez dependency. This is also available via
+    sudo apt-get and comes installed in most VM's so we have removed it as a
+    tool and no longer use this function. However, we kept this code here just
+    incase bluez is not included in your VM and sudo apt-get bluez does not
+    work. To use this script, follow the instructions in the user manual on
+    how to add a tool (in this case bluez). In the install.py, call this
+    function.
     '''
     print 'Installing Bluez...'
     print 'Cloning Bluez repository...'
@@ -215,9 +223,8 @@ def install_bluez(pack_man):
 
 def install_lightblue(pack_man):
     '''
-        This function installs the lightblue library/dependency
+    This function installs the lightblue library/dependency
     '''
-
     print 'Installing pybluez...'
     pyb_rc = subprocess.call(['sudo', '-H', 'pip', 'install', 'pybluez'])
     if pyb_rc != 0:
@@ -253,9 +260,8 @@ def install_lightblue(pack_man):
 
 def can_utils_x(pack_man):
     '''
-        This function installs the matplot-lib library which is needed for can-utils-x to run
+    This function installs the matplot-lib library which is needed for can-utils-x to run
     '''
-
     mat_rc = commandline_install(pack_man, 'python-matplotlib')
     if mat_rc != 0:
         print 'INSTALLATION FAILED: Failed to install matplotlib from python. This is needed to run do'
