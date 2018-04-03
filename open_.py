@@ -81,6 +81,8 @@ def open_(toolname):
         op_rc = subprocess.run(['gnome-terminal', '-e', 'gnuradio-companion']).returncode
     elif toolname == 'gqrx':
         op_rc = subprocess.run(['gqrx']).returncode
+    elif toolname == 'freq':
+        op_rc = subprocess.call('python ./M2/customFreq_modify.py', shell=True)
 
     #MISCELLANEOUS TOOLS
     elif toolname == 'katoolin':

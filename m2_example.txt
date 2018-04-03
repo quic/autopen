@@ -1,1 +1,8 @@
-poooooooppppppp
+Uploading Scripts
+	Scripts can selected through the drop-down menu. In case of an upload failure, simply hold the 	Erase button for 2 seconds, unplug the device, and plug it back in. 
+
+Reverse Engineering
+	Reverse engineering is performed by uploading M2RET. Next, open SavvyCAN and connect 	the M2 from the Connections tab on top. Once connected, plug the M2 into the OBDII port of 	the car (under the steering wheel). Messages should begin to flow through. Optionally, a .dbc 	file can be loaded into SavvyCAN to interpret CAN frames in real-time.
+
+Sending
+	Sending messages can be done through this GUI by simply specifying the Arbitration ID and 	Data Bytes. Alternatively, fuzzing, replay, and DoS attacks  can be executed through 	SavvyCAN’s toolkit.

@@ -41,6 +41,7 @@ Builder.load_string(builder_fh.read())
 
 installed_tools = []
 installed_tools.append('m2')
+installed_tools.append('freq')
 try:
     already_installed_fh = open('installed.txt', 'r')
     for i in already_installed_fh.readlines():
@@ -144,7 +145,7 @@ class DataEntryPage(Screen):
         newcursor.execute(getId)
 	idnum = newcursor.fetchall()
         lastCursor = db.cursor()
-        insertEx = "INSERT INTO Exploits (idCars, ExDate, Exploit,CarYear) VALUES ('"+str(idnum[0][0])+"','"+self.exploitdate_wid.text+"','"+self.exploit_wid.text+"'+'"+year+"');"
+        insertEx = "INSERT INTO Exploits (idCars, ExDate, Exploit,CarYear) VALUES ('"+str(idnum[0][0])+"','"+self.exploitdate_wid.text+"','"+self.exploit_wid.text+"','"+year+"');"
         lastCursor.execute(insertEx)
         #print("sent this: " + valueSend)
         db.commit()
@@ -647,6 +648,13 @@ class SDRPage(Screen):
                 labeltext1 = stream.read()
             widget.ids["label1"].text = labeltext1
             with open("text/gqrx_example.txt", "r") as stream:
+                labeltext2 = stream.read()
+            widget.ids["label2"].text = labeltext2
+        elif v == 'freq':
+            with open("text/freq.txt", "r") as stream:
+                labeltext1 = stream.read()
+            widget.ids["label1"].text = labeltext1
+            with open("text/freq_example.txt", "r") as stream:
                 labeltext2 = stream.read()
             widget.ids["label2"].text = labeltext2
 

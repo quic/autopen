@@ -632,6 +632,11 @@
                                 size_hint: .25, .1
                                 on_press: root.sdr('gqrx')
                         Button:
+                                id:freq 
+                                text: 'Custom Freq'
+                                size_hint: .25, .1
+                                on_press: root.sdr('freq')
+                        Button:
                                 text: ''
                                 background_color: 0,0,0,0
                 Button:

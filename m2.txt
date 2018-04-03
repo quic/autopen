@@ -1,1 +1,1 @@
-HIIIIIIII
+The M2 by Macchina is an Arduino-based microprocessor which connects to the CAN bus via the OBDII port. The accompanying software allows you to send messages to the CAN bus and perform fuzzing, denial of service, and replay attacks. You can also view and record CAN messages from the car in real-time using SavvyCAN.
