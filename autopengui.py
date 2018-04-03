@@ -40,7 +40,7 @@ except IOError as io_error:
 Builder.load_string(builder_fh.read())
 
 installed_tools = []
-
+installed_tools.append('m2')
 try:
     already_installed_fh = open('installed.txt', 'r')
     for i in already_installed_fh.readlines():
@@ -289,13 +289,21 @@ class CanPage(Screen):
             widget.ids["label1"].text = labeltext1
             with open("text/canutilsx_example.txt", "r") as stream:
                 labeltext2 = stream.read()
-            widget.ids["label2"].text = labeltext2
+            wifdget.ids["label2"].text = labeltext2
 
         elif v == 'canbadger':
             with open("text/canbadger.txt", "r") as stream:
                 labeltext1 = stream.read()
             widget.ids["label1"].text = labeltext1
             with open("text/canbadger_example.txt", "r") as stream:
+                labeltext2 = stream.read()
+            widget.ids["label2"].text = labeltext2
+
+        elif v == 'm2':
+            with open("m2.txt", "r") as stream:
+                labeltext1 = stream.read()
+            widget.ids["label1"].text = labeltext1
+            with open("m2_example.txt", "r") as stream:
                 labeltext2 = stream.read()
             widget.ids["label2"].text = labeltext2
 

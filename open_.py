@@ -51,6 +51,8 @@ def open_(toolname):
         op_rc = subprocess.run(['gnome-terminal']).returncode
     elif toolname == 'can-utils-x':
         op_rc = subprocess.run(['python', 'main.py']).returncode
+    elif toolname == 'm2':
+        op_rc = subprocess.call('python ./M2/m2GUI.py', shell=True)
     elif toolname == 'j1939':
         op_rc = subprocess.run(['gnome-terminal']).returncode
     elif toolname == 'c0f':

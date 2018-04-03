@@ -476,6 +476,11 @@
                                 text: 'O2OO'
                                 size_hint: .25, .1
                                 on_press: root.can('o2oo')
+                        Button:
+                                id: m2
+                                text: 'M2'
+                                size_hint: .25, .1
+                                on_press: root.can('m2')
                 Button:
                         text: 'Back'
                         size_hint: .1, .05
