@@ -689,6 +689,19 @@
                         font_size: '40sp'
                         size_hint: .25, .1
                         pos_hint: {'x': .4, 'y': .8}
+                ScrollableLabel:
+                        pos_hint:{'x': 0.1, 'top': 0.78}
+                        size_hint: (0.7, 0.7)
+                        Label:
+                                id: sendlabel
+                                size_hint_y: None
+                                height: sendlabel.texture_size[1]
+                                text_size: sendlabel.width, None
+                                text: 'Do you have an exploit that is not yet in this application?\nEnter it below! Enter the full name of the car (i.e. Toyota Camry), the year of the car, the date of the exploit found (in yyyymmdd format, i.e. 20111205 for December 5th 2011), and the description of the exploit.\nOnce you press the Send Exploit button, your exploit will be added to the database. You will see the new exploit on the exploits page after restarting the application. '
+                                font_size: 20
+                                markup: True
+                                valign:'middle'
+
                 TextInput:
 			
                         id: sendData

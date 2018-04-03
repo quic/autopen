@@ -107,7 +107,7 @@ class CarInfoPage(Screen):
                         if i[1] == stuff:
                                 for t in exploits:
                                         if t[1] == i[0]:
-                                                finalmessage = self.exploitbox_wid.text+"\n\n"+"Date Found: "+str(t[2])+"\n"+"Car Year: " + str(i[2])+"\n"+t[3]
+                                                finalmessage = self.exploitbox_wid.text+"\n\n"+"Date Found: "+str(t[2])+"\n"+"Car Year: " + str(t[4])+"\n"+t[3]
                                                 self.exploitbox_wid.text = finalmessage		
 	pass
 	
@@ -137,14 +137,14 @@ class DataEntryPage(Screen):
                 if car[1] == model:
                         check = 1
         if check == 0:
-	    valueSend = "INSERT INTO Cars (Model,ModelYear) VALUES ('" + model + "','" + year + "');"
+	    valueSend = "INSERT INTO Cars (Model) VALUES ('"+model+"');"
             cursor.execute(valueSend);
         newcursor = db.cursor()
         getId = "SELECT idCars FROM Cars WHERE Model = '" + model +"';"
         newcursor.execute(getId)
 	idnum = newcursor.fetchall()
         lastCursor = db.cursor()
-        insertEx = "INSERT INTO Exploits (idCars, ExDate, Exploit) VALUES ('"+str(idnum[0][0])+"','"+self.exploitdate_wid.text+"','"+self.exploit_wid.text+"');"
+        insertEx = "INSERT INTO Exploits (idCars, ExDate, Exploit,CarYear) VALUES ('"+str(idnum[0][0])+"','"+self.exploitdate_wid.text+"','"+self.exploit_wid.text+"'+'"+year+"');"
         lastCursor.execute(insertEx)
         #print("sent this: " + valueSend)
         db.commit()

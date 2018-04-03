@@ -1,7 +1,5 @@
 #!/usr/bin/python
 import MySQLdb
-#import peewee
-#from peewee import *
 db = MySQLdb.connect(host="autopen.c5eqmploekdx.us-east-2.rds.amazonaws.com", user="SHIFT", passwd="%&12SHilaE7", db="autopen", port=3306)
 cursor = db.cursor();
 #valueSend = "INSERT INTO Cars (Model,ModelYear) VALUES ('tiotott','1998');"
