@@ -472,6 +472,11 @@
                                 size_hint: .25, .1
                                 on_press: root.can('pyobd')
                         Button:
+                                id: savvy
+                                text: 'SavvyCan'
+                                size_hint: .25, .1
+                                on_press: root.can('savvy')
+                        Button:
                                 id: o2oo
                                 text: 'O2OO'
                                 size_hint: .25, .1

@@ -42,6 +42,7 @@ Builder.load_string(builder_fh.read())
 installed_tools = []
 installed_tools.append('m2')
 installed_tools.append('freq')
+installed_tools.append('savvy')
 try:
     already_installed_fh = open('installed.txt', 'r')
     for i in already_installed_fh.readlines():
@@ -297,6 +298,13 @@ class CanPage(Screen):
                 labeltext1 = stream.read()
             widget.ids["label1"].text = labeltext1
             with open("text/canbadger_example.txt", "r") as stream:
+                labeltext2 = stream.read()
+            widget.ids["label2"].text = labeltext2
+        elif v == 'savvy':
+            with open("text/savvy.txt", "r") as stream:
+                labeltext1 = stream.read()
+            widget.ids["label1"].text = labeltext1
+            with open("text/savvy_example.txt", "r") as stream:
                 labeltext2 = stream.read()
             widget.ids["label2"].text = labeltext2
 

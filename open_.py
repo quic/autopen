@@ -52,13 +52,15 @@ def open_(toolname):
     elif toolname == 'can-utils-x':
         op_rc = subprocess.run(['python', 'main.py']).returncode
     elif toolname == 'm2':
-        op_rc = subprocess.call('python ./M2/m2GUI.py', shell=True)
+        op_rc = subprocess.call('python ./M2/m2GUI.py &', shell=True)
     elif toolname == 'j1939':
         op_rc = subprocess.run(['gnome-terminal']).returncode
     elif toolname == 'c0f':
         op_rc = subprocess.run(['gnome-terminal']).returncode
     elif toolname == 'udsim':
         op_rc = subprocess.run(['gnome-terminal', '-e', 'udsim', 'can0']).returncode
+    elif toolname == 'savvy':
+        op_rc = subprocess.call( '~/SavvyCAN/SavvyCAN', shell = True)
 
     #BLUETOOTH TOOLS
     elif toolname == 'bluelog':
@@ -82,7 +84,7 @@ def open_(toolname):
     elif toolname == 'gqrx':
         op_rc = subprocess.run(['gqrx']).returncode
     elif toolname == 'freq':
-        op_rc = subprocess.call('python ./M2/customFreq_modify.py', shell=True)
+        op_rc = subprocess.call('python ./M2/customFreq_modify.py &', shell=True)
 
     #MISCELLANEOUS TOOLS
     elif toolname == 'katoolin':
