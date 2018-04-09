@@ -5,3 +5,4 @@ canbus-utils
 canbus-utils
 pyobd
 o2oo
+canbadger-hw

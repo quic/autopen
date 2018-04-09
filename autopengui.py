@@ -291,7 +291,7 @@ class CanPage(Screen):
             widget.ids["label1"].text = labeltext1
             with open("text/canutilsx_example.txt", "r") as stream:
                 labeltext2 = stream.read()
-            wifdget.ids["label2"].text = labeltext2
+            widget.ids["label2"].text = labeltext2
 
         elif v == 'canbadger':
             with open("text/canbadger.txt", "r") as stream:
