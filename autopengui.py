@@ -43,6 +43,7 @@ installed_tools = []
 installed_tools.append('m2')
 installed_tools.append('freq')
 installed_tools.append('savvy')
+installed_tools.append('combine')
 try:
     already_installed_fh = open('installed.txt', 'r')
     for i in already_installed_fh.readlines():
@@ -656,6 +657,13 @@ class SDRPage(Screen):
                 labeltext1 = stream.read()
             widget.ids["label1"].text = labeltext1
             with open("text/gqrx_example.txt", "r") as stream:
+                labeltext2 = stream.read()
+            widget.ids["label2"].text = labeltext2
+        elif v == 'combine':
+            with open("text/combine.txt", "r") as stream:
+                labeltext1 = stream.read()
+            widget.ids["label1"].text = labeltext1
+            with open("text/combine_example.txt", "r") as stream:
                 labeltext2 = stream.read()
             widget.ids["label2"].text = labeltext2
         elif v == 'freq':

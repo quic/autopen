@@ -644,6 +644,11 @@
                         Button:
                                 text: ''
                                 background_color: 0,0,0,0
+                        Button:
+                                id: combine
+                                text: 'combine'
+                                size_hint: .25, .1
+                                on_press: root.sdr('combine')
                 Button:
                         text: 'Back'
                         size_hint: .1, .05
