@@ -87,8 +87,8 @@ def open_(toolname):
     elif toolname == 'freq':
         op_rc = subprocess.call('python ./M2/customFreq_modify.py &', shell=True)
     elif toolname == 'combine':
-        op_rc = subprocess.Popen( '~/SavvyCAN/SavvyCAN &', close_fds = True, shell = True)
-	op_rc = subprocess.Popen('python ./M2/m2GUI.py &', close_fds = True, shell=True)
+        op_rc = subprocess.Popen( 'echo autopen2 | sudo -S ~/SavvyCAN/SavvyCAN &', close_fds = True, shell = True)
+	op_rc = subprocess.Popen('python ./M2/customFreq_modify.py &', close_fds = True, shell=True)
     #MISCELLANEOUS TOOLS
     elif toolname == 'katoolin':
         op_rc = subprocess.call('gnome-terminal -e katoolin', shell = True)
