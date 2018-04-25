@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<block>
+  <name>SNR_AVG</name>
+  <key>ReNoMalY_SNR_AVG</key>
+  <category>ReNoMalY</category>
+  <import>import ReNoMalY</import>
+  <make>ReNoMalY.SNR_AVG($vlen)</make>
+  <!-- Make one 'param' node for every Parameter you want settable from the GUI.
+       Sub-nodes:
+       * name
+       * key (makes the value accessible as $keyname, e.g. in the make node)
+       * type -->
+  <param>
+    <name>Vec Length</name>
+    <key>vlen</key>
+	<value>1</value>
+    <type>int</type>
+  </param>
+<param>
+	<name>Num Inputs</name>
+	<key>num_inputs</key>
+		<value>1</value>
+		<type>int</type>
+</param>
+	<check>$num_inputs &gt; 0</check>
+	<check>$vlen &gt; 0</check>
+  <!-- Make one 'sink' node per input. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+ <sink>
+    <name>inVec</name>
+    <type>float</type>
+    <vlen>$vlen</vlen>
+  </sink>
+  <!-- Make one 'source' node per output. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <source>
+    <name>outSNR</name>
+    <type>float</type>
+  </source>
+</block>

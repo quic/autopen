@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<block>
+  <name>isAnomaly</name>
+  <key>ReNoMalY_isAnomaly</key>
+  <category>ReNoMalY</category>
+  <import>import ReNoMalY</import>
+  <make>ReNoMalY.isAnomaly($vlen, $file)</make>
+  <!-- Make one 'param' node for every Parameter you want settable from the GUI.
+       Sub-nodes:
+       * name
+       * key (makes the value accessible as $keyname, e.g. in the make node)
+       * type -->
+<param>
+    <name>vlen</name>
+    <key>vlen</key>
+    <value>1</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>File</name>
+    <key>file</key>
+    <value></value>
+    <type>string</type><!--file_open needs a file, having it as file_open requires special things, like done in file_source-->
+    
+  </param>
+  <!-- Make one 'sink' node per input. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <sink>
+    <name>BaseAvg</name>
+    <type>float</type>
+  </sink>
+  <sink>
+    <name>InSnR</name>
+    <type>float</type>
+  </sink>
+  <!-- Make one 'source' node per output. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <source>
+    <name>out</name>
+    
+    <type>byte</type>
+
+    
+  </source>
+</block>
