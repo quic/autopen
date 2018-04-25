@@ -638,7 +638,7 @@
                                 on_press: root.sdr('gqrx')
                         Button:
                                 id:freq 
-                                text: 'Custom Freq'
+                                text: 'Autopen Signal Toolkit'
                                 size_hint: .25, .1
                                 on_press: root.sdr('freq')
                         Button:
