@@ -458,6 +458,7 @@ def installed_tools(pack_man, toolname):
     elif toolname == 'gnuradio':
         print 'Beginning gnuradio installation...'
         install_rc = dependencies.commandline_install(pack_man, 'gnuradio')
+	subprocess.call('cd gnuradio_dep; cd gr-carsignals; cd build; ./Reconfig; cd ..; cd ..; cd gr-ReNoMalY; cd build; ./Reconfig;', shell=True)
     elif toolname == 'aircrack-ng':
         print 'Beginning aircrack-ng installation...'
         install_rc = dependencies.commandline_install(pack_man, 'aircrack-ng')
