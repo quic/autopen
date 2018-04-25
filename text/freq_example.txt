@@ -1,1 +1,10 @@
-Example Pending
+Please refer to the User Manual for full instruction.
+
+Signal Display:
+Ensure that the HackRF is connected to the computer before starting. The signal is displayed on the plot and the buttons on the bottom will retune and display the RF signals. 
+
+File Playback Module:
+Select a prerecorded file using "Upload a File" and play the file on the Signal Plot.
+
+File Analysis Module:
+Select a prerecorded file or batch of files using "Select a File or Batch" and then "Execute Anomaly Detection." The results will display underneath the module.
