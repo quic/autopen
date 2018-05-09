@@ -1,1 +1,11 @@
-This is the how to page
+There are two main uses for this tool: 
+	- To easily download and use the necessary tools needed to perform penetration tests on an automobile
+	- To view and share known vehicle exploits
+
+1. Tools
+	To use a tool, first press the "Tools" button on the home page. Then select what type of tool you want to use, whether is it canbus, software defined radio, Bluetooth/wifi, or other. This will bring you to a list of tools under that type. By clicking on one, you will see a description of the tool, as well as a button to install it. Once it is installed, an open button will appear which can be used to launch th edesired tool. If you know longer wish to have the tool, simply press the uninstall button to get rid of it.
+
+2. Known Exploits
+	By selecting "Tools" then "CARS", a user can see what cars have known exploits. They can then choose a car and see what exploits have been found. The car model, car manufacture year, exploit, and the date the exploit was found are shown on the next page.
+	A user can enter their own exploits by navigating to the "Exploit Entry" page. There they are prompted to enter the car model, year, exploit and date found. Pressing the send button will add this new exploit to the database.
+	

@@ -1,1 +1,6 @@
-Terms and Condition
+Terms and Conditions:
+
+All software included is opensource and therefore free for you to use. 
+All tools and exploits in this package are for educational and penetration testing purposes only. DO NOT USE FOR MALICIOUS PURPOSES.
+Attacking others' vehicles without permission is illegal and can result in severe legal consequences.
+We, the creators, are not responsible for anthing a user does with the software.

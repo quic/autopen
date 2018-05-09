@@ -1,0 +1,30 @@
+INCLUDE(FindPkgConfig)
+PKG_CHECK_MODULES(PC_CARSIGNALS carsignals)
+
+FIND_PATH(
+    CARSIGNALS_INCLUDE_DIRS
+    NAMES carsignals/api.h
+    HINTS $ENV{CARSIGNALS_DIR}/include
+        ${PC_CARSIGNALS_INCLUDEDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/include
+          /usr/local/include
+          /usr/include
+)
+
+FIND_LIBRARY(
+    CARSIGNALS_LIBRARIES
+    NAMES gnuradio-carsignals
+    HINTS $ENV{CARSIGNALS_DIR}/lib
+        ${PC_CARSIGNALS_LIBDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/lib
+          ${CMAKE_INSTALL_PREFIX}/lib64
+          /usr/local/lib
+          /usr/local/lib64
+          /usr/lib
+          /usr/lib64
+)
+
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(CARSIGNALS DEFAULT_MSG CARSIGNALS_LIBRARIES CARSIGNALS_INCLUDE_DIRS)
+MARK_AS_ADVANCED(CARSIGNALS_LIBRARIES CARSIGNALS_INCLUDE_DIRS)
+

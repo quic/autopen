@@ -1,0 +1,30 @@
+INCLUDE(FindPkgConfig)
+PKG_CHECK_MODULES(PC_RENOMALY ReNoMalY)
+
+FIND_PATH(
+    RENOMALY_INCLUDE_DIRS
+    NAMES ReNoMalY/api.h
+    HINTS $ENV{RENOMALY_DIR}/include
+        ${PC_RENOMALY_INCLUDEDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/include
+          /usr/local/include
+          /usr/include
+)
+
+FIND_LIBRARY(
+    RENOMALY_LIBRARIES
+    NAMES gnuradio-ReNoMalY
+    HINTS $ENV{RENOMALY_DIR}/lib
+        ${PC_RENOMALY_LIBDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/lib
+          ${CMAKE_INSTALL_PREFIX}/lib64
+          /usr/local/lib
+          /usr/local/lib64
+          /usr/lib
+          /usr/lib64
+)
+
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(RENOMALY DEFAULT_MSG RENOMALY_LIBRARIES RENOMALY_INCLUDE_DIRS)
+MARK_AS_ADVANCED(RENOMALY_LIBRARIES RENOMALY_INCLUDE_DIRS)
+

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<block>
+  <name>SNR_Accumulator</name>
+  <key>ReNoMalY_SNR_Accumulator</key>
+  <category>ReNoMalY</category>
+  <import>import ReNoMalY</import>
+  <make>ReNoMalY.SNR_Accumulator($vlen)</make>
+  <!-- Make one 'param' node for every Parameter you want settable from the GUI.
+       Sub-nodes:
+       * name
+       * key (makes the value accessible as $keyname, e.g. in the make node)
+       * type -->
+  <param>
+    <name>Vec Len</name>
+    <key>vlen</key>
+		<value>1</value>
+    <type>int</type>
+  </param>
+<param>
+		<name>Num Inputs</name>
+		<key>num_inputs</key>
+		<value>1</value>
+		<type>int</type>
+</param>
+  <!-- Make one 'sink' node per input. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <sink>
+    <name>snr_db</name>
+    <type>float</type>
+    <vlen>$vlen</vlen>
+  </sink>
+
+  <!-- Make one 'source' node per output. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <source>
+    <name>Out_SNR</name>
+    <type>float</type>
+  </source>
+</block>

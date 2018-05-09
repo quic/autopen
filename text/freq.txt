@@ -1,0 +1,7 @@
+AutoPen Signal Toolkit
+
+
+The AutoPen Signal Toolkit is an application that will allow analysis of Radio Frequency (RF) signals from a car. This toolkit includes the ability to record a RF signal, playback a signal and perform analysis on a signal. The toolkit can display common signals from the car. This toolkit is compatible with the HackRF.
+
+This application was developed as part of AutoPen 2's Senior Capstone Project. 
+

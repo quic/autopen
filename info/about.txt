@@ -1,1 +1,4 @@
-This is the about page
+Autopen is an open-source toolkit designed to assist security analysts, manufacturers, and various professionals to detect 
+potential vulnerabilities in vehicles using various the tools. This product is meant to simplify installation, 
+help the user in getting to know what tools are at their disposal, and teach them how to use them.
+With all the necessary tools in one place with instructions on how to use them, it will be easy for professionals and amateurs alike to test and record results. A user can see known exploits for certain cars that are stored in a database, as well as as their own exploits they have found. 

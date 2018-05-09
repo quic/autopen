@@ -1,3 +1,14 @@
+#<CustomDropDown>:
+#        Button:
+#                text: 'My first Item'
+#                size_hint_y: None
+#                height: 44
+                #on_release: root.select('item1')
+#        Button:
+#                text: 'My second Item'
+#                size_hint_y: None
+#                height: 44
+                #on_release: root.select('item2')     
 <WelcomePage>:
         id: welcome
         FloatLayout:
@@ -48,6 +59,15 @@
                                 root.manager.transition.direction = 'left'
                                 root.manager.transition.duration = .5
                                 root.manager.current = 'terms'
+                Button:
+                        text: 'Exploit Entry'
+                        size_hint: .25, .1
+                        pos_hint: {'x':.55, 'y':.1}
+                        on_press:
+				
+                                root.manager.transition.direction = 'left'
+                                root.manager.transition.duration = .5
+                                root.manager.current = 'entry'
 
 <HowTo>:
         id: howto
@@ -157,6 +177,57 @@
                                 root.manager.transition.duration = .5
                                 root.manager.current = "welcome"
 
+<CarInfoPage>:
+        label_wid: carTitle
+        exploitbox_wid: labelcar
+        id: carinfo_main
+        FloatLayout:
+                id: carinfo_float
+                canvas.before:
+                        Rectangle:
+                                source: 'images/background_front.jpg'
+                                pos: self.pos
+                                size: self.size
+                Label:
+                        text: '[i][b][color=3388dd]Known Exploits[/color][/b][/i]'
+                        underline: True
+                        markup: True
+                        font_size: '40sp'
+                        size_hint: .25, .1
+                        pos_hint: {'x': .4, 'y': .8}
+
+                Label:
+                        id: carTitle
+                        underline: True
+                        markup: True
+                        font_size: '30sp'
+                        size_hint: .25, .1
+                        pos_hint: {'x': .4, 'y': .73}
+                ScrollableLabel:
+                        pos_hint:{'x': 0.1, 'top': 0.78}
+                        size_hint: (0.7, 0.7)
+                        Label:
+                                id: labelcar
+                                size_hint_y: None
+                                height: labelcar.texture_size[1]
+                                text_size: labelcar.width, None
+                                #text: 'WWWWWW'
+                                font_size: 20
+                                markup: True
+                                valign:'middle'
+
+                Button:
+                        text: 'Back'
+                        size_hint: .1, .05
+                        pos_hint: {'x':0, 'y': 0}
+                        on_press:
+                                root.manager.transition.direction = "right"
+                                root.manager.transition.duration = .5
+                                root.manager.current = "cars"
+                                labelcar.text = ''
+
+
+
 <ToolsPage>:
         id: tools_main
         FloatLayout:
@@ -237,11 +308,93 @@
                         pos_hint: {'x':.89, 'top':0.99}
                         size_hint: (0.1,0.05)
                         on_press: root.find()
+                Button:
+                        text: 'CARS'
+                        size_hint: .25, .1
+                        pos_hint: {'x':.4, 'y':.4}
+                        on_press:
+                                root.manager.transition.direction = 'left'
+                                root.manager.transition.duration = .5
+                                root.manager.current = 'cars'
+                                #root.manager.get_screen('cars').starter()
+                
+		#Button:
+                   #     text: 'CARS'
+                     #   size_hint: .25, .1
+                     #   pos_hint: {'x':.4, 'y':.4}
+                      #  on_press:
+                      #          root.manager.transition.direction = "left"
+                      #          root.manager.transition.duration = .5
+                       #         root.manager.current = 'cars'
 
                 Image:
                         source: "images/AutoPenBlack.png"
                         size_hint: 0.1,0.1
                         pos_hint: {'x':0, 'y':0.88}
+
+<CarsPage>:
+        #dropdown: drop
+        #top_layout: topLayoutID
+        id: cars
+        dbtn: trybtn
+        BoxLayout:
+                id: topLayoutID
+        #cols: 2
+                size_hint: 1, .05
+                pos_hint: {'x': 0, 'y': .95}
+                Button:
+            #id: notesDropDownID
+                        id: trybtn
+                        text: 'Cars'
+                        on_release: root.drop_down.open(self)
+        FloatLayout:
+                id: cars_float
+                canvas.before:
+                        Rectangle:
+                                source: 'images/background_front.jpg'
+                                pos: self.pos
+                                size: self.size
+                Label:
+                        text: '[i][b][color=3388dd]Cars[/color][/b][/i]'
+                        underline: True
+                        markup: True
+                        font_size: '40sp'
+                        size_hint: .25, .1
+                        pos_hint: {'x': .4, 'y': .8}
+
+                Button:
+                        text: 'Back'
+                        size_hint: .1, .05
+                        pos_hint: {'x':0, 'y': 0}
+                        on_press:
+                                root.manager.transition.direction = "right"
+                                root.manager.transition.duration = .5
+                                root.manager.current = "tools"
+                #CustomDropDown:
+                #        id: drop
+                #        pos_hint:{'x': 0.1, 'top': 0.5}
+                ScrollableLabel:
+                        pos_hint:{'x': 0.28, 'top': 0.9}
+                        size_hint: (0.35, 0.7)
+                        Label:
+                                id: labelcar
+                                size_hint_y: None
+                                height: labelcar.texture_size[1]
+                                text_size: labelcar.width, None
+                                text: ''
+                                font_size: 20
+                                markup: True
+                                valign:'middle'
+
+
+                #Button:
+                  #      text: '2014 Ford Taurus'
+                    #    size_hint: .25, .1
+                     #   pos_hint: {'x':.4, 'y':.4}
+                     #   on_press:
+                       #         root.manager.transition.direction = 'left'
+                        #        root.manager.transition.duration = .5
+                          #      root.manager.current = '2014fordtaurus'
 
 <CanPage>:
         id: can_main
@@ -319,10 +472,20 @@
                                 size_hint: .25, .1
                                 on_press: root.can('pyobd')
                         Button:
+                                id: savvy
+                                text: 'SavvyCan'
+                                size_hint: .25, .1
+                                on_press: root.can('savvy')
+                        Button:
                                 id: o2oo
                                 text: 'O2OO'
                                 size_hint: .25, .1
                                 on_press: root.can('o2oo')
+                        Button:
+                                id: m2
+                                text: 'M2'
+                                size_hint: .25, .1
+                                on_press: root.can('m2')
                 Button:
                         text: 'Back'
                         size_hint: .1, .05
@@ -474,8 +637,18 @@
                                 size_hint: .25, .1
                                 on_press: root.sdr('gqrx')
                         Button:
+                                id:freq 
+                                text: 'Autopen Signal Toolkit'
+                                size_hint: .25, .1
+                                on_press: root.sdr('freq')
+                        Button:
                                 text: ''
                                 background_color: 0,0,0,0
+                        Button:
+                                id: combine
+                                text: 'combine'
+                                size_hint: .25, .1
+                                on_press: root.sdr('combine')
                 Button:
                         text: 'Back'
                         size_hint: .1, .05
@@ -510,6 +683,107 @@
                                 valign:'middle'
         FloatLayout:
                 id: dynbutton
+
+<DataEntryPage>:
+        carmodel_wid: sendData
+        mandate_wid: sendYear
+        exploit_wid: sendExploit
+        exploitdate_wid: sendDate
+        id: entry
+        FloatLayout:
+                id: data_float
+                canvas.before:
+                        Rectangle:
+                                source: 'images/background_off_side.jpg'
+                                pos: self.pos
+                                size: self.size
+                Label:
+                        text: '[i][b][color=3388dd]Enter Exploit[/color][/b][/i]'
+                        underline: True
+                        markup: True
+                        font_size: '40sp'
+                        size_hint: .25, .1
+                        pos_hint: {'x': .4, 'y': .8}
+                ScrollableLabel:
+                        pos_hint:{'x': 0.1, 'top': 0.78}
+                        size_hint: (0.7, 0.7)
+                        Label:
+                                id: sendlabel
+                                size_hint_y: None
+                                height: sendlabel.texture_size[1]
+                                text_size: sendlabel.width, None
+                                text: 'Do you have an exploit that is not yet in this application?\nEnter it below! Enter the full name of the car (i.e. Toyota Camry), the year of the car, the date of the exploit found (in yyyymmdd format, i.e. 20111205 for December 5th 2011), and the description of the exploit.\nOnce you press the Send Exploit button, your exploit will be added to the database. You will see the new exploit on the exploits page after restarting the application. '
+                                font_size: 20
+                                markup: True
+                                valign:'middle'
+
+                TextInput:
+			
+                        id: sendData
+			#text: 'Car Model'
+                        multiline: False
+                        keyboard_suggestions: True
+                        hint_text: 'Car_Model'
+                        #text: 'Car Model'
+                        pos_hint: {'x':.03, 'top':0.4}
+                        size_hint: (0.24,0.05)
+                        focus: True
+                TextInput:
+			
+                        id: sendYear
+			
+                        multiline: False
+                        keyboard_suggestions: True
+                        hint_text: 'Year'
+                        
+                        pos_hint: {'x':.3, 'top':0.4}
+                        size_hint: (0.06,0.05)
+                        focus: True
+                TextInput:
+			
+                        id: sendDate
+			
+                        multiline: False
+                        keyboard_suggestions: True
+                        hint_text: 'yyyymmdd'
+                        
+                        pos_hint: {'x':.38, 'top':0.4}
+                        size_hint: (0.11,0.05)
+                        focus: True
+                TextInput:
+			
+                        id: sendExploit
+			
+                        multiline: True
+                        keyboard_suggestions: True
+                        hint_text: 'Exploit Description'
+                        
+                        pos_hint: {'x':.5, 'top':0.4}
+                        size_hint: (0.35,0.05)
+                        focus: True
+                Button:
+                        id: sendbutton
+                        text: 'Send Exploit'
+                        font_size: 10
+                        pos_hint: {'x':.85, 'top':0.4}
+                        size_hint: (0.1,0.05)
+                        on_press:
+                                root.info = sendData.text
+                                root.do_action()
+                                sendData.text = ''
+                                sendExploit.text = ''
+                                sendDate.text = ''
+                                sendYear.text = ''
+                                        
+      
+                Button:
+                        text: 'back'
+                        size_hint: .1, .05
+                        pos_hint: {'x':0, 'y': 0}
+                        on_press:
+                                root.manager.transition.direction = "right"
+                                root.manager.transition.duration = .5
+                                root.manager.current = "welcome"
 
 <MiscellaneousPage>
         id: mis
