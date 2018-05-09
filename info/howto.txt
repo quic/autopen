@@ -1,5 +1,5 @@
 There are two main uses for this tool: 
-	- To easily download and use the necessary tools needed to penetration taste an automobile
+	- To easily download and use the necessary tools needed to perform penetration tests on an automobile
 	- To view and share known vehicle exploits
 
 1. Tools
