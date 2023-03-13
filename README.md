@@ -24,11 +24,7 @@ When prompted to keep dash as the default shell, select No.
 
 To run Autopen, having Python 3 and pip3 installed, the repository needs to be added and the following dependencies must be installed. 
 
-`sudo add-apt-repository ppa:kivy-team/kivy`
-
-`pip3 install python3-kivy`
-
-`pip3 install cython==0.23`
+`python -m pip install "kivy[base]`
 
 ## Running the Program
 
